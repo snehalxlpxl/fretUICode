@@ -1,0 +1,52 @@
+<h2>Masters</h2>
+<div class="content-wrapper container-xxl p-0">
+    <div class="card container">
+      <div class="cardbody pl-2 pr-2 pt-2">
+
+            
+  <ul ngbNav #navWithIcons="ngbNav" class="nav-tabs">
+    <li ngbNavItem>
+      <a ngbNavLink><span [data-feather]="'anchor'"></span> Ocean Line Master</a>
+      <ng-template ngbNavContent>
+        <p>
+          <app-ocean-line-master #modalForm1></app-ocean-line-master>
+          <app-ocean-line-modal ></app-ocean-line-modal>
+        </p>
+      </ng-template>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink><span [data-feather]="'airplay'"></span> Air Line Master</a>
+      <ng-template ngbNavContent>
+        <p>
+          <app-airlinemaster></app-airlinemaster>
+        </p>
+      </ng-template>
+    </li>
+  
+    <li ngbNavItem>
+      <a ngbNavLink><span [data-feather]="'award'"></span> All Type Master</a>
+      <ng-template ngbNavContent>
+        <p>
+          <app-alltypemaster></app-alltypemaster>
+        </p>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="navWithIcons" class="mt-2"></div>
+  
+    
+          <router-outlet></router-outlet>
+    </div>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

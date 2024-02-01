@@ -1,0 +1,239 @@
+<div class="content-wrapper container-xxl p-0">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/customer">Company List</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Company Form</li>
+        </ol>
+      </nav>
+
+    <div class="card mt-1 container">
+        
+        <div class="cardbody ml-3 mt-1">
+            <form class="form" [formGroup]="CompanyForm" (ngSubmit)="CompanyForm.valid && collectFormData()">
+                <h4 class="mt-2">Company Information</h4>
+
+                <div class="row mr-1 mt-2">
+                    <div class="form-group">
+                        <input type="number" id="CompanyID " class="form-control" placeholder="Company ID"
+                            name="CompanyID" formControlName="companyId" hidden />
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text"  class="form-control" 
+                            name="dateCreated" formControlName="dateCreated" hidden />
+
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="companyName ">Company Name </label>
+                            <input type="text" id="companyName" class="form-control" placeholder="Company Name"
+                                name="companyName" formControlName="companyName" maxlength="100" />
+                            <div *ngIf="CompanyForm.controls['companyName'].invalid  && CompanyForm.controls['companyName'].touched || submitted"
+                                class="text-danger">
+                                <div *ngIf="CompanyForm.controls['companyName'].errors.required">
+                                    Company Name is required.
+                                </div>
+                            </div> 
+
+                            <div *ngIf="isExist" class="text-danger">
+                                Company Already Exist
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1 mt-2">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="companyTypeName ">Company Type</label>
+                            <!-- <select id="companyTypeName" class="form-control" name="companyTypeName"
+                                formControlName="companyTypeId" (change)='getSelectedOptionText($event)'>
+                                <option *ngFor="let item of company" [value]="item?.companyTypeId">
+                                    {{item?.companyType1}}
+                                </option>
+
+                            </select>  -->
+                          
+                           <ng-select [items]="company"
+                           bindLabel="companyType1"
+                           bindValue="companyTypeId"
+                           formControlName="companyTypeId" >
+                         </ng-select>
+
+                        <div *ngIf="CompanyForm.controls['companyTypeId'].invalid && CompanyForm.controls['companyTypeId'].touched"
+                         class="text-danger">
+                            <div *ngIf="CompanyForm.controls['companyTypeId'].errors.required">
+                                Company Type is required.
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ownerId ">Sales Person </label>
+                            <!-- <select class="form-control" (change)="changeWebsite($event)" formControlName="ownerId">
+                                <option *ngFor="let item of SalesPerson" [value]="item?.userId">
+                                    {{item?.userDisplayName}}
+                                </option>
+                            </select> -->
+                            <ng-select [items]="SalesPerson"
+                            bindLabel="userDisplayName"
+                            bindValue="userId"
+                            formControlName="ownerId" >
+                          </ng-select>
+
+                            <div *ngIf="CompanyForm.controls['ownerId'].invalid && CompanyForm.controls['ownerId'].touched"
+                                class="text-danger">
+                                <div *ngIf="CompanyForm.controls['ownerId'].errors.required">
+                                    Sales Person is required.
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col">
+                      <div class="form-group">
+                          <label for="paymentTermLabel ">Payment Terms</label>
+                          <!-- <select id="paymentTermLabel" class="form-control" name="paymentTermLabel"
+                              formControlName="paymentTermId" (change)="onPaymentTerms($event)">
+                              <option *ngFor="let item of PaymentTerms" [value]="item?.paymentTermId">
+                                  {{item.paymentTerm1}}</option>
+                          </select> -->
+                          <ng-select [items]="PaymentTerms"
+                          bindLabel="paymentTerm1"
+                          bindValue="paymentTermId"
+                          formControlName="paymentTermId" >
+                        </ng-select>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="row mr-1 mt-2">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gsttypeName ">GST Treatment</label>
+                            <!-- <select id="gsttypeName" class="form-control" name="gsttypeName"
+                                formControlName="gsttypeId" (change)="onGSTtypeId($event)">
+                                <option *ngFor="let item of GstTreatment" [value]="item?.gsttypeId">{{item?.gstregType}}
+                                </option>
+                            </select> -->
+                            <ng-select [items]="GstTreatment"
+                          bindLabel="gstregType"
+                          bindValue="gsttypeId"
+                          formControlName="gsttypeId" 
+                          placeholder="GST Treatment">
+                        </ng-select>
+                            <div *ngIf="CompanyForm.controls['gsttypeId'].invalid && CompanyForm.controls['gsttypeId'].touched"
+                                class="text-danger">
+                                <div *ngIf="CompanyForm.controls['gsttypeId'].errors.required">
+                                    GST Treatment is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gstin ">GSTIN </label>
+                            <input type="text" id="gstin" class="form-control" placeholder="GSTIN" name="gstin"
+                                formControlName="gstin" maxlength="15" />
+                        </div>
+                        <div *ngIf="CompanyForm.controls['gstin'].invalid && CompanyForm.controls['gstin'].touched"
+                                class="text-danger">
+                                <div *ngIf="CompanyForm.controls['gstin'].errors.required">
+                               GSTIN Number is required.
+                                </div>
+                                <div *ngIf="CompanyForm.controls['gstin'].errors.pattern">
+                                GSTIN Number is invalid
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                          <label for="pannumber ">PAN </label>
+                          <input type="text" id="pannumber" class="form-control" placeholder="PAN Number" maxlength="10" minlength="10"
+                              name="pannumber" formControlName="pannumber" />
+                      </div>
+                      <div *ngIf="CompanyForm.controls['pannumber'].invalid && CompanyForm.controls['pannumber'].touched"
+                                class="text-danger">
+                                <div *ngIf="CompanyForm.controls['pannumber'].errors.required">
+                                  Pan Number is required.
+                                </div>
+                                <div *ngIf="CompanyForm.controls['pannumber'].errors.pattern">
+                                  Pan Number is invalid
+                                </div>
+                        </div>
+                  </div>
+                  
+                </div>
+
+
+
+
+              <div class="mt-2 mb-2">
+               
+                <button type="submit" rippleEffect class="btn btn-gradient-success mb-1" (click)="onSubmitService(CompanyForm)" [disabled]="CompanyForm.invalid">Save</button>
+               
+                <!-- {{isSavebtn}} -->
+                <!-- <button type="button" rippleEffect class="btn btn-primary mb-1 ml-2" routerLink="/address/{{companydataurlid}}"> Add Address Details</button>
+                <button type="button" rippleEffect class="btn btn-primary mb-1 ml-2" routerLink="/contacts/{{companydataurlid}}"> Add Contacts Details</button> -->
+              </div>
+            </form>
+        </div>
+
+        <div class="cardbody ml-3 mt-1" *ngIf="isSavebtn">
+          <ul ngbNav #nav="ngbNav" class="nav nav-pills" [activeId]="1" >
+            <li [ngbNavItem]="1" class="active" >
+              <a ngbNavLink class="nav-item nav-link active" aria-controls="ngb-nav-12-panel" [class.active]="viewMode=='address'" (click)="viewMode='address'" aria-selected="true"> Address</a>
+              <ng-template ngbNavContent>
+                <div [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'address'">
+                        <app-address *ngIf="isSavebtn" [hero]="companyId||companydataurlid" ></app-address>                       
+                    </div>
+                </div>
+              </ng-template>
+          </li>
+          <li [ngbNavItem]="2">
+              <a ngbNavLink class="nav-item" [class.active]="viewMode=='contacts'" (click)="viewMode='contacts'">Contacts</a>
+              <ng-template ngbNavContent>
+
+                <div [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'contacts'">
+                        <app-contacts  *ngIf="isSavebtn" [hero1]="companyId||companydataurlid"></app-contacts>
+                    </div>
+                </div>
+              </ng-template>
+          </li>
+          <li [ngbNavItem]="3">
+              <a ngbNavLink class="nav-item" [class.active]="viewMode=='shipments'" (click)="viewMode='shipments'"> Shipments </a>
+              <ng-template ngbNavContent>
+                <div [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'shipments'">
+                        <app-shipments></app-shipments>
+                    </div>
+                </div>
+              </ng-template>
+          </li>
+          <li [ngbNavItem]="4">
+              <a ngbNavLink class="nav-item" [class.active]="viewMode=='appointments'" (click)="viewMode='appointments'">Appointments</a>
+              <ng-template ngbNavContent>
+                <div [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'appointments'">
+                        <app-appoint></app-appoint>
+                    </div>
+                </div>
+              </ng-template>
+          </li>
+        
+          </ul>
+
+
+          <div [ngbNavOutlet]="nav" class="mt-1"></div>
+
+
+    
+        </div>
+
+
+</div>

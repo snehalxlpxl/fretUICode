@@ -1,0 +1,86 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+
+.datatable-scroll {
+    width: auto !important;
+  }
+  .card .card-header{
+    display: none!important;
+  }
+  .ng-select .ng-select-container {
+    color: #333;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-height: 28px!important;
+    align-items: center;
+}
+.ng-select.ng-select-single .ng-select-container {
+  height: 28px!important;
+}
+.bor-red{
+  border-left: 3px solid red;
+}
+.bor-green{
+  border-left: 3px solid green;
+}
+.ngselect{
+  height: 2rem!important;
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+  border-left-width: 3px!important;
+  padding-left: 0px!important;
+}
+.table th, .table td {
+  padding: 0.5rem!important;
+}
+th, td {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+.border{
+  border: 2px solid red;
+}
+
+
+.addrdata{
+  font-size: 0.84rem;
+  white-space: pre-wrap;
+}
+.ng-op-head{
+background-color: rgb(198 198 198);
+  color: #414141;
+  letter-spacing: -0.7px;
+  font-weight: 500;
+  font-size: .96rem;
+}
+.ng-op-head span{
+padding: .5rem;
+}
+.p-head{
+padding: .4rem;
+}
+.p-body{
+padding: .3rem;
+}
+.addchargebtn{
+  width: 24px;
+    height: 24px;
+    margin: auto;
+    background-color: darkgrey;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    /* align-items: center; */
+    font-size: 15px;
+    color: #fff4e0;
+    justify-content: space-around;
+    cursor: pointer;
+}
+.stretchable-dropdown .ng-dropdown-panel {
+  min-width: 200px; /* Set a minimum width for the dropdown */
+  width: 100%; /* Allow the dropdown to stretch */
+  max-height: 200px; /* Set a maximum height for the dropdown (optional) */
+  overflow-y: auto; /* Add vertical scrollbar if needed (optional) */
+}

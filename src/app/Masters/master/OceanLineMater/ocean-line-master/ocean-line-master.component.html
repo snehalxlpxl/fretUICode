@@ -1,0 +1,223 @@
+
+<div class="row">
+  
+    <div class="col-md-6 col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <button class="btn btn-primary" rippleEffect (click)="openModal(modalBasic)">
+            <i data-feather="plus" class="mr-0 mr-sm-1"></i
+            ><span class="d-none d-sm-inline-block">Add New Record</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6 col-12 d-flex justify-content-md-end">
+      <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+        <label class="d-flex align-items-center"
+        >Search<input
+          type="search"
+          placeholder="Search"
+          class="form-control ml-25"
+          (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)"
+      /></label>
+      </div>
+    </div>
+  </div>
+  <ngx-datatable
+  [rows]="kitchenSinkRows"
+  [rowHeight]="58"
+  class="bootstrap core-bootstrap"
+  [limit]="10"
+  
+  [headerHeight]="40"
+  [footerHeight]="50"
+  [scrollbarH]="true"
+  [selectionType]="SelectionType.checkbox"
+  [limit]="basicSelectedOption"
+  
+  >
+    <ngx-datatable-column
+      [width]="100"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+    >
+      <ng-template
+        ngx-datatable-header-template
+        let-value="value"
+        let-allRowsSelected="allRowsSelected"
+        let-selectFn="selectFn"
+      >
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [checked]="allRowsSelected"
+            (change)="selectFn(!allRowsSelected)"
+            id="headerChkbxRef"
+          />
+          <label class="custom-control-label" for="headerChkbxRef"></label>
+        </div>
+      </ng-template>
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-isSelected="isSelected"
+        let-onCheckboxChangeFn="onCheckboxChangeFn"
+      >
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [checked]="isSelected"
+            (change)="onCheckboxChangeFn($event)"
+            id="rowChkbxRef{{ rowIndex }}"
+          />
+          <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="ID#" prop="oceanLineId" [width]="50"></ngx-datatable-column>
+    <ngx-datatable-column name="ocean Line Code" prop="oceanLineCode" [width]="220">
+   
+    </ngx-datatable-column>
+   
+    <ngx-datatable-column name="line Company Name" prop="lineCompanyName" [width]="300"></ngx-datatable-column>
+    <ngx-datatable-column name="line Call Sign" prop="lineCallSign" [width]="200"></ngx-datatable-column>
+    <ngx-datatable-column name="scaccode" prop="scaccode" [width]="200">
+     
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Edit" [width]="100" [sortable]="false">
+      <ng-template ngx-datatable-cell-template>
+        <div class="d-flex align-items-center">
+          
+            <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+            ><i data-feather="edit" class="text-primary cursor-pointer"></i> </a
+          >
+          
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Delete" [width]="100" [sortable]="false">
+        <ng-template ngx-datatable-cell-template>
+          <div class="d-flex align-items-center">
+            <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                  ><i data-feather="trash-2" class="mr-50"></i> </a
+                >
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+  </ngx-datatable>
+     <!-- modal -->
+  <div id="oceanlinemodal">
+    <ng-template #modalBasic let-modal>
+      <div class="modal-header align-items-center">
+       <h5 class="modal-title" id="companyProfileLabel">New Ocean Line Details</h5>
+       <button #closeModal  type="button" class="close m-0" (click)="modal.dismiss(oceanlinemasterForm)" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+  
+      <div class="modal-body">
+        
+          <form [formGroup]="oceanlinemasterForm" #myForm="ngForm">
+              <div class="row">
+                <div class="col-6">
+                 
+                        <div class="row ">
+                          <div class="col-12">
+                            <div class="form-group">
+                                  <label for="LineCode" name="LineCode" class="">oceanLineCode</label>
+                                  <input 
+                                  type="text"
+                                  id="LineCode "
+                                  class="form-control form-control-sm"
+                                  placeholder="transitTime" 
+                                  formControlName="oceanLineCode"
+                                    />
+                                  <div *ngIf="oceanlinemasterForm.controls['oceanLineCode'].invalid && oceanlinemasterForm.controls['oceanLineCode'].touched" class="text-danger mt-1 validation-text">
+                                    <div *ngIf="oceanlinemasterForm.controls['oceanLineCode'].errors.required">
+                                      oceanLineCode is required.
+                                    </div>
+                                  </div>
+                            </div>
+                          </div>
+                        
+                        </div>
+                </div>
+         
+                  <div class="col-6">
+                    <div class="form-group">
+                          <label for="CompanyName " name="CompanyName">lineCompanyName</label>
+                          <input 
+                          type="text"
+                          id="CompanyName "
+                          class="form-control form-control-sm"
+                          placeholder="lineCompanyName" 
+                          formControlName="lineCompanyName"
+                            />
+                          <div *ngIf="oceanlinemasterForm.controls['lineCompanyName'].invalid && oceanlinemasterForm.controls['lineCompanyName'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="oceanlinemasterForm.controls['lineCompanyName'].errors.required">
+                              lineCompanyName is required.
+                            </div>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="lineCallSigna " class="">lineCallSign</label>
+                    
+                      <input 
+                          type="text"
+                          id="lineCallSigna "
+                          class="form-control form-control-sm"
+                          placeholder="lineCallSign" 
+                          formControlName="lineCallSign"
+                            />
+                        <div *ngIf="oceanlinemasterForm.controls['lineCallSign'].invalid && oceanlinemasterForm.controls['lineCallSign'].touched" class="text-danger mt-1 validation-text">
+                          <div *ngIf="oceanlinemasterForm.controls['lineCallSign'].errors.required">
+                            lineCallSign is required.
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+              
+                  <div class="col-6">
+                      <div class="form-group">
+                          <label for="scaccodea " class="">scaccode</label>
+                        
+                          <input 
+                            type="text"
+                            id="scaccode "
+                            class="form-control form-control-sm"
+                            placeholder="scaccode" 
+                            formControlName="scaccode"
+                              />
+                          <div *ngIf="oceanlinemasterForm.controls['scaccode'].invalid && oceanlinemasterForm.controls['scaccode'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="oceanlinemasterForm.controls['scaccode'].errors.required">
+                              scaccode is required.
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <input type="text" formControlName="dateCreated" hidden>
+                  <input type="text" formControlName="dateModified" hidden>
+                </div>
+              <div class="row">
+        
+                <div class="modal-footer">   
+                    <button type="submit" class="btn btn-success" (click)="onSubmit(oceanlinemasterForm)"  rippleEffect>Save Data</button>
+                  
+                </div>
+              </div>
+   
+      </form>
+  
+      </div>
+  
+      
+     
+  </ng-template>
+  </div>
+    

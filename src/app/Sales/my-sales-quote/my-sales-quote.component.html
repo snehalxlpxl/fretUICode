@@ -1,0 +1,257 @@
+<div class="content-wrapper container-xxl p-0">
+    <div class="card mt-1 container">
+      <div class="cardbody ml-3 mt-3">
+          
+    <ul ngbNav #nav="ngbNav" class="nav nav-pills">
+      <li ngbNavItem>
+        <a ngbNavLink> Basic Information</a>
+        <ng-template ngbNavContent>
+          <form class="form" [formGroup]="SalesQuoteForm" >
+                <div class="container mt-2">
+                  <h4>General Information</h4>
+                </div>
+    
+                <div class="container mt-2">
+                   
+                    <div class="row mr-1" >
+                        <div class="col-md-4 col-12">
+                          <div class="form-group">
+                            <label for="Status">Sales Quote Status</label>
+                                <select 
+                                  id="Status" 
+                                  class="form-control" 
+                                  name="status"
+                                  formControlName="status"> 
+                                  <option>Enquiry</option> 
+                                  <option>Quotation</option>
+                                </select>
+                          </div>
+                        </div>
+    
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                              <label for="mode_of_transport">Mode Of Transport</label>
+                                  <select 
+                                    id="mode_of_transport" 
+                                    class="form-control" 
+                                    name="mode_of_transport" 
+                                    formControlName="mode_of_transport"> 
+                                    <option>Ocean</option> 
+                                    <option>Air</option>
+                                  </select>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                              <label for="Direction">Direction</label>
+                                  <select 
+                                    id="Direction" 
+                                    class="form-control" 
+                                    name="Direction"
+                                    formControlName="Direction"> 
+                                    <option>Import</option> 
+                                    <option>Export</option>
+                                  </select>
+                            </div>
+                        </div>
+                        
+                    </div>
+    
+             
+                    <div class="row mr-1 mt-2" >
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="CustomerName ">Customer Name :</label>
+                                <input 
+                                  type="text"
+                                  id="Customer Name "
+                                  class="form-control"
+                                  placeholder="Customer Name" 
+                                  name="CustomerName"
+                                  formControlName="CustomerName"
+                                />
+                                <div *ngIf="SalesQuoteForm.get('CustomerName')?.invalid && (SalesQuoteForm.get('CustomerName')?.dirty || SalesQuoteForm.get('CustomerName')?.touched)">
+                                  <div *ngIf="SalesQuoteForm.get('username')?.hasError('required')">
+                                    Customer Name is required
+                                </div>
+                              </div>
+                              </div>
+                        </div>
+    
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="SalesPersonName ">Sales Person Name :</label>
+                                <input 
+                                  type="text"
+                                  id="SalesPersonName "
+                                  class="form-control"
+                                  placeholder="Sales Person Name" 
+                                  name="SalesPersonName"
+                                  formControlName="SalesPersonName"
+                                />
+                              </div>
+                        </div>
+                    </div>
+    
+                
+                    <div class="row mr-1 mt-2" >
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="SalesQuoteNumber ">Sales Quote Number :</label>
+                                <input 
+                                  type="text"
+                                  id="SalesQuoteNumber "
+                                  class="form-control"
+                                  placeholder="Sales Quote Number "
+                                  name="SalesQuoteNumber"
+                                  formControlName="SalesQuoteNumber"
+                                  readonly
+                                />
+                              </div>
+                        </div>
+    
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="Date ">Date :</label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    placeholder="dd/mm/yyyy"
+                                    ngbDatepicker 
+                                    #d="ngbDatepicker" 
+                                    name="date"
+                                    formControlName="date"
+                                    >
+                            </div>
+                        </div>
+    
+    
+                    </div>
+                </div>
+                <hr>
+                <div class="container mt-2">
+                  <h4>Commodity Information</h4>
+                </div>
+    
+            
+                 <div class="container">
+                  <div class="row mr-1" >
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="PackageDetails ">Package Details :</label>
+                            <textarea class="form-control" 
+                                id="PackageDetails" 
+                                name="PackageDetails"
+                                rows="4"
+                                formControlName="PackageDetails">
+                              </textarea>
+                        </div>
+                      </div>
+    
+                      <div class="col-md-6 col-12">
+                          <div class="form-group">
+                              <label for="Volume ">Volume :</label>
+                              <input 
+                                type="text"
+                                id="Volume "
+                                class="form-control"
+                                placeholder="Volume "
+                                name="Volume"
+                                formControlName="Volume"
+                              />
+                              <label for="GrossWeight " class="mt-1">Gross Weight :</label>
+                              <input 
+                                type="text"
+                                id="GrossWeight "
+                                class="form-control "
+                                placeholder="Gross Weight "
+                                name="GrossWeight"
+                                formControlName="GrossWeight"
+                              />
+                            </div>
+                      </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="col-sm-6 col-12 mb-2">
+                    <label>Basic Select with Search</label>
+                    <div class="form-group">
+                      <!-- <select class="form-control mb-1" >
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select> -->
+                      <!-- Basic Select with Search -->
+                      <ng-select [items]="selectBasic" bindLabel="name" [loading]="selectBasicLoading"> 
+                    
+                      </ng-select>
+                      <!--/ Basic Select with Search -->
+                    </div>
+                  </div>
+                      
+                          <!-- <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Number</mat-label>
+                            <input type="text"
+                                  placeholder="Pick one"
+                                  aria-label="Number"
+                                  matInput
+                                  [formControl]="myControl"
+                                  [matAutocomplete]="auto">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                {{option}}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field> -->
+                       
+                </div>
+              
+          </form>
+                <hr>
+                <div class="container" >
+                  <!-- <app-my-sales-quote-list-item [myobj]="this.myobj1"  (bookTitleCreated)=onBookAdded($event)>
+                  </app-my-sales-quote-list-item> -->
+    <app-my-sales-quote-list-item   (bookTitleCreated)=onBookAdded($event)>
+    </app-my-sales-quote-list-item>
+    
+    <div class=" mt-2 mb-2 container ">
+      <button type="submit" rippleEffect class="btn btn-primary mr-1" (click)="save(SalesQuoteForm)" > Save All</button>
+    </div>
+                </div> 
+        </ng-template>
+      </li>
+    
+      <li ngbNavItem ml-4>
+        <a ngbNavLink>Details</a>
+        <ng-template ngbNavContent>
+        
+          <p>
+            Pudding candy canes sugar plum cookie chocolate cake powder croissant. Carrot cake tiramisu danish
+            candy cake muffin croissant tart dessert. Tiramisu caramels candy canes chocolate cake sweet roll
+            liquorice icing cupcake.Bear claw chocolate chocolate cake jelly-o pudding lemon drops sweet roll
+            sweet candy. Chocolate sweet chocolate bar candy chocolate bar chupa chups gummi bears lemon
+            drops.
+          </p>
+    
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-1"></div>
+      
+      </div>
+    </div>
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

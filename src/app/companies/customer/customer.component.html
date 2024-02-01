@@ -1,0 +1,194 @@
+<!-- <h4 class="container-xxl p-0">Companies</h4> -->
+<div class="content-wrapper container-xxl p-0">
+  <h3 class="container-xxl p-0 ml-2" >Companies</h3>
+
+  <div class="card mt-1 container">
+      <div class="cardbody ml-3 mt-3">
+          <app-companylist></app-companylist>
+      </div>
+  </div>
+</div>
+
+          <!-- <ul ngbNav #nav="ngbNav" class="nav nav-pills"> -->
+              <!-- <li ngbNavItem> 
+                  <a ngbNavLink> Companies</a>
+                  <ng-template ngbNavContent>
+                      <form class="form" [formGroup]="CompanyForm">
+                      
+                              <h4 class="mt-2">Company Information</h4>
+                        
+
+                          <div class="row mr-1 mt-2">
+                              
+
+                             
+                                  <div class="form-group">
+                                      <input type="number" 
+                                          id="CompanyID " 
+                                          class="form-control"
+                                          placeholder="Company ID" 
+                                          name="CompanyID"
+                                          formControlName="companyId" 
+                                          hidden
+                                      />
+                                
+                              </div>
+
+                              <div class="col-12">
+                                  <div class="form-group">
+                                      <label for="companyName ">Company Name :</label>
+                                      <input type="text" 
+                                          id="companyName Name " 
+                                          class="form-control"
+                                          placeholder="Company Name" 
+                                          name="companyName"
+                                          formControlName="companyName" />
+                                          <div *ngIf="CompanyForm.controls['companyName'].invalid && CompanyForm.controls['companyName'].touched" class="text-danger">
+                                              <div *ngIf="CompanyForm.controls['companyName'].errors.required">
+                                                  Company Name is required.
+                                              </div>
+                                          </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row mr-1 mt-2">
+                            <div class="col-md-6 col-12">
+                                  <div class="form-group">
+                                      <label for="companyTypeName ">Company Type:</label>
+                                      <select 
+                                          id="companyTypeName" 
+                                          class="form-control" 
+                                          name="companyTypeName"
+                                          formControlName="companyTypeName"
+                                          (change)='getSelectedOptionText($event)'> 
+                                          <option *ngFor="let item of company" [value]="item?.companyTypeId">{{item?.companyType1}}</option> 
+                                        
+                                      </select>
+                                      <div *ngIf="CompanyForm.controls['companyTypeName'].invalid && CompanyForm.controls['companyTypeName'].touched" class="text-danger">
+                                          <div *ngIf="CompanyForm.controls['companyTypeName'].errors.required">
+                                              Company Type is required.
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                              <div class="col-md-6 col-12">
+                                  <div class="form-group">
+                                      <label for="ownerId ">Sales Person :</label>
+                                      <select  class="form-control" (change)="changeWebsite($event)">
+                                          <option *ngFor="let item of SalesPerson" [value]="item?.userId" >{{item?.userDisplayName}}</option>
+                                      </select>
+                                      
+                                      <div *ngIf="CompanyForm.controls['ownerId'].invalid && CompanyForm.controls['ownerId'].touched" class="text-danger">
+                                          <div *ngIf="CompanyForm.controls['ownerId'].errors.required">
+                                              Sales Person is required.
+                                          </div>
+                                      </div> 
+                                     
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="row mr-1 mt-2">
+                              <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="gsttypeName ">GST_Treatment:</label>
+                                        <select 
+                                            id="gsttypeName" 
+                                            class="form-control" 
+                                            name="gsttypeName"
+                                            formControlName="gsttypeName"
+                                            (change)="onGSTtypeId($event)"> 
+                                            <option *ngFor="let item of GstTreatment" [value]="item?.gsttypeId">{{item?.gstregType}}</option> 
+                                        </select>
+                                        <div *ngIf="CompanyForm.controls['gsttypeName'].invalid && CompanyForm.controls['gsttypeName'].touched" class="text-danger">
+                                          <div *ngIf="CompanyForm.controls['gsttypeName'].errors.required">
+                                              GST Treatment is required.
+                                          </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                  <div class="form-group">
+                                      <label for="gstin ">GSTIN :</label>
+                                      <input type="text" 
+                                          id="gstin" 
+                                          class="form-control"
+                                          placeholder="gstin" 
+                                          name="gstin"
+                                          formControlName="gstin"
+                                          maxlength="15" />
+                                  </div>
+                              </div>
+                            </div>
+
+
+                          <div class="row mr-1 mt-2">
+                              <div class="col-md-6 col-12">
+                                  <div class="form-group">
+                                      <label for="pannumber ">PAN :</label>
+                                      <input type="text" 
+                                          id="pannumber" 
+                                          class="form-control"
+                                          placeholder="PAN Number" 
+                                          name="pannumber"
+                                          formControlName="pannumber" 
+                                          maxlength="10"/>
+                                  </div>
+                              </div>
+                                <div class="col-md-6 col-12">
+                                  <div class="form-group">
+                                      <label for="paymentTermLabel ">Payment Terms:</label>
+                                      <select 
+                                          id="paymentTermLabel" 
+                                          class="form-control" 
+                                          name="paymentTermLabel"
+                                          formControlName="paymentTermLabel"
+                                          (change)="onPaymentTerms($event)"> 
+                                          <option *ngFor="let item of PaymentTerms" [value]="item?.paymentTermId">{{item.paymentTerm1}}</option> 
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+
+                        
+                       
+                         <button type="submit" rippleEffect class="btn btn-primary mb-1" (click)="onSubmitService(CompanyForm)" > Save</button>
+                         <button rippleEffect class="btn btn-primary mb-1" routerLink="/address/{{companydataurlid}}" > Add Address Details</button>
+                      </form>
+                  </ng-template>
+              </li>
+          <li ngbNavItem>
+                  <a ngbNavLink> Company List</a>
+                  <ng-template ngbNavContent> 
+                      <app-company-list></app-company-list>
+                </ng-template>
+              </li>
+           <li ngbNavItem>
+                  <a ngbNavLink> Address</a>
+                  <ng-template ngbNavContent>
+                      <app-address></app-address>
+                  </ng-template>
+              </li>
+              <li ngbNavItem>
+                  <a ngbNavLink>Contacts</a>
+                  <ng-template ngbNavContent>
+                      <app-contacts></app-contacts>
+                  </ng-template>
+              </li>
+              <li ngbNavItem>
+                  <a ngbNavLink> Shipments </a>
+                  <ng-template ngbNavContent>
+
+                  </ng-template>
+              </li>
+              <li ngbNavItem>
+                  <a ngbNavLink>Appointments</a>
+                  <ng-template ngbNavContent>
+
+                  </ng-template>
+              </li>
+          </ul>
+          <div [ngbNavOutlet]="nav" class="mt-1"></div>
+-->

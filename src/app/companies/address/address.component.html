@@ -1,0 +1,290 @@
+
+
+<div class="content-wrapper container-xxl p-0">
+   
+
+    <ng-template #modalForm let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="companyProfileLabel">Add Address</h5>
+            <button type="button" class="close" (click)="modal.dismiss(AddressForm.reset)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <form [formGroup]="AddressForm" (ngSubmit)="AddressForm.valid && collectFormData()">
+                <div class="form-group row">
+                    <label for="addressTypeNick " class="col-sm-4 col-form-label">Address Type Nick </label>
+                    <div class="col-12">
+                        <input type="text" id="addressTypeNick " class="form-control" placeholder="Address Type Nick"
+                            name="addressTypeNick" formControlName="addressTypeNick" maxlength="30" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text"  class="form-control" 
+                        name="dateCreated" formControlName="dateCreated" hidden />
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="country "  class="col-sm-4 col-form-label">country </label>
+                    <div class="col-12">
+                        <!-- <input type="text" id="country " class="form-control" placeholder="country"
+                            name="country" formControlName="country" /> -->
+                            <!-- <ng-select [items]="country"
+                                bindLabel="countryName"
+                                bindValue="countryName"
+                                formControlName="country" >
+                              </ng-select> -->
+                              <ng-select [items]="countryget"
+                                bindLabel="countryName"
+                                bindValue="countryId"
+                                formControlName="countryId" 
+                                (change)="onchage($event)">
+                              </ng-select>
+                    </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <!-- <div class="col">
+                        <div class="form-group">
+                            <label for="countryId ">Country ID</label>
+                           
+                                <ng-select [items]="countryId"
+                                bindLabel="countryId"
+                                bindValue="countryId"
+                                formControlName="countryId" >
+                              </ng-select>
+                        </div>
+                    </div> -->
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="stateName ">State Name</label>
+                            <!-- <input type="text" id="stateName " class="form-control" placeholder="stateName"
+                                name="stateName" formControlName="stateName" /> -->
+                                <!-- <ng-select [items]="stateName"
+                                bindLabel="stateName"
+                                bindValue="stateName"
+                                formControlName="stateName" >
+                              </ng-select> -->
+                              <ng-select [items]="stateNameGet"
+                                bindLabel="stateName"
+                                bindValue="stateId"
+                                formControlName="stateId" 
+                                (change)="onchangeState($event)">
+                              </ng-select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="cityName ">City</label>
+                            <input type="text" id="cityName " class="form-control"
+                                placeholder="Parent Company Id" name="cityName"
+                                formControlName="cityName"  maxlength="50" />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="addressLine1addressLine1 ">Address Line 1</label>
+                            <input type="text" id="addressLine1 " class="form-control"
+                                placeholder="Parent Company Name" name="addressLine1"
+                                formControlName="addressLine1" maxlength="100"  />
+                           
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="addressLine2 ">Address Line 2</label>
+                            <input type="text" id="addressLine2 " class="form-control" placeholder="addressLine2"
+                                name="addressLine2" formControlName="addressLine2"  maxlength="100" />
+                            
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="zipcode ">Zip Code</label>
+                            <input type="text" id="zipcode " class="form-control" placeholder="gst Type" name="zipcode"  maxlength="15"
+                                formControlName="zipcode" />
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="formattedAddress ">Formated Address</label>
+                            <input type="text" id="formattedAddress " class="form-control" placeholder="place Of Supply"
+                                name="formattedAddress" formControlName="formattedAddress" maxlength="500"  />
+                          
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="phone1 ">Phone 1 </label>
+                            <input type="text" id="phone1 " class="form-control" placeholder="phone1 " name="phone1" maxlength="10"
+                                formControlName="phone1" />
+                           
+                        </div>
+
+
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="phone2 ">Phone 2 </label>
+                            <input type="text" id="phone2 " class="form-control" placeholder="phone2 " name="phone2" maxlength="10"
+                                formControlName="phone2" />
+                           
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-gradient-success" (click)="onSubmitService(AddressForm)" [disabled]="AddressForm.invalid"
+                       rippleEffect>Save</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+    </ng-template>
+
+    <!--Datatables-->
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+            <!-- <div class="col-6 col-sm-4">
+                <button class="btn btn-primary ml-1 mb-2" rippleEffect (click)="modalOpenForm(modalForm)">
+                    <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New
+                        Address</span>
+                </button>
+            </div> -->
+            <div class="row" mt-4>
+
+                <!-- <div class="col-md-6 col-12">
+                    <div class="d-flex justify-content-between align-items-center m-1">
+                        <label class="d-flex align-items-center">Show
+                            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries</label>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                        <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                class="form-control ml-25" (keyup)="filterUpdate($event)"
+                                (search)="filterUpdate($event)" /></label>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true" [columnMode]="ColumnMode.force"
+                [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" (select)="onSelect($event)" >
+                <!-- (select)="onSelect($event)"
+(activate)="onActivate($event)"
+[columnMode]="ColumnMode.force" -->
+
+                <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                    [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                        let-selectFn="selectFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                        </div>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                        let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                                (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Address Type Nick" prop="addressTypeNick" [width]="180">
+                      <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                        <div (click)="populateForm(row,modalForm)" class="cursor-pointer"><b>{{row.addressTypeNick}}</b></div>
+                      </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="country" prop="country" [width]="100">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="country ID" prop="countryId" [width]="120"></ngx-datatable-column>
+                <!-- <ngx-datatable-column name="State Name" prop="stateName"
+                    [width]="200"></ngx-datatable-column> -->
+                <!-- <ngx-datatable-column name="City" prop="cityName"
+                    [width]="200"></ngx-datatable-column> -->
+                <ngx-datatable-column name="Address Line 1" prop="addressLine1" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Address Line 2" prop="addressLine2" [width]="200"></ngx-datatable-column>
+
+                <!-- <ngx-datatable-column name="zipcode" prop="zipcode" [width]="250"></ngx-datatable-column> -->
+
+
+                <ngx-datatable-column name="formattedAddress" prop="formattedAddress" [width]="200"></ngx-datatable-column>
+                <!-- <ngx-datatable-column name="phone1" prop="phone1" [width]="400"></ngx-datatable-column>
+                <ngx-datatable-column name="phone2" prop="phone2" [width]="400"></ngx-datatable-column> -->
+                <ngx-datatable-column name="Date Created" prop="dateCreated" [width]="200">
+
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |
+                        date:'dd-MM-yyyy'}}</ng-template>
+                    <!-- {{formatdate | date:'short'}} -->
+                </ngx-datatable-column>
+
+                <!-- <ng-template let-value="value" ngx-datatable-cell-template>{{myDate | date:'dd-MM-yyyy'}}</ng-template>
+      </ngx-datatable-column> -->
+                <ngx-datatable-column name="Created By" prop="createdBy" [width]="100"></ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                            <span class="d-none d-sm-inline-block" (click)="populateForm(row,modalForm)">Edit</span>
+                        </button>
+
+                        <button class="btn btn-gradient-danger ml-1 me-2" (click)="onDelete(row.companyAddressId)"
+                            [swal]="SweetAlertConfirmColor" rippleEffect>
+                            <span class="d-none d-sm-inline-block ">Delete</span>
+                        </button>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                        <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        <div class="col-2">
+            <button class="btn btn-gradient-primary" rippleEffect (click)="modalOpenForm(modalForm)">
+                <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New
+                    Address</span>
+            </button>
+        </div>
+        </core-card-snippet>
+    </section>
+
+
+</div>

@@ -1,0 +1,648 @@
+<div class="content-wrapper container-xxl p-0">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/ocean-import">Ocean Import List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ocean Import </li>
+        </ol>
+    </nav>
+    <h3 class="ml-1 mt-2">Import Information</h3>
+
+    <div class="card mt-1 container">
+        <div class="cardbody ml-3 mt-1">
+            <form class="form" [formGroup]="CompanyForm" >
+               
+                <h6 class="mt-2">Opportunity Detatils
+                </h6>
+                <!-- <hr> -->
+                <div class="row mr-1 mt-2">
+                    <div class="form-group">
+                        <input type="text"  class="form-control" 
+                            name="dateCreated" formControlName="dateCreated" hidden />
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" id="cargoId " class="form-control" placeholder="Cargo ID"
+                            name="cargoId" formControlName="cargoId" hidden />
+
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="customer ">Customer</label>
+                            <ng-select [items]="GetCustomer"
+                                bindLabel="companyName"
+                                bindValue="companyId"
+                                formControlName="customerId" 
+                                placeholder="Customer"
+                                (change)="onCustomer($event,form)">
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['customerId'].invalid  && CompanyForm.controls['customerId'].touched"
+                                    class="text-danger">
+                                <div *ngIf="CompanyForm.controls['customerId'].errors.required">
+                                    Customer is required.
+                                </div>
+                            </div> 
+                        </div>
+                        <input type="text" formControlName="cust" hidden/>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="opportunity ">Opportunity</label>
+                            <ng-select placeholder="Opportunity">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="salesPerson ">Sales Person</label>
+                            <ng-select [items]="GetSalesPerson"
+                                bindLabel="userDisplayName"
+                                bindValue="userId"
+                                formControlName="opportunityOwnerId" 
+                                placeholder="Sales Person"
+                                (change)="onSalesPerson($event,form)">
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['opportunityOwnerId'].invalid  && CompanyForm.controls['opportunityOwnerId'].touched"
+                                    class="text-danger">
+                                <div *ngIf="CompanyForm.controls['opportunityOwnerId'].errors.required">
+                                    Sales Person is required.
+                                </div>
+                            </div> 
+                        </div>
+                        <input type="text" formControlName="sales" hidden/>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="estimatedAmount ">Estimated Amount</label>
+                            <input type="text" id="estimatedAmount" class="form-control" placeholder="Estimated Amount"
+                                name="estimatedAmount" formControlName="amount"  />
+                                <div *ngIf="CompanyForm.controls['amount'].invalid  && CompanyForm.controls['amount'].touched"
+                                    class="text-danger">
+                                <div *ngIf="CompanyForm.controls['amount'].errors.required">
+                                    Estimated Amount is required.
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+               <hr>
+                <h6 class="mt-2">Cargo Details
+                </h6>
+                <!-- <hr> -->
+                <div class="row mr-1 mt-2">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="jobNo ">Job No</label>
+                            <input type="text" id="jobNo" class="form-control" placeholder="Job No"
+                                name="jobNo" formControlName="jobNo" />  
+                        </div>                     
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="jobType ">Job Type</label>
+                            <ng-select
+                                    [items]="GetJobType"
+                                    bindLabel="jobtypeName"
+                                    bindValue="jobtypeId"
+                                    formControlName="jobType" 
+                                    placeholder="Job Type"
+                                    (change)="onjobType($event,form)">
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['jobType'].invalid  && CompanyForm.controls['jobType'].touched"
+                                    class="text-danger">
+                                <div *ngIf="CompanyForm.controls['jobType'].errors.required">
+                                    Job Type is required.
+                                </div>
+                            </div> 
+                        </div>
+                        <input type="text" formControlName="job" hidden/>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="modeOfTransport">Mode Of Transport</label>
+
+                            <!-- <input type="text" name="modeOfTransport"  class="form-control"  id="modeOfTransport" readonly value="Ocean"    formControlName="modeOfTransport"> -->
+                            <ng-select  
+                            formControlName="modeOfTransport"  
+                                placeholder="Mode Of Transport" 
+                                (change)="OnmodeOfTransport($event,form)"
+                              >
+                                <ng-option *ngFor="let item of items" [value]="item.Name">{{item.Name}}</ng-option>
+                                <!-- <ng-option value="Ocean">Ocean</ng-option>
+                                <ng-option value="Air">Air</ng-option> -->
+                             
+                            </ng-select>
+                            <!--  [(ngModel)]="selectedmodeOfTransport" -->
+                        </div>
+                        <input type="text" formControlName="mode" hidden/>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="transportDirection">Direction</label>
+                            <ng-select   formControlName="transportDirection" placeholder="Direction">
+                                <ng-option *ngFor="let item of directions" [value]="item.Name">{{item.Name}}</ng-option>
+
+                            </ng-select>
+                            <!-- [(ngModel)]="selectedDirections" -->
+                        </div>
+                    </div>
+                </div> 
+                <div class="row mr-1 mt-2">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="isConsolidation "  >Cargo Type</label>
+                            <ng-select placeholder="CargoType"  formControlName="isConsolidation" >
+                                <ng-option *ngFor="let item of cargoType"  [value]="item.id"  >{{item.Name}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['isConsolidation'].invalid  && CompanyForm.controls['isConsolidation'].touched"
+                                    class="text-danger">
+                                <div *ngIf="CompanyForm.controls['isConsolidation'].errors.required">
+                                    Cargo Type is required.
+                                </div>
+                            </div> 
+                        </div>                     
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="typeOfMove ">Type Of Move</label>
+                            <ng-select
+                                    [items]="GetTypeOfMove"
+                                    bindLabel="incotermName"
+                                    bindValue="incoTermId"
+                                    formControlName="typeOfMoveId" 
+                                    placeholder="Type Of Move"
+                                    (change)="ontypeOfMove($event,form)">
+                            </ng-select>
+                        </div>
+                        <input type="text" formControlName="move" hidden/>
+
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="etd ">ETD</label>
+                           <input type="date" name="etd" id="etd" class="form-control" placeholder="ETD" formControlName="etd">
+                           <div *ngIf="CompanyForm.controls['etd'].invalid  && CompanyForm.controls['etd'].touched"
+                           class="text-danger">
+                       <div *ngIf="CompanyForm.controls['etd'].errors.required">
+                          ETD is required.
+                       </div>
+                   </div> 
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="eta ">ETA</label>
+                            <input type="date" name="eta" id="eta" class="form-control" placeholder="ETA" formControlName="eta">
+                            <div *ngIf="CompanyForm.controls['eta'].invalid  && CompanyForm.controls['eta'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['eta'].errors.required">
+                           ETA is required.
+                        </div>
+                    </div> 
+                        </div>
+                    </div>
+                   
+                </div> 
+                <div class="row mr-1 mt-2">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="pol" >POL</label>
+                            <ng-select
+                                [items]="GetPOL"
+                                bindLabel="locationShortName"
+                                bindValue="locationId"
+                                formControlName="polid" 
+                                placeholder="POL"
+                                (change)="onpol($event, form)">
+                            </ng-select>
+                        </div>  
+                        <input type="text" formControlName="pol" hidden/>
+                   
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="pod">POD</label>
+                            <ng-select
+                                [items]="GetPOD"
+                                bindLabel="locationShortName"
+                                bindValue="locationId"
+                                formControlName="podid" 
+                                placeholder="POD"
+                                (change)="onpod($event, form)">
+                            </ng-select>
+                        </div>
+                        <input type="text" formControlName="pod" hidden/>
+
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="incoTerm">Inco Term</label>
+                            <ng-select
+                                [items]="GetIncoTerm"
+                                bindLabel="incotermName"
+                                bindValue="incoTermId"
+                                formControlName="incoTermId" 
+                                placeholder="Inco Term"
+                                (change)="onIncoTerm($event, form)">
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['incoTermId'].invalid  && CompanyForm.controls['incoTermId'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['incoTermId'].errors.required">
+                            Inco Term is required.
+                        </div>
+                    </div> 
+                        </div>
+                        <input type="text" formControlName="incooterm" hidden/>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label for="freightStatus ">Freight Status</label>
+                            <ng-select  formControlName="freightStatus" placeholder="Freight Status">
+                                <ng-option *ngFor="let item of freightStatus" [value]="item.Name">{{item.Name}}</ng-option>
+                            </ng-select>
+                            <!-- [(ngModel)]="selectedFreightStatus"  -->
+                        </div>
+                    </div>
+                </div> 
+                <div class="row mr-1 mt-2">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="placeOfReceipt ">Place Of Receipt</label>
+                            <input type="text" id="placeOfReceipt" class="form-control" placeholder="Place Of Receipt"
+                                name="placeOfReceipt" formControlName="placeOfReceipt"/>  
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="invoice ">PO/Invoice</label>
+                            <input type="text" id="invoice" class="form-control" placeholder="PO/Invoice"
+                                name="invoice" formControlName="customerReference"/>  
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h6 class="mt-2">Overview</h6>
+
+
+                <div class="row mr-1 mt-2">
+
+                    <!-- <div class="form-group">
+                        <input type="text"  class="form-control" 
+                            name="shipper" formControlName="shipper" hidden 
+                            (change)="onAddress($event)" 
+                            />
+                    </div> -->
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="shipper">Shipper</label>
+                            <ng-select 
+                                placeholder="Shipper"
+                                [items]="GetAddress"
+                                bindLabel="addressTypeNick"
+                                bindValue="companyAddressId"
+                                formControlName="shipperAddressId" 
+                                (change)="onAddress($event,form)" 
+                                id="aa">
+                            <ng-template ng-header-tmp>
+                              <div class="d-flex align-items-center ng-op-head" >
+                                <div class="col-md-1 text-center p-0">#</div>
+                                  <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                  <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                  <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                              </div>
+                            </ng-template>
+                            <ng-template ng-label-tmp let-item="item">
+                              <b>{{item.addressTypeNick}}</b>
+                            </ng-template>
+                            
+                            <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                              <div class="d-flex addrdata">
+                                <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                              </div>
+                          </ng-template>
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['shipperAddressId'].invalid  && CompanyForm.controls['shipperAddressId'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['shipperAddressId'].errors.required">
+                            Shipper Address is required.
+                        </div>
+                    </div> 
+                        </div> 
+                        <input type="text" formControlName="shipper" hidden/>
+                    
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="consignee">Consignee</label>
+                            <ng-select 
+                            placeholder="Consignee"
+                                [items]="GetAddress"
+                                bindLabel="addressTypeNick"
+                                bindValue="companyAddressId"
+                                formControlName="consigneeAddressId"  
+                                (change)="onConsignee($event,form)" 
+                                id="aa">
+                                <ng-template ng-header-tmp>
+                                    <div class="d-flex align-items-center ng-op-head" >
+                                      <div class="col-md-1 text-center p-0">#</div>
+                                        <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                        <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                        <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                    </div>
+                                  </ng-template>
+                                  <ng-template ng-label-tmp let-item="item">
+                                    <b>{{item.addressTypeNick}}</b>
+                                  </ng-template>
+                                  
+                                  <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                    <div class="d-flex addrdata">
+                                      <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                      <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                      <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                      <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                            <div *ngIf="CompanyForm.controls['consigneeAddressId'].invalid  && CompanyForm.controls['consigneeAddressId'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['consigneeAddressId'].errors.required">
+                            Consignee Address  is required.
+                        </div>
+                    </div> 
+                        </div>
+                        <input type="text" formControlName="consignee" hidden/>
+                    </div>
+                </div>
+                <div class="row mr-1 mt-2">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="notify">Notify Part 1</label>
+                            <ng-select 
+                            placeholder="Notify Part 1"
+                                [items]="GetAddress"
+                                bindLabel="addressTypeNick"
+                                bindValue="companyAddressId"
+                                formControlName="notifyParty1AddressId"  
+                                (change)="onNotifyPart1($event,form)" 
+                                id="aa">
+                                <ng-template ng-header-tmp>
+                                    <div class="d-flex align-items-center ng-op-head" >
+                                      <div class="col-md-1 text-center p-0">#</div>
+                                        <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                        <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                        <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                    </div>
+                                  </ng-template>
+                                  <ng-template ng-label-tmp let-item="item">
+                                    <b>{{item.addressTypeNick}}</b>
+                                  </ng-template>
+                                  
+                                  <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                    <div class="d-flex addrdata">
+                                      <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                      <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                      <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                      <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <input type="text" formControlName="NotifyParty1" hidden/>
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="notifyPart ">Notify Part 2</label>
+                            <ng-select 
+                            placeholder="Notify Part 2"
+                            [items]="GetAddress"
+                            bindLabel="addressTypeNick"
+                            bindValue="companyAddressId"
+                            formControlName="notifyParty2AddressId"  
+                            (change)="onNotifyPart2($event,form)" 
+                            id="aa">
+                            <ng-template ng-header-tmp>
+                                <div class="d-flex align-items-center ng-op-head" >
+                                  <div class="col-md-1 text-center p-0">#</div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                    <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                </div>
+                              </ng-template>
+                              <ng-template ng-label-tmp let-item="item">
+                                <b>{{item.addressTypeNick}}</b>
+                              </ng-template>
+                              
+                              <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                <div class="d-flex addrdata">
+                                  <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                  <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        </div>
+                        <input type="text" formControlName="NotifyParty2" hidden/>
+
+                    </div>
+                </div> 
+
+                <div class="row mr-1 mt-2">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="Forwarder">Forwarder</label>
+                            <ng-select 
+                            placeholder="Forwarder"
+                            [items]="GetAddress"
+                            bindLabel="addressTypeNick"
+                            bindValue="companyAddressId"
+                            formControlName="forwardedAddressId" 
+                            (change)="onForwarder(form,$event)"  
+                            id="aa">
+                            <ng-template ng-header-tmp>
+                                <div class="d-flex align-items-center ng-op-head" >
+                                  <div class="col-md-1 text-center p-0">#</div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                    <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                </div>
+                              </ng-template>
+                              <ng-template ng-label-tmp let-item="item">
+                                <b>{{item.addressTypeNick}}</b>
+                              </ng-template>
+                              
+                              <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                <div class="d-flex addrdata">
+                                  <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                  <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        </div>   
+                        <input type="text" formControlName="Forwarder" hidden/>                  
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="OriginAgent">Origin Agent</label>
+                            <ng-select 
+                            placeholder="Origin Agent"
+                            [items]="GetAddress"
+                            bindLabel="addressTypeNick"
+                            bindValue="companyAddressId"
+                            formControlName="originAgentAddressId" 
+                            (change)="onOriginAgent($event,form)"   
+                            id="aa">
+                            <ng-template ng-header-tmp>
+                                <div class="d-flex align-items-center ng-op-head" >
+                                  <div class="col-md-1 text-center p-0">#</div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                    <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                </div>
+                              </ng-template>
+                              <ng-template ng-label-tmp let-item="item">
+                                <b>{{item.addressTypeNick}}</b>
+                              </ng-template>
+                              
+                              <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                <div class="d-flex addrdata">
+                                  <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                  <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="CompanyForm.controls['originAgentAddressId'].invalid  && CompanyForm.controls['originAgentAddressId'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['originAgentAddressId'].errors.required">
+                            Origin Agent Address  is required.
+                        </div>
+                    </div> 
+                        </div>
+                        <input type="text" formControlName="OriginAgent" hidden/>                  
+
+
+                    </div>
+
+                    </div>
+                    <div class="row mr-1 mt-2">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="DestinationAgent">Destination Agent</label>
+                            <ng-select 
+                            placeholder="Destination Agent"
+                            [items]="GetAddress"
+                            bindLabel="addressTypeNick"
+                            bindValue="companyAddressId"
+                            formControlName="destinationAgentAddressId"  
+                            (change)="onDestinationAgent($event,form)"   
+                            id="aa">
+                            <ng-template ng-header-tmp>
+                                <div class="d-flex align-items-center ng-op-head" >
+                                  <div class="col-md-1 text-center p-0">#</div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Company Name</div></div>
+                                    <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                    <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                </div>
+                              </ng-template>
+                              <ng-template ng-label-tmp let-item="item">
+                                <b>{{item.addressTypeNick}}</b>
+                              </ng-template>
+                              
+                              <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                <div class="d-flex addrdata">
+                                  <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.companyName}}</div>
+                                  <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                  <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                        <div *ngIf="CompanyForm.controls['destinationAgentAddressId'].invalid  && CompanyForm.controls['destinationAgentAddressId'].touched"
+                            class="text-danger">
+                        <div *ngIf="CompanyForm.controls['destinationAgentAddressId'].errors.required">
+                            Destination Agent Address  is required.
+                        </div>
+                    </div> 
+                        </div>
+                        <input type="text" formControlName="DestinationAgent" hidden/>                  
+
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="MBLNo ">MBL No.</label>
+                            <input type="text" id="MBLNo" class="form-control" placeholder="MBL No"
+                            name="MBLNo" formControlName="mblTerm"  />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="HBLNo ">HBL No.</label>
+                            <input type="text" id="HBLNo" class="form-control" placeholder="HBL No"
+                                name="HBLNo" formControlName="hblTerm"  />
+                        </div>
+                    </div>
+                </div> 
+                <div class="mt-2 mb-2">
+                    <button type="submit" rippleEffect class="btn btn-gradient-success mb-1" (click)="onSubmitService(CompanyForm)"  [disabled]="CompanyForm.invalid">Save</button>
+                    <!-- {{isSavebtn}} -->
+                    <!-- (click)="onSubmitService(CompanyForm)" [disabled]="CompanyForm.invalid" -->
+                </div>  
+            </form>            
+        </div>
+
+    <div class="cardbody ml-3 mt-1" *ngIf="isSavebtn">
+        <ul ngbNav #nav="ngbNav" class="nav nav-pills" [activeId]="1" >
+          <li [ngbNavItem]="1" class="active" >
+            <a ngbNavLink class="nav-item nav-link active" aria-controls="ngb-nav-12-panel" [class.active]="viewMode=='container'" (click)="viewMode='container'" aria-selected="true"> Cargo Container</a>
+            <ng-template ngbNavContent>
+              <div [ngSwitch]="viewMode">
+                  <div *ngSwitchCase="'container'">
+                      <app-container *ngIf="isSavebtn" [hero]="cargoId" 
+                      [myObj]="rowData"></app-container>                       
+                  </div>
+              </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink class="nav-item" [class.active]="viewMode=='packages'" (click)="viewMode='packages'">Packages</a>
+            <ng-template ngbNavContent>
+
+              <div [ngSwitch]="viewMode">
+                  <div *ngSwitchCase="'packages'">
+                      <app-packages  *ngIf="isSavebtn" [hero]="cargoId"></app-packages>
+                  </div>
+              </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+            <a ngbNavLink class="nav-item" [class.active]="viewMode=='shipment-routing'" (click)="viewMode='shipment-routing'"> Shipments Routing </a>
+            <ng-template ngbNavContent>
+              <div [ngSwitch]="viewMode">
+                  <div *ngSwitchCase="'shipment-routing'">
+                   <app-shipment-routing  *ngIf="isSavebtn" [hero]="cargoId"></app-shipment-routing>
+                  </div>
+              </div>
+            </ng-template>
+        </li>
+      
+        </ul>
+
+
+        <div [ngbNavOutlet]="nav" class="mt-1"></div>
+
+
+  
+      </div>
+    </div>
+
+</div>    
+    

@@ -1,0 +1,134 @@
+  <!-- modal -->
+  <div id="modal">
+    <!-- <ng-template #modalForm let-modal> -->
+    <ng-template >
+      <div class="modal-header">
+       <h5 class="modal-title" id="companyProfileLabel">Add New Sales Quotes Details</h5>
+       <button type="button" class="close m-0" (click)="modal.dismiss(SalesQuoteDetailsForm)" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+  
+      <div class="modal-body">
+        
+          <form [formGroup]="SalesQuoteDetailsForm">
+              <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                        <label for="carrier" class="col-sm-4 col-form-label">Carrier</label>
+                        <select (change)="onChangeCarrier($event)" class="form-control" placeholder="carrier"  formControlName="carrier">
+                          <option *ngFor="let loc of oceanmaster" [value]="loc.oceanLineId" id="{{loc.oceanLineId}}">{{loc.oceanLineCode}}</option>
+                        </select>
+                        <div *ngIf="SalesQuoteForm.controls['carrier'].invalid && SalesQuoteForm.controls['carrier'].touched" class="text-danger mt-1 validation-text">
+                          <div *ngIf="SalesQuoteForm.controls['carrier'].errors.required">
+                            Expiry Date is required.
+                          </div>
+                        </div>
+                        
+                  </div>
+                </div>
+              </div>
+              <div class="row ">
+                  <div class="col-6">
+                    <div class="form-group">
+                          <label for="pol " class="col-sm-4 col-form-label">POL</label>
+                          <select (change)="onChangepol($event)" class="form-control" placeholder="POL"  formControlName="pol">
+                            <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                          </select>
+                          
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="pod " class="col-sm-4 col-form-label">POD</label>
+                      <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="pod">
+                        <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                      </select>
+                      
+                </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                      <label for="companyTypeId ">transitTime</label>
+                      <input 
+                      type="text"
+                      id="transitTime "
+                      class="form-control"
+                      placeholder="transitTime" 
+                      name="transitTime"
+                      formControlName="transitTime"
+                        />
+                      <!-- <span class="text-danger"
+                      *ngIf="(CompanyForm.controls['transitTime'].touched || submitted) && CompanyForm.controls['transitTime'].errors?.['required']">transitTime is required*
+                    </span> -->
+                  </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                      <label for="companyTypeName ">incoTerm</label>
+                      <input 
+                      type="text"
+                      id="incoTerm "
+                      class="form-control"
+                      placeholder="incoTerm" 
+                      name="incoTerm"
+                      formControlName="incoTerm"
+                      />
+                      <!-- <span class="text-danger"
+                      *ngIf="(CompanyForm.controls['incoTerm'].touched || submitted) && CompanyForm.controls['incoTerm'].errors?.['required']">incoTerm is required*
+                      </span> -->
+                  </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                      <label for="notes ">notes</label>
+                      <input 
+                      type="text"
+                      id="notes "
+                      class="form-control"
+                      placeholder="notes" 
+                      name="notes"
+                      formControlName="notes"
+                      />
+                      <!-- <span class="text-danger"
+                      *ngIf="(CompanyForm.controls['notes'].touched || submitted) && CompanyForm.controls['notes'].errors?.['required']">notes is required*
+            </span> -->
+                  </div>
+                  </div>
+                  <div class="col">
+                      <div class="form-group">
+                        <label for="parentCompanyName ">sortOrder</label>
+                        <input 
+                        type="number"
+                        id="sortOrder "
+                        class="form-control"
+                        placeholder="sortOrder" 
+                        name="sortOrder"
+                        formControlName="sortOrder"
+                        />
+                        <!-- <span class="text-danger"
+                        *ngIf="(CompanyForm.controls['sortOrder'].touched || submitted) && CompanyForm.controls['sortOrder'].errors?.['required']">sortOrder is required*
+                        </span> -->
+                    </div>
+                  </div>
+              
+              </div>
+              <div class="row">
+        
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-success" (click)="onSubmitService(SalesQuoteDetailsForm)"  rippleEffect>Save Data</button>
+                  
+                </div>
+              </div>
+   
+      </form>
+  
+      </div>
+  
+      
+     
+  </ng-template>
+  </div>

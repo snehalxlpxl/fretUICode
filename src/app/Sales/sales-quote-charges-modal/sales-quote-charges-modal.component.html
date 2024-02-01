@@ -1,0 +1,140 @@
+<p>sales-quote-charges-modal works!</p>
+<!-- <div id="modal">
+    <ng-template #modalForm2 let-modal>
+      <div class="modal-header">
+       <h4 class="modal-title" id="companyProfileLabel">Add New Sales Quotes Charges new  formate</h4>
+       <button type="button" class="close m-0" (click)="modal.dismiss(chargesForm)" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+  
+  <div class="modal-body"> -->
+
+  <form >
+    <table class="table table-secondary table-striped">
+      <thead>
+        <th>Id</th>
+        <th>chargeItem</th>
+        <th>Quantity</th>
+        <th>Apply per</th>
+        <th>Buying Rate</th>
+        <th>Currency</th>
+        <th>Buying Amount</th>
+        <th>Tax Percentage</th>
+        <th>Tax Amount</th>
+        <th>Action</th>
+      </thead>
+      <tbody formArrayName="Rows">
+        <tr
+        >
+          <td [width]="100">
+            <input type="number" value="" id="sqid" formControlName="sqid" hidden />
+            <input type="number" value="" id="sqdetailRowId" formControlName="sqdetailRowId" hidden />
+            <input type="number" value="" id="sqdetailRowId" name="sqchargeId{ {i} }" formControlName="sqchargeId" hidden />
+            <!-- <select
+              (change)="onChangechargeItem($event)"
+              class="form-control"
+              placeholder="chargeItem"
+              formControlName="chargeItemId"
+            >
+            <option *ngFor="let charged of chargeditem" [value]="charged.chargeItemId" id="chargeItem{{ i }}">{{charged.chargeItemName}}</option>
+          </select> -->
+          <ng-select  formControlName="salesQuoteType">
+            <ng-option value="FCL">FCL</ng-option>
+            <ng-option value="LCL">LCL</ng-option>
+            <ng-option value="AIR">AIR</ng-option>
+          </ng-select>
+          </td>
+          <td>
+            <input type="number" id="quantity" formControlName="quantity" class="form-control form-control-sm" />
+          </td>
+          <td>
+            <select
+              class="form-control"
+              placeholder="applyPer"
+              formControlName="applyPer"
+            >
+            <option  [value]="" id=""></option>
+          </select>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="BuyingRate"
+              name="BuyingRate"
+              placeholder="Buying Rate"
+              formControlName="buyingRate"
+            />
+          </td>
+          <td>
+            <!-- <select
+              (change)="onChangeCarrier($event)"
+              class="form-control"
+              placeholder="currency"
+              formControlName="currencyId"
+            >
+            <option *ngFor="let cur of currency" [value]="cur.currencyId" id="chargeItem{{ i }}">{{cur.currencyCode}}</option>
+          </select> -->
+          <ng-select  formControlName="salesQuoteType">
+            <ng-option value="FCL">FCL</ng-option>
+            <ng-option value="LCL">LCL</ng-option>
+            <ng-option value="AIR">AIR</ng-option>
+          </ng-select>
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="BuyingAmount"
+              name="buyingamount"
+              value=""
+              placeholder="buyingamount"
+              formControlName="buyingamount"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="TaxPercentage"
+              value=""
+              placeholder="0"
+              formControlName="taxPercent"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              id="taxAmount"
+              value=""
+              placeholder="taxAmount"
+              formControlName="taxAmount"
+            />
+          </td>
+          <td>
+            <!-- *ngIf="chargesForm.controls.Rows.controls.length > 1" -->
+            <button
+              
+              class="btn btn-outline-danger btn-sm"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <button type="button" class="btn btn-outline-secondary btn-md">
+    Add new Row
+  </button>
+  <br />
+  <br />
+  <button class="btn btn-primary">Submit data</button>
+  <!-- {{chargesflag}} -->
+  <!-- </div>  
+  </ng-template> -->
+
+
+  <!-- </div> -->

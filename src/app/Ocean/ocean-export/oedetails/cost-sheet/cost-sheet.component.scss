@@ -1,0 +1,38 @@
+// .table-container {
+//     width:1330px; /* Adjust the height as needed */
+//     overflow: auto;
+//     height: 200%;
+//   }
+  .stretchable-dropdown{
+    width:250px;
+  }
+  .dropdown-menu {
+    display: block;
+    position: relative;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 100;
+    top: -9px;
+    left: 60%;
+  }
+  .ng-op-head span{
+    padding: .5rem;
+  }
+  .addrdata{
+    font-size: 0.84rem;
+    white-space: pre-wrap;
+  }
+.ng-op-head{
+  background-color: rgb(198 198 198);
+    color: #414141;
+    letter-spacing: -0.7px;
+    font-weight: 500;
+    font-size: .96rem;
+}
+.form-control-sm{
+  width: 50px;
+}
+// table.table.table-bordered.table-responsive {
+//   height: 80vh;
+// }

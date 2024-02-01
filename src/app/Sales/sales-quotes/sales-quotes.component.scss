@@ -1,0 +1,8 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+
+.datatable-scroll {
+  width: auto !important;
+}
+.ngx-datatable-kitchen-sink>.card>.card-header{
+  display: none;
+}

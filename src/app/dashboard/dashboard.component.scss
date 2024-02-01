@@ -1,0 +1,79 @@
+.btn-ecommerce {
+    border-color: #5048a6!important;
+    background-color: #7367f0!important;
+    color: #fff!important;
+}
+.card-title{
+    font-size: 1rem;
+    margin-bottom: .5rem;
+}
+.card-subheading{
+    font-size: .9rem!important
+}
+.card-link{
+    color: #7367f0;
+    background-color: transparent;
+}
+.card-medalimg{
+    position: absolute;
+    right: 3rem;
+    top: 0;
+}
+.avatar-content{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #b1abf1;
+    position: relative;
+    text-align: center;
+    line-height: 44px;
+    color: #7367f0!important;
+    background-color: #eeedfe;
+}
+.avatar-content-bg-blue{
+    color: #00cfe8!important;
+    background-color: #e3f9fc;
+}
+.avatar-content-bg-red{
+    color: #ea5455!important;
+    background-color: #f6e7e8;
+}
+.avatar-content-bg-green{
+    color: #28c76f!important;
+    background-color: #e4f4eb;
+}
+.font-small-2 {
+    font-size: .8rem!important;
+}
+.k-progressbar-vertical {
+    width: var(--kendo-progressbar-height, 10px);
+    height: 5em;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr;
+}
+.bg-yellow{
+        background-color: #feac5f;
+    }
+.font-size-sm{
+    font-size: .8rem;
+}
+.card-company-table td .avatar {
+    background-color: #f8f8f8;
+    margin-right: 2rem;
+}
+.avatar {
+    white-space: nowrap;
+    background-color: #c3c3c3;
+    border-radius: 50%;
+}
+.browser-detail {
+    display: flex;
+    justify-content: space-between;
+}
+span.align-item-vetically-center.m-0 {
+    line-height: 27px;
+    padding-left: 10px;
+}
+.browser-detail:not(:first-child) {
+    margin-top: 1.7rem;
+}

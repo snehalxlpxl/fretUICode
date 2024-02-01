@@ -1,0 +1,276 @@
+
+<div class="content-wrapper container-xxl p-0">
+    <ng-template #modalForm let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="companyProfileLabel">Add Contacts</h5>
+            <button type="button" class="close" (click)="modal.dismiss(ContactForm.reset)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+            <form [formGroup]="ContactForm">
+                <div class="form-group">
+                    <input type="text"  class="form-control" 
+                        name="dateCreated" formControlName="dateCreated" hidden />
+
+                </div>
+
+                <div class="form-group row">
+                    <label for="salutation " class="col-sm-4 col-form-label">Salutation</label>
+                    <div class="col-12">
+                        <input type="text" id="salutation " class="form-control" placeholder="salutation"
+                            name="salutation" formControlName="salutation" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-4 col-form-label">First Name</label>
+                    <div class="col-12">
+                        <input type="text" id="firstName " class="form-control" placeholder="First Name"
+                            name="firstName" formControlName="firstName" />
+                        <span class="text-danger"
+                            *ngIf="(ContactForm.controls['firstName'].touched || submitted) && ContactForm.controls['firstName'].errors?.['required']">First
+                            Name is required*
+                        </span>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="middleName ">Middle Name</label>
+                            <input type="text" id="middleName " class="form-control" placeholder="Middle Name"
+                                name="middleName" formControlName="middleName" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="lastName ">Last Name</label>
+                            <input type="text" id="lastName " class="form-control" placeholder="Last Name"
+                                name="lastName" formControlName="lastName" />
+                            <span class="text-danger"
+                                *ngIf="(ContactForm.controls['lastName'].touched || submitted) && ContactForm.controls['lastName'].errors?.['required']">Last
+                                Name is required*
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="email ">Email</label>
+                            <input type="email" id="email " class="form-control"
+                                placeholder="Email" name="email"
+                                formControlName="email" 
+                                
+                                />
+                               
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="phone ">Phone No.</label>
+                            <input type="text" id="phone " class="form-control"
+                                placeholder="Phone No. " name="phone"
+                                formControlName="phone"  maxlength="10"/>
+                           
+                        </div>
+                        <div *ngIf="ContactForm.controls['phone'].invalid && ContactForm.controls['phone'].touched"
+                        class="text-danger">
+                        <div *ngIf="ContactForm.controls['phone'].errors.required">
+                            Phone No is required.
+                        </div>
+                        <div class="text-danger" *ngIf="ContactForm.controls['phone'].errors.pattern">
+                            Phone no is invalid
+                        </div>
+                        <div class="text-danger" *ngIf="ContactForm.controls['phone'].errors.maxlength">
+                            Phone no max 10 digits
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="mobile ">Mobile No.  </label>
+                            <input type="text" id="mobile " class="form-control" placeholder="Mobile"
+                                name="mobile" formControlName="mobile" maxlength="10"/>
+                        </div>
+                        <div *ngIf="ContactForm.controls['mobile'].invalid && ContactForm.controls['mobile'].touched"
+                        class="text-danger">
+                        <div *ngIf="ContactForm.controls['mobile'].errors.required">
+                    Mobile No is required.
+                        </div>
+                        <div class="text-danger" *ngIf="ContactForm.controls['mobile'].errors.pattern">
+                            mobile no is invalid
+                        </div>
+                        <div class="text-danger" *ngIf="ContactForm.controls['mobile'].errors.maxlength">
+                            mobile no will be 10 digits only
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="dob ">Date of birth </label>
+                            <input type="date" id="dob " class="form-control" placeholder="DOB"
+                                name="dob" formControlName="dob" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="department ">Department</label>
+                            <input type="text" id="department " class="form-control" placeholder="Department" name="department"
+                                formControlName="department" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-gradient-success" (click)="onSubmitService(ContactForm)"
+                     rippleEffect>Save Data</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </ng-template>
+
+    <!--Datatables-->
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+            <h4 class="card-title">Contacts-List</h4>
+<!-- 
+            <div class="col-6 col-sm-4">
+                <button class="btn btn-primary ml-1 mb-2" rippleEffect (click)="modalOpenForm(modalForm)">
+                    <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block"> New
+                        Contacts</span>
+                </button>
+            </div> -->
+            <div class="row">
+
+                <div class="col-md-6 col-12">
+                    <!-- <div class="d-flex justify-content-between align-items-center m-1">
+                        <label class="d-flex align-items-center">Show
+                            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries</label>
+                    </div> -->
+                </div>
+                <!-- <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                        <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                class="form-control ml-25" (keyup)="filterUpdate($event)"
+                                (search)="filterUpdate($event)" /></label>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true"
+                [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" (select)="onSelect($event)">
+                <!-- (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+  [columnMode]="ColumnMode.force" -->
+
+                <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                    [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                        let-selectFn="selectFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                        </div>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                        let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                                (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Salutation" prop="salutation" [width]="120">
+
+                </ngx-datatable-column>
+                <ngx-datatable-column name="First Name" prop="firstName" [width]="200">
+                    <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                        <div (click)="populateForm(row,modalForm)" class="cursor-pointer"><b>{{row.firstName}}</b></div>
+                      </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Middle Name" prop="middleName" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Last Name" prop="lastName"
+                    [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Email" prop="email"
+                    [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Mobile" prop="mobile" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Phone" prop="phone" [width]="200"></ngx-datatable-column>
+                <!-- <ngx-datatable-column name="Pan number" prop="pannumber" [width]="100"></ngx-datatable-column> -->
+
+                <ngx-datatable-column name="Department" prop="department" [width]="250"></ngx-datatable-column>
+                <ngx-datatable-column name="Date Of Birth" prop="dob" [width]="200">
+
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |
+                        date:'dd-MM-yyyy'}}</ng-template>
+                    <!-- {{formatdate | date:'short'}} -->
+                </ngx-datatable-column>               
+                 <ngx-datatable-column name="Date Created" prop="dateCreated" [width]="200">
+
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |
+                        date:'dd-MM-yyyy'}}</ng-template>
+                    <!-- {{formatdate | date:'short'}} -->
+                </ngx-datatable-column>
+
+                <!-- <ng-template let-value="value" ngx-datatable-cell-template>{{myDate | date:'dd-MM-yyyy'}}</ng-template>
+               
+              </ngx-datatable-column> -->
+                <ngx-datatable-column name="Created By" prop="createdBy" [width]="100"></ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                            <span class="d-none d-sm-inline-block" (click)="populateForm(row,modalForm)">Edit</span>
+                        </button>
+
+                        <button class="btn btn-gradient-danger ml-1 me-2" (click)="onDelete(row.contactId)"
+                            [swal]="SweetAlertConfirmColor" rippleEffect>
+                            <span class="d-none d-sm-inline-block ">Delete</span>
+                        </button>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                        <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                    </ng-template>
+                </ngx-datatable-column>
+
+
+
+            </ngx-datatable>
+
+            <div class="col-6 col-sm-4">
+                <button class="btn btn-gradient-primary ml-1 mb-2" rippleEffect (click)="modalOpenForm(modalForm)">
+                    <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block"> New
+                        Contacts</span>
+                </button>
+            </div>
+        </core-card-snippet>
+    </section>
+
+</div>

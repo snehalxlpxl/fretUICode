@@ -1,0 +1,439 @@
+<!-- <p>packages works!</p> -->
+
+<div class="content-wrapper container-xxl p-0">
+   
+
+    <ng-template #modalForm let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="companyProfileLabel">Cargo Packages</h5>
+            <button type="button" class="close" (click)="modal.dismiss(ContainerForm.reset)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <form [formGroup]="ContainerForm">
+                <div class="form-group">
+                    <input type="text"  class="form-control" 
+                        name="dateCreated" formControlName="dateCreated" hidden />
+                </div>
+                <h5>Basic Information</h5>
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group row">
+                            <label for="container " class="col-sm-4 col-form-label">Container</label>
+                            <div class="col-12">
+                                <input type="text" id="containerPackTypeId " class="form-control"
+                                placeholder="Container" name="containerPackTypeId"
+                                formControlName="containerPackTypeId"  />
+                                <!-- <ng-select 
+                                        placeholder="Container"
+                                        [items]="Container"
+                                        bindLabel="packageTypeName"
+                                        bindValue="packageGroupId"
+                                        formControlName="containerPackTypeId" 
+                                        (change)="onContainer($event)" 
+                                        id="aa">
+                                    <ng-template ng-header-tmp>
+                                    <div class="d-flex align-items-center ng-op-head" >
+                                        <div class="col-md-1 text-center p-0">#</div>
+                                        <div class="col-md-4 text-center border-left"><div class="p-head">Package Code</div></div>
+                                        <div class="col-md-8 text-center border-left"><div class="p-head">Package Type</div></div>
+                                    </div>
+                                    </ng-template>
+                                    <ng-template ng-label-tmp let-item="item">
+                                    <b>{{item.packageTypeName}}</b>
+                                    </ng-template>
+                                    
+                                    <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                    <div class="d-flex addrdata">
+                                        <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                        <div class="col-md-4 border-left  p-body pl-1">{{item.packageCode}}</div>
+                                        <div class="col-md-8 border-left  p-body pl-1">{{item.packageTypeName}}</div>                              
+                                    </div>
+                                    </ng-template>
+                                </ng-select> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="row mr-1">
+                    <div class="col">
+                    <div class="form-group row">
+                        <label for="country "  class="col-sm-4 col-form-label">Package Type </label>
+                        <div class="col-12">
+                            <ng-select 
+                            placeholder="Package Type"
+                            [items]="Package"
+                            bindLabel="packageTypeName"
+                            bindValue="packageGroupId"
+                            formControlName="containerPackTypeId" 
+                            (change)="onContainer($event)" 
+                            id="aa">
+                        <ng-template ng-header-tmp>
+                        <div class="d-flex align-items-center ng-op-head" >
+                            <div class="col-md-1 text-center p-0">#</div>
+                            <div class="col-md-4 text-center border-left"><div class="p-head">Package Code</div></div>
+                            <div class="col-md-8 text-center border-left"><div class="p-head">Package Type</div></div>
+                        </div>
+                        </ng-template>
+                        <ng-template ng-label-tmp let-item="item">
+                        <b>{{item.packageTypeName}}</b>
+                        </ng-template>
+                        
+                        <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                        <div class="d-flex addrdata">
+                            <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                            <div class="col-md-4 border-left  p-body pl-1">{{item.packageCode}}</div>
+                            <div class="col-md-8 border-left  p-body pl-1">{{item.packageTypeName}}</div>                              
+                        </div>
+                        </ng-template>
+                    </ng-select>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="packageCount ">Package Count</label>
+                            <input type="text" id="packageCount " class="form-control"
+                                placeholder="Package Count" name="packageCount"
+                                formControlName="packageCount"  />
+                        </div>
+                    </div>
+                </div>
+
+<!-- 
+
+                <div class="row mr-1">
+                    <div class="col-2">
+                        <div class="form-group">
+                           
+                                <label for="unitType ">Unit Type</label>
+                           
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group ">
+                            <input type="radio" name="unitType" id="unitType" value="metric" /><label for="unitType" class="ms-4">Metric</label>
+                            <input type="radio" name="unitType" id="unitType" value="imperial" ms-2/><label for="unitType ">Imperial</label>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row mr-1">
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label for="unitType ">Unit Type</label>   
+                        </div>
+                    </div> 
+                    <div class="col">   
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="unitType" id="unitType"  value="metric" >
+                            <label class="form-check-label" for="unitType">
+                                 Metric
+                            </label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="unitType" id="unitType"  value="Imperial">
+                            <label class="form-check-label ms-2" for="unitType">
+                                Imperial
+                            </label>
+                        </div>
+                    </div> 
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="length">Length (cm)</label>
+                            <input type="text" id="length " class="form-control"
+                            placeholder="length" name="length"
+                            formControlName="length"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="width">Width (cm)</label>
+                            <input type="text" id="width " class="form-control"
+                            placeholder="width" name="width"
+                            formControlName="width"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="grossWeight">Gross Weight (kgs)</label>
+                            <input type="text" id="grossWeight " class="form-control"
+                            placeholder="grossWeight" name="grossWeight"
+                            formControlName="grossWeight"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="height">Height (cm)</label>
+                            <input type="text" id="height " class="form-control"
+                            placeholder="height" name="height"
+                            formControlName="height"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="netWeight">Net Weight (kgs)</label>
+                            <input type="text" id="netWeight " class="form-control"
+                            placeholder="Net Weight" name="netWeight"
+                            formControlName="netWeight"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="volume">Volume (cbm)</label>
+                            <input type="text" id="volume " class="form-control"
+                            placeholder="volume" name="volume"
+                            formControlName="volume"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="totalGrossWeight">Total Gross Weight (kgs)</label>
+                            <input type="text" id="totalGrossWeight " class="form-control"
+                            placeholder="Net Weight" name="totalGrossWeight"
+                            formControlName="totalGrossWeight"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="volumeWeight">Volume Weight (kgs)</label>
+                            <input type="text" id="volume " class="form-control"
+                            placeholder="volume" name="volume"
+                            formControlName="volumeWeight"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="totalNetWeight">Total Net Weight (kgs)</label>
+                            <input type="text" id="totalNetWeight " class="form-control"
+                            placeholder="Net Weight" name="totalNetWeight"
+                            formControlName="totalNetWeight"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="packageDescription">Container Description</label>
+                            <textarea id="packageDescription" class="form-control" placeholder="Description"
+                                name="packageDescription" formControlName="packageDescription" ></textarea>                          
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h5>Additional Information</h5>
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="marksAndNumbers">Marks & Numbers</label>
+                            <textarea id="marksAndNumbers" class="form-control" placeholder="Marks And Numbers"
+                                name="marksAndNumbers" formControlName="marksAndNumbers" ></textarea>                          
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="invoiceNumber">Invoice No.</label>
+                            <input type="text" id="invoiceNumber " class="form-control"
+                            placeholder="Invoice Number" name="invoiceNumber"
+                            formControlName="invoiceNumber"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="invoiceDate">Invoice Date </label>
+                            <input type="text" id="invoiceDate " class="form-control"
+                            placeholder="Invoice Date" name="invoiceDate"
+                            formControlName="invoiceDate"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sbno">SB. No.</label>
+                            <input type="text" id="sbno " class="form-control"
+                            placeholder="SB Number" name="sbno"
+                            formControlName="sbno"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="sbdate">SB Date </label>
+                            <input type="text" id="sbdate " class="form-control"
+                            placeholder="SB Date" name="sbdate"
+                            formControlName="sbdate"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="epCopyNo">EP. Copy No.</label>
+                            <input type="text" id="epCopyNo " class="form-control"
+                            placeholder="EP Copy Number" name="EP Copy No"
+                            formControlName="epCopyNo"  />                  
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="epCopyDate">EP Copy Date </label>
+                            <input type="text" id="epCopyDate " class="form-control"
+                            placeholder="EP Copy Date" name="epCopyDate"
+                            formControlName="epCopyDate"  />                  
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-gradient-success"  (click)="onSubmitService(ContainerForm)" 
+                       rippleEffect>Save</button>
+                       <!-- [disabled]="ContainerForm.invalid"
+                       -->
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+    </ng-template>
+
+    <!--Datatables-->
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+            <!-- <div class="col-6 col-sm-4">
+                <button class="btn btn-primary ml-1 mb-2" rippleEffect (click)="modalOpenForm(modalForm)">
+                    <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New
+                        Address</span>
+                </button>
+            </div> -->
+            <div class="row" mt-4>
+
+                <!-- <div class="col-md-6 col-12">
+                    <div class="d-flex justify-content-between align-items-center m-1">
+                        <label class="d-flex align-items-center">Show
+                            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries</label>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                        <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                class="form-control ml-25" (keyup)="filterUpdate($event)"
+                                (search)="filterUpdate($event)" /></label>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true" [columnMode]="ColumnMode.force"
+                [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" (select)="onSelect($event)" >
+                <!-- (activate)="onActivate($event)" -->
+
+                <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                    [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                        let-selectFn="selectFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                        </div>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                        let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                                (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Cargo Pack Name" prop="cargoPackName" [width]="180">
+                      <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                        <div (click)="populateForm(row,modalForm)" class="cursor-pointer"><b>{{row.cargoPackName}}</b></div>
+                      </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="package Count" prop="packageCount" [width]="120">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="package Description" prop="packageDescription" [width]="180"></ngx-datatable-column>
+                
+                <ngx-datatable-column name="marks And Numbers" prop="marksAndNumbers" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="invoice Number" prop="invoiceNumber" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="s b no" prop="sbno" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Date Created" prop="dateCreated" [width]="200">
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |date:'dd-MM-yyyy HH:MM'}}</ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Created By" prop="createdBy" [width]="120"></ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                            <span class="d-none d-sm-inline-block" (click)="populateForm(row,modalForm)">Edit</span>
+                        </button>
+
+                        <button class="btn btn-gradient-danger ml-1 me-2" (click)="onDelete(row.companyAddressId)"
+                            [swal]="SweetAlertConfirmColor" rippleEffect>
+                            <span class="d-none d-sm-inline-block ">Delete</span>
+                        </button>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                        <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        <div class="col-2">
+            <button class="btn btn-gradient-primary" rippleEffect (click)="modalOpenForm(modalForm)">
+                <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New Container</span>
+            </button>
+        </div>
+        </core-card-snippet>
+    </section>
+
+
+</div>

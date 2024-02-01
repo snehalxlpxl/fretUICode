@@ -1,0 +1,227 @@
+<div class="content-wrapper container-xxl p-0">
+
+  <section id="ngx-datatable-kitchen-sink">
+      <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+        <h4 class="card-title">Documents</h4>
+   
+    
+    <ngx-datatable
+      [rows]="kitchenSinkRows"
+      [rowHeight]="58"
+      class="bootstrap core-bootstrap"
+      [limit]="10"
+      [columnMode]="ColumnMode.force"
+      [headerHeight]="40"
+      [footerHeight]="50"
+      [scrollbarH]="true"
+      [selectionType]="SelectionType.checkbox"
+      [limit]="basicSelectedOption"
+ 
+      
+    >
+    <!-- 
+      (activate)="onActivate($event)"
+     -->
+    
+      <ngx-datatable-column
+        [width]="50"
+        [sortable]="false"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+      >
+        <ng-template
+          ngx-datatable-header-template
+          let-value="value"
+          let-allRowsSelected="allRowsSelected"
+          let-selectFn="selectFn"
+        >
+          <div class="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              [checked]="allRowsSelected"
+              (change)="selectFn(!allRowsSelected)"
+              id="headerChkbxRef"
+            />
+            <label class="custom-control-label" for="headerChkbxRef"></label>
+          </div>
+        </ng-template>
+        <ng-template
+          ngx-datatable-cell-template
+          let-rowIndex="rowIndex"
+          let-value="value"
+          let-isSelected="isSelected"
+          let-onCheckboxChangeFn="onCheckboxChangeFn"
+        >
+          <div class="custom-control custom-checkbox">
+            <input
+              type="checkbox"
+              class="custom-control-input"
+              [checked]="isSelected"
+              (change)="onCheckboxChangeFn($event)"
+              id="rowChkbxRef{{ rowIndex }}"
+            />
+            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Job No " prop="jobNo" [width]="120">
+      
+        <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+          <div class="d-flex align-items-center">                  
+            <div class="cell-line-height">
+              <a  routerLink="/oedetails/{{row.cargoId}}" class="font-medium-1 d-block"
+                ><span class="font-weight-bold">{{ name }}</span></a>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column> -->
+
+      <ngx-datatable-column name="Document Type" prop="documentType" [width]="170"></ngx-datatable-column>
+
+      <ngx-datatable-column name="Document name" prop="remarks" [width]="220"></ngx-datatable-column>
+      <ngx-datatable-column name="File Type" prop="documentFileType" [width]="170"></ngx-datatable-column>
+      <ngx-datatable-column name="Created By " prop="createdBy" [width]="170"></ngx-datatable-column>
+      <ngx-datatable-column name="Date Created" prop="dateCreated" [width]="250"></ngx-datatable-column>
+     
+      <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                <!-- <span class="d-none d-sm-inline-block" (click)="openPDF(item.id)">View</span> -->
+                <a class="d-none d-sm-inline-block" (click)="openPDF(row.cargoDocumentId)">View</a>
+                <!-- <a href="http://38.17.55.137:5000/api/webtracking/download/{{row.cargoDocumentId}}">PDF</a> -->
+            </button>
+            <!-- <ngx-extended-pdf-viewer
+            [src]="'pdfurl'"
+            [textLayer]="true"
+            [height]="'95%'"
+            [showHandToolButton]="true"
+            [showPresentationModeButton]="true"
+            [showDownloadButton]="false"
+            hidden
+          ></ngx-extended-pdf-viewer> -->
+
+            <!-- {{row|json}} -->
+        </ng-template>
+       
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-gradient-danger ml-1 me-2" (click)="onDelete(row.cargoDocumentId)"
+              [swal]="SweetAlertConfirmColor" rippleEffect>
+              <span class="d-none d-sm-inline-block ">Delete</span>
+          </button>
+          <!-- Swal of Sweet Alert ConfirmColor -->
+          <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+          <!-- Swal of Sweet Alert ConfirmColor -->
+          </ng-template>
+      </ngx-datatable-column>
+      <!-- <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+        <ng-template ngx-datatable-cell-template>
+          <div class="d-flex align-items-center">
+            <div ngbDropdown container="body">
+              <a
+                ngbDropdownToggle
+                href="javascript:void(0);"
+                class="hide-arrow"
+                id="dropdownBrowserState"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+              </a>
+              <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                  ><i data-feather="file-text" class="mr-50"></i> Details</a
+                >
+                <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                  ><i data-feather="archive" class="mr-50"></i> Archive</a
+                >
+                <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                  ><i data-feather="trash-2" class="mr-50"></i> Delete</a
+                >
+              </div>
+            </div>
+    
+            <i data-feather="edit" class="text-primary cursor-pointer"></i>
+          </div>
+        </ng-template>
+      </ngx-datatable-column> -->
+    </ngx-datatable>
+    <div class="col-2">
+      <button class="btn btn-gradient-primary" rippleEffect (click)="modalOpenForm(modalForm)">
+          <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">Upload</span>
+      </button>
+  </div>
+    </core-card-snippet>
+    </section>
+    
+
+
+  <ng-template #modalForm let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="companyProfileLabel">Uploads</h5>
+        <button type="button" class="close" (click)="modal.dismiss(DocumentForm.reset)" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <form [formGroup]="DocumentForm">
+            <div class="form-group">
+                <input type="text"  class="form-control" 
+                    name="dateCreated" formControlName="dateCreated" hidden />
+            </div>
+
+            <div class="row mr-1">
+                <div class="col">
+                    <div class="form-group row">
+                        <label for="documentType" class="col-sm-4 col-form-label">Document Type</label>
+                        <div class="col-12">
+                          <ng-select [items]="documentType"
+                          bindLabel="documentName"
+                          bindValue="documentName"
+                          formControlName="documentType" 
+                         >
+                        </ng-select>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mr-1">
+                <div class="col">
+                    <div class="form-group">
+                        <label for=" ">Upload File</label>
+                        <input type="file" id="" class="form-control"
+                            placeholder="Upload File" name=""
+                           />
+                    </div>
+                </div>
+            </div>
+
+           
+
+            <div class="modal-footer">
+                <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="modal.dismiss()">Close</button>
+                <button type="button" class="btn btn-gradient-success"  (click)="onSubmitService(DocumentForm)" 
+                   rippleEffect>Save</button>
+                   <!-- [disabled]="DocumentForm.invalid"
+                   -->
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+</ng-template>
+
+</div>

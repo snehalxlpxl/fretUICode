@@ -1,0 +1,550 @@
+<section id="ngx-datatable-kitchen-sink" class="">
+  <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+    <!-- <div class="cardbody"> -->
+    <h4 class="">Routing Details</h4> 
+    <!-- {{ModeOfTransport}}{{Direction}} -->
+<div class="row">
+  <div class="col-12 mb-50">
+    <!-- <button class="btn btn-primary ml-1" rippleEffect (click)="onShowQuoteForm()">
+      <i data-feather="plus" class="mr-0 mr-sm-1"></i
+      ><span class="d-none d-sm-inline-block" >Add New Record</span>
+    </button> -->
+
+    <!-- <a csvLink [data]="exportCSVData" class="btn btn-outline-secondary float-right mr-1" rippleEffect
+      >Export CSV</a
+    > -->
+  </div>
+  <!-- <div class="col-md-6 col-12">
+    <div class="d-flex justify-content-between align-items-center mb-1">
+      <label class="d-flex align-items-center"
+        >Show
+        <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        entries</label
+      >
+    </div>
+  </div>
+  <div class="col-md-6 col-12 d-flex justify-content-md-end">
+    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+      <label class="d-flex align-items-center"
+        >Search<input
+          type="search"
+          placeholder="Search"
+          class="form-control ml-25"
+          (keyup)="filterUpdate($event)"
+          (search)="filterUpdate($event)"
+      /></label>
+    </div>
+  </div> -->
+</div>
+
+
+<!-- class="material striped" -->
+<ngx-datatable
+  [rows]="hero"
+  [rowHeight]="58"
+  class="bootstrap core-bootstrap"
+  [limit]="10"
+  [headerHeight]="40"
+  [footerHeight]="50"
+  [scrollbarH]="true"
+  [selectionType]="SelectionType.checkbox"
+  [limit]="basicSelectedOption"
+>
+
+
+  <ngx-datatable-column
+    [width]="50"
+    [canAutoResize]="false"
+    [draggable]="false"
+    [resizeable]="false"
+  >
+    <ng-template
+      ngx-datatable-header-template
+      let-value="value"
+      let-allRowsSelected="allRowsSelected"
+      let-selectFn="selectFn"
+    >
+      <div class="custom-control custom-checkboxv ">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          [checked]="allRowsSelected"
+          (change)="selectFn(!allRowsSelected)"
+          id="headerChkbxRef"
+        />
+        <label class="custom-control-label" for="headerChkbxRef"></label>
+      </div>
+    </ng-template>
+    <ng-template
+      ngx-datatable-cell-template
+      let-rowIndex="rowIndex"
+      let-value="value"
+      let-isSelected="isSelected"
+      let-onCheckboxChangeFn="onCheckboxChangeFn"
+    >
+      <div class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          [checked]="isSelected"
+          (change)="onCheckboxChangeFn($event)"
+          id="rowChkbxRef{{ rowIndex }}"
+        />
+        <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <!-- <ngx-datatable-column name="salesQuoteId" prop="salesQuoteId" [width]="150"></ngx-datatable-column> -->
+  <!-- <ngx-datatable-column name="salesQuoteDetailId" prop="salesQuoteDetailId" [width]="150"></ngx-datatable-column> -->
+  <ngx-datatable-column name="Sort Order" prop="sortOrder" [width]="150"></ngx-datatable-column>
+  <!-- <ngx-datatable-column name="polid" prop="polid" [width]="150"></ngx-datatable-column> -->
+  <ngx-datatable-column name="POL" prop="polname" [width]="150">
+      <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+        <div (click)="sendValueToParent(row.salesQuoteDetailId)" class="cursor-pointer"><b>{{row.polname}}</b></div>
+      </ng-template>
+  </ngx-datatable-column>
+  <!-- <ngx-datatable-column name="podid" prop="podid" [width]="150"></ngx-datatable-column> -->
+  <ngx-datatable-column name="POD" prop="locationShortName" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Carrier" prop="oceanLineCode" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="Transit Time" prop="transitTime" [width]="150"></ngx-datatable-column>
+  <ngx-datatable-column name="IncoTerm" prop="incoTerm" [width]="100"></ngx-datatable-column>
+  <ngx-datatable-column name="Notes" prop="notes" [width]="100"></ngx-datatable-column>
+  
+  
+  <ngx-datatable-column name="Edit" [width]="50" [sortable]="false"><a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+    ><i data-feather="trash-2" class="ml-50"></i></a>
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center">
+        
+
+        <div class="d-flex align-items-center" (click)="sendValueToParent(row.salesQuoteDetailId)">
+        <span  class="d-flex align-items-center"
+    ><i data-feather="edit" class="text-primary cursor-pointer"></i></span>
+      </div>
+        
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Delete" [width]="100" [sortable]="false"><i data-feather="edit" class="text-primary cursor-pointer"></i>
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center cursor-pointer text-danger" (click)="onDelete(row.salesQuoteDetailId)">
+        <span  class="d-flex align-items-center"
+    ><i data-feather="trash-2" class="mr-50"></i></span>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="ADD Charges" [width]="150" [sortable]="false"><i data-feather="edit" class="text-primary cursor-pointer"></i>
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center" (click)="modalOpenForm(row.salesQuoteId,row.salesQuoteDetailId,modalForm)">
+        <!-- <span  class="d-flex align-items-center"
+    >ADD Charges</span> -->
+    <div class="addchargebtn">+</div>
+      </div>
+    </ng-template>
+  </ngx-datatable-column>
+  <!-- <ngx-datatable-column name="ADD Charges" [width]="150" [sortable]="false"><i data-feather="edit" class="text-primary cursor-pointer"></i>
+    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+      <div class="d-flex align-items-center" (click)="modalOpenForm(row.salesQuoteId,row.salesQuoteDetailId,modalForm)">
+       <span  class="d-flex align-items-center"
+    >ADD Charges</span> 
+     <button type="button" class="btn btn-secondary btn-sm">new modal</button> 
+      </div>
+    </ng-template>
+  </ngx-datatable-column> -->
+</ngx-datatable>
+  <!-- </div> -->
+</core-card-snippet>
+</section>
+<!-- <app-sales-quote-charges-modal></app-sales-quote-charges-modal> -->
+<!-- MODAL for add charges -->
+
+
+<div id="modalCharges">
+  <ng-template #modalForm let-modal >
+    <div class="modal-header">
+     <h4 class="modal-title" id="companyProfileLabel">Add New Sales Quotes Charges</h4>
+     <button #closeModal type="button" class="close m-0" (click)="modal.dismiss(chargesForm)" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+     </button>
+    </div>
+
+<div class="modal-body postion-relative" style="height: 100vh;">
+<div class=" table-responsive " style="height:100vh">
+    <div class="col-md-12">
+      <form [formGroup]="chargesForm">
+        <table class="table table-striped border" [cellPadding]="0" [cellSpacing]="0" border="1" >
+          <thead>
+            <tr><th colspan="4" ><b>Charge</b></th><th colspan="5"><b>Buying</b></th><th colspan="5"><b>Selling</b></th><th colspan="2"><b>Paying Party</b></th><th></th></tr>
+            <tr>
+              <th>Id</th>
+              <th>chargeItem</th>
+              <th>Quantity</th>
+              <th>Apply per</th>
+              <th>Buying Rate</th>
+              <th>Currency</th>
+              <th>Tax Percentage</th>
+              <th>Buying Amount</th>
+              
+              <th>Buy Tax Amount</th>
+              
+              <th>Selling Rate</th>
+              <th>Currency</th>
+              <th> Tax Percentage</th>
+              <th>Selling Amount</th>
+             
+              <th>Sell Tax Amount</th>
+              <th>Invoice To</th>
+              <th>Pay To</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="Rows">
+            <tr
+              *ngFor="
+                let itemrow of chargesForm.controls.Rows.controls;
+                let i = index;
+                let l = last
+              "
+              [formGroupName]="i"
+            >
+              <td [width]="20">{{ i + 1 }}</td>
+              <td [width]="400">
+                <input type="number" value="{{salesdataurlid||sqID}}" id="sqid{{ i }}" formControlName="sqid" hidden />
+                <input type="number" value="{{salesDetailRowId}}" id="sqdetailRowId{{ i }}" formControlName="sqdetailRowId" hidden />
+                <input type="number" value="{{sqchargeId}}" id="sqdetailRowId{{ i }}" name="sqchargeId{{i}}" formControlName="sqchargeId" hidden />
+                <input type="text" formControlName="incomeExpense" value="EXPENSE" hidden>
+                <!-- <select
+                  (change)="onChangechargeItem($event)"
+                  class="form-control"
+                  placeholder="chargeItem"
+                  formControlName="chargeItemId"
+                >
+                <option *ngFor="let charged of chargeditem" [value]="charged.chargeItemId" id="chargeItem{{ i }}">{{charged.chargeItemName}}</option>
+              </select> -->
+                <!-- <ng-select [items]="chargeditem"
+                  bindLabel="chargeItemName"
+                  bindValue="chargeItemId"
+                  id="chargeItemId{{i}}"
+                  formControlName="chargeItemId" 
+                  (change)="onChangeChargeMaster(i,$event)"
+                  class="form-control-sm ngselect"
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('chargeItemId').invalid&&chargesForm.controls.Rows.controls[i].get('chargeItemId').touched&& chargesForm.controls.Rows.controls[i].get('chargeItemId').errors?.required}"
+                  >
+                </ng-select> -->
+                <ng-select #chargeitem [items]="chargeditem"
+                  bindLabel="chargeItemName"
+                  bindValue="chargeItemId"
+                  formControlName="chargeItemId" 
+                  [ngClass]="{ 'bor-red':chargesForm.controls.Rows.controls[i].get('chargeItemId').invalid&& chargesForm.controls.Rows.controls[i].get('chargeItemId').touched&& chargesForm.controls.Rows.controls[i].get('chargeItemId').errors?.required}"
+                  (change)="onChangeChargeMaster($event,i)" 
+                  class="stretchable-dropdown"
+                 >
+                <ng-template ng-header-tmp>
+                  <div class="d-flex align-items-center ng-op-head" >
+                      <div class="col-md-5 text-center"><div class="p-head">Charge Description</div></div>
+                      <div class="col-md-7 text-center border-left"><div class="p-head">Direction</div></div>
+                  </div>
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+                  {{item.chargeItemName}}
+                </ng-template>
+                
+                <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                  <div class="d-flex addrdata">
+                    <!-- <div class="col-md-1 text-center  p-body">{{index+1}}</div> -->
+                    <div class="col-md-5 p-body"><div class="p-head">{{item.chargeItemName}}</div></div>
+                    <div class="col-md-7 border-left  p-body pl-1">{{item.transportationDirection}}</div>
+                  </div>
+              </ng-template>
+              </ng-select>
+                <!-- <p *ngIf="itemrow['controls'].chargeItemId?.errors?.required">X is required</p> -->
+                <!-- <label *ngIf="chargesForm.controls.Rows.controls[i].get('chargeItemId').errors?.required"
+                class="text-danger">
+                Charged Item required.
+              </label> -->
+              <!-- <span ngIf="isValidFormSubmitted"  class="text-danger">*</span> -->
+              <input type="text" formControlName="chargeDescription"  value="{{chargeItemName}}" hidden>
+              </td>
+              <td [width]="70">
+                <input type="number" 
+                id="quantity{{i}}" 
+                formControlName="quantity" 
+                (change)="onChange(i)"
+                placeholder="0"
+                class="form-control form-control-sm"
+                [ngClass]="{ 'bor-red':chargesForm.controls.Rows.controls[i].get('quantity').invalid&& chargesForm.controls.Rows.controls[i].get('quantity').touched&& chargesForm.controls.Rows.controls[i].get('quantity').errors?.required}"
+                />
+                <!-- <label *ngIf="Rows.controls[i].get('quantity').errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted"
+                class="error">
+                Quantity required.
+              </label> -->
+              </td>
+              <td>
+                <!-- <select
+                  (change)="onChangeApplyPer($event)"
+                  class="form-control"
+                  placeholder="applyPer"
+                  formControlName="applyPer"
+                >
+                <option *ngFor="let apply of applyPer" [value]="apply.applyPerName" id="chargeItem{{ i }}">{{apply.applyPerName}}</option>
+              </select> -->
+              <ng-select [items]="applyPer"
+                                bindLabel="applyPerName"
+                                bindValue="applyPerName"
+                                id="applyPer{{i}}"
+                                formControlName="applyPer" 
+                                [width]="100"
+                                class="form-control-sm ngselect"
+                                
+                                [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('applyPer').touched&& chargesForm.controls.Rows.controls[i].get('applyPer').errors?.required}"
+                                >
+              </ng-select>
+              <!--(change)="onChangeApplyPer($event,i)"
+                 <label
+              *ngIf="Rows.controls[i].get('applyPer')?.errors?.required && isValidFormSubmitted != null && !isValidFormSubmitted"
+              class="error">
+              quantity required.
+            </label> -->
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="BuyingRate"
+                  name="BuyingRate{{ i }}"
+                  placeholder="0"
+                  [width]="200"
+                  formControlName="rate"
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('rate').touched&& chargesForm.controls.Rows.controls[i].get('rate').errors?.required}"
+                  (change)="onChange(i)"
+                />
+              </td>
+              <td>
+                <!-- <select
+                  (change)="onChangeCarrier($event)"
+                  class="form-control"
+                  placeholder="currency"
+                  formControlName="currencyId"
+                >
+                <option *ngFor="let cur of currency" [value]="cur.currencyId" id="chargeItem{{ i }}">{{cur.currencyCode}}</option>
+              </select> -->
+              <ng-select [items]="currency"
+                                bindLabel="currencyCode"
+                                bindValue="currencyId"
+                                formControlName="currencyId" 
+                                class="form-control-sm ngselect"
+                                (change)="onChangeCurrency($event,i)" 
+                                [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('currencyId').touched&& chargesForm.controls.Rows.controls[i].get('currencyId').errors?.required}" >
+              </ng-select>
+              <input type="text" formControlName="currencyCode" hidden/>
+              </td>
+              <td>
+                <ng-select [items]="taxerates"
+                bindLabel="taxName"
+                bindValue="effectiveTaxPercentage"
+                formControlName="taxPercent" 
+                (change)="onChange(i)"
+                class="form-control-sm ngselect"
+                [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('taxPercent').touched&& chargesForm.controls.Rows.controls[i].get('taxPercent').errors?.required}"
+                               
+                >
+                </ng-select>
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="BuyingAmount"
+                  name="buyingamount{{i}}"
+                  (change)="onChange(i)"
+                  placeholder="0"
+                  formControlName="totalAmount"
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('totalAmount').touched&& chargesForm.controls.Rows.controls[i].get('totalAmount').errors?.required}"
+                               
+                />
+                <!-- [(ngModel)]="chargesForm.value.Rows[i].rate * chargesForm.value.Rows[i].quantity" 
+                  value="{{chargesForm.value.Rows[i].rate * chargesForm.value.Rows[i].quantity}}"  -->
+              </td>
+              
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="taxAmount"
+                  name="taxAmount{{i}}" 
+                  placeholder="taxAmount"
+                  formControlName="taxAmount"
+                  (change)="onChange(i)"
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('taxAmount').touched&& chargesForm.controls.Rows.controls[i].get('taxAmount').errors?.required}"
+                
+                />
+                <!--  [(ngModel)]="chargesForm.value.Rows[i].rate * chargesForm.value.Rows[i].quantity * chargesForm.value.Rows[i].taxPercent" 
+                  value="{{(chargesForm.value.Rows[i].rate * chargesForm.value.Rows[i].quantity * chargesForm.value.Rows[i].taxPercent)*per}}"
+                 -->
+              </td>
+             
+              <td>
+                   <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    id="sellingingRate"
+                    name="sellingingRate{{ i }}"
+                    placeholder="0"
+                    [width]="200"
+                    formControlName="sellingrate"
+                    (change)="onChange(i)"
+                    [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('sellingrate').touched&& chargesForm.controls.Rows.controls[i].get('sellingrate').errors?.required}"
+                    
+                  />
+                 
+              </td>
+              <td>
+               
+                <ng-select [items]="currency"
+                                  bindLabel="currencyCode"
+                                  bindValue="currencyId"
+                                  formControlName="sellcurrencyId" 
+                                  class="form-control-sm ngselect"
+                                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('sellcurrencyId').touched&& chargesForm.controls.Rows.controls[i].get('sellcurrencyId').errors?.required}"
+                                  [disabled]="true"
+                                  [aria-disabled]="true"
+                                  >
+                </ng-select>
+                </td>
+                <td>
+                  <ng-select [items]="taxerates"
+                  bindLabel="taxName"
+                  bindValue="effectiveTaxPercentage"
+                  formControlName="selltaxPercent" 
+                  (change)="onChange(i)"
+                  class="form-control-sm ngselect"
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('selltaxPercent').touched&& chargesForm.controls.Rows.controls[i].get('selltaxPercent').errors?.required}"                    
+                  >
+                  </ng-select>
+                  
+                </td>
+                <td>
+                  <input type="number" value="{{sqchargeIdSell}}" id="sqchargeIdSell{{ i }}" name="sqchargeId{{i}}" formControlName="sqchargeIdSell" hidden />
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    id="selltotalAmount"
+                    name="selltotalAmount{{i}}"
+                    (change)="onChange(i)"
+                    placeholder="0"
+                    formControlName="selltotalAmount"
+                    [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('selltotalAmount').touched&& chargesForm.controls.Rows.controls[i].get('selltotalAmount').errors?.required}"
+                               
+                  />
+                  
+                </td>
+                
+                <td>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    id="selltaxAmount"
+                    name="selltaxAmount{{i}}" 
+                    placeholder="selltaxAmount"
+                    formControlName="selltaxAmount"
+                    (change)="onChange(i)"
+                    [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('selltaxAmount').touched&& chargesForm.controls.Rows.controls[i].get('selltaxAmount').errors?.required}"
+                  />
+              
+                </td>
+                <td>
+                  <ng-select [items]="companyname"
+                  bindLabel="companyName"
+                  bindValue="companyId"
+                  formControlName="invoiceTo" 
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('invoiceTo').touched&& chargesForm.controls.Rows.controls[i].get('invoiceTo').errors?.required}"
+                 
+                  >
+                  </ng-select>
+                </td>
+                <td>
+                  <ng-select [items]="companyname"
+                  bindLabel="companyName"
+                  bindValue="companyId"
+                  formControlName="payingPartyId" 
+                  [ngClass]="{ 'bor-red': chargesForm.controls.Rows.controls[i].get('payingPartyId').touched&& chargesForm.controls.Rows.controls[i].get('payingPartyId').errors?.required}"
+                  >
+                  </ng-select>
+                  <input type="text" formControlName="sellincomeExpense" value="INCOME" hidden>
+                </td>
+                <td>
+                  <!-- *ngIf="chargesForm.controls.Rows.controls.length > 1" -->
+                  <button
+                    (click)="deleteRow(i,chargesForm.value.Rows[i].sqchargeId,chargesForm.value.Rows[i].sqid,chargesForm.value.Rows[i].sqdetailRowId)"
+                    class="btn btn-outline-danger btn-sm"
+                  >
+                    Delete
+                    <!-- {{chargesForm.value.Rows[i].sqchargeId }} -->
+                  </button>
+                </td>
+            </tr>
+         
+          </tbody>
+          <tfoot>
+            <tr style="background-color: #f3f2f7;">
+              <td colspan="7"></td>
+              <td><input type="text" value="{{totalBuyingAmt}}" [disabled]="true"></td>
+              <td><input type="text" value="{{totalBuyingAmtTax}}" [disabled]="true"></td>
+              <td colspan="3"></td>
+              <td><input type="text" value="{{totalSellingAmt}}" [disabled]="true"></td>
+              <td><input type="text" value="{{totalSellyingAmtTax}}" [disabled]="true"></td>
+              <td colspan="3"></td>
+             
+            </tr>
+            <tr><td colspan="15"><a type="button" (click)="addNewRow()" class="btn btn-outline-secondary btn-sm">
+              <span>Add</span>  Charges
+            </a></td></tr>
+          </tfoot>
+        </table>
+      </form>
+    </div>
+
+</div>
+
+
+<br />
+<br />
+<!-- <button (click)="onAddCharges(chargesForm)" class="btn btn-success btn-sm">Save</button>
+<button id="generatePdfButton" class="btn btn-light btn-sm ml-1" (click)="generatePDF(SaleQuotedata)">
+  <i class="fa fa-file-pdf-o" style="font-size:15px;color:red"></i>
+  Generate PDF
+</button>
+
+<code>{{ chargesForm.value| json }}</code> -->
+<!-- <div *ngIf="isValidFormSubmitted&&chargesForm.invalid" class="text-danger mt-1 validation-text">Please fill all the details.</div>-->
+<div class="row postion-absolute profitrow d-flex align-items-center"> 
+  <div class="col-md-2"><div class="text-left text-uppecase"><div style="padding-bottom: 3px;font-size: 12px;"><b>Profit Excluding Tax</b></div><div><input type="text" class="text-success profit_input" value="{{profitExcludingTax}}" disabled/></div></div></div>
+  <div class="col-md-2"><div class="text-left text-uppecase"><div style="padding-bottom: 3px;font-size: 12px;"><b>Profit Including Tax</b></div><div><input type="text" class="text-success profit_input" value="{{profitIncludingTax}}" disabled/></div></div></div>
+   
+  <div class="col-md-8 text-right">
+    <button (click)="onAddCharges(chargesForm)" class="btn btn-success btn-sm">Save</button>
+    <button id="generatePdfButton" class="btn btn-light btn-sm ml-1" (click)="generatePDF(SaleQuotedata)">
+      
+      Generate <i class="fa fa-file-pdf-o" style="font-size:15px;color:red"></i>
+    </button>
+    
+  </div>
+  <div class="col-md-12 text-right">
+    <!-- <button (click)="onAddCharges(chargesForm)" class="btn btn-success btn-sm">Save</button>
+    <button id="generatePdfButton" class="btn btn-light btn-sm ml-1" (click)="generatePDF(SaleQuotedata)">
+      <i class="fa fa-file-pdf-o" style="font-size:15px;color:red"></i>
+      Generate PDF
+    </button> -->
+       <!-- <code>{{ chargesForm.value| json }}</code>  -->
+      <div *ngIf="isValidFormSubmitted&&chargesForm.invalid" class="text-danger mt-1 validation-text">Please fill all the details.</div>
+  </div>
+</div>
+
+</div>  
+</ng-template>
+</div>

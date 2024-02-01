@@ -1,0 +1,875 @@
+<div class="content-wrapper container-xxl p-0">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/sales-quotes">Sales Quote List</a></li>
+      <li class="breadcrumb-item active" aria-current="page" >Sales Quote </li>
+    </ol>
+  </nav>
+  <div class="card mt-1 pt-2 pl-3 pr-3 container">
+    <div class="cardbody">
+
+           
+            <div class="container">
+                <div class="" >
+                  <form class="form" [formGroup]="SalesQuoteForm" #myfrom>
+
+                    <div class="d-flex align-items-center">
+                      <h4 class="col-10 pl-0 ">New Sales Quote</h4>
+                      <div class="col-md-2 col-2">
+                        <div class="form-group">
+                            <label for="salesQuoteType "><b>Sales Quote Type</b></label>
+                            <!-- <select 
+                              id="salesQuoteType" 
+                              class="form-control" 
+                              name="salesQuoteType"
+                              formControlName="salesQuoteType"> 
+                              <option>FCL</option> 
+                              <option>LCL</option>
+                              <option>AIR</option>
+                            </select> -->
+                             <ng-select  formControlName="salesQuoteType" placeholder="Sales Quote Type">
+                              <ng-option value="FCL">FCL</ng-option>
+                              <ng-option value="LCL">LCL</ng-option>
+                              <ng-option value="AIR">AIR</ng-option>
+                            </ng-select>
+                            <div *ngIf="SalesQuoteForm.controls['salesQuoteType'].invalid && SalesQuoteForm.controls['salesQuoteType'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['salesQuoteType'].errors.required" >
+                                Sales Quote type is required.
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <fieldset class="the-fieldset">
+                          <legend class="the-legend">General Information</legend>
+                    <div class="row" >
+                    
+                      <div class="form-group ">
+                            <input class
+                              type="number"
+                              id="salesQuoteId"
+                              class="form-control form-control-sm"
+                              placeholder="Sales Quote Id" 
+                              name="salesQuoteId"
+                              formControlName="salesQuoteId" 
+                              hidden
+                            />
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="salesQuoteStatus ">Sales Quote Status</label>
+                            <ng-select  formControlName="salesQuoteStatus" placeholder="Sales Quote Status">
+                              <ng-option value="Enquiry">Enquiry</ng-option>
+                              <ng-option value="Quotation">Quotation</ng-option>
+                            </ng-select>
+                            
+                            <div *ngIf="SalesQuoteForm.controls['salesQuoteStatus'].invalid && SalesQuoteForm.controls['salesQuoteStatus'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['salesQuoteStatus'].errors.required">
+                                Sales Quote Status is required.
+                              </div>
+                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="CustomerName ">Mode Of Transport</label>
+                            <!-- <select 
+                              id="modeoftransport" 
+                              class="form-control" 
+                              name="modeoftransport"
+                              formControlName="modeoftransport"> 
+                              <option>OCEAN</option> 
+                              <option>AIR</option>
+                            </select> -->
+
+                            <ng-select  formControlName="modeoftransport" (change)="onChangeModeOfTransport($event)">
+                              <ng-option value="OCEAN">OCEAN</ng-option>
+                              <ng-option value="AIR">AIR</ng-option>
+                            </ng-select>
+                            <div *ngIf="SalesQuoteForm.controls['modeoftransport'].invalid && SalesQuoteForm.controls['modeoftransport'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['modeoftransport'].errors.required">
+                                Transport Mode is required.
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="direction ">Direction</label>
+                            <!-- <select 
+                              id="direction" 
+                              class="form-control" 
+                              name="direction"
+                              formControlName="direction"> 
+                              <option>Import</option> 
+                              <option>Export</option>
+                            </select> -->
+
+                            <ng-select  formControlName="direction" (change)="onChangeDirection($event)">
+                              <ng-option value="Import">Import</ng-option>
+                              <ng-option value="Export">Export</ng-option>
+                            </ng-select>
+                            <div *ngIf="SalesQuoteForm.controls['direction'].invalid && SalesQuoteForm.controls['direction'].touched"  class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['direction'].errors.required ">
+                                Direction is required.
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8 col-12">
+                        <div class="form-group">
+                            <label for="salesQuoteNumber ">Sales Quote Number</label>
+                            <input 
+                              type="text"
+                              id="salesQuoteNumber"
+                              class="form-control form-control-sm"
+                              (change)="onChangeCheckUniqueQuoteNumber($event)"
+                              placeholder="Sales Quote Number" 
+                              name="salesQuoteNumber"
+                              formControlName="salesQuoteNumber"
+                              required
+
+                            />
+                            <div *ngIf="SalesQuoteForm.controls['salesQuoteNumber'].invalid && SalesQuoteForm.controls['salesQuoteNumber'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['salesQuoteNumber'].errors.required">
+                                Sales Quote Number is required.
+                              </div>
+                           </div>
+                           <div *ngIf="isunique" class="text-danger mt-1 validation-text">Sales Quote Number Sholud Be Unique</div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <label for="revisionId ">Revision #</label>
+                          <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" placeholder="Revision Number" name="revisionId" formControlName="revisionId" >
+                            
+                          </div>
+                          <div *ngIf="SalesQuoteForm.controls['revisionId'].invalid && SalesQuoteForm.controls['revisionId'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteForm.controls['revisionId'].errors.required">
+                              Revision Number is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="enqReceivedDate ">Enquiry Received  On</label>
+                          <!-- <div class="input-group">
+                            <input [owlDateTime]="dt2" placeholder="Enquiry Date" class="form-control" formControlName="enqReceivedDate">
+                            <div class="input-group-append">
+                              <span [owlDateTimeTrigger]="dt2" ><button  class="btn btn-outline-secondary fa fa-calendar"
+                                type="button" rippleEffect></button></span>
+                            </div>
+                              <owl-date-time #dt2></owl-date-time>
+                          </div> -->
+                          <!-- <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="Basic Date Picker" formControlName="enqReceivedDate"
+                              ngbDatepicker #enqReceivedDate="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary feather icon-calendar" (click)="enqReceivedDate.toggle()"
+                                type="button" rippleEffect></button>
+                            </div>
+                          </div> -->
+                          <div class="input-group">
+                            <input type="date" formControlName="enqReceivedDate" data-date="" data-date-format="DD MMMM YYYY" class="form-control form-control-sm" >
+                          </div>
+                          <div *ngIf="SalesQuoteForm.controls['enqReceivedDate'].invalid && SalesQuoteForm.controls['enqReceivedDate'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteForm.controls['enqReceivedDate'].errors.required">
+                              Enquiry Date is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="salesQuoteDate ">Sales Quote Date</label>
+                            
+                            <!-- <div class="input-group">
+
+                              <input [owlDateTime]="dt1" placeholder="Sales Quote Date" class="form-control" formControlName="salesQuoteDate">
+                              <div class="input-group-append">
+                                <span [owlDateTimeTrigger]="dt1" ><button  class="btn btn-outline-secondary fa fa-calendar"
+                                  type="button" rippleEffect></button></span>
+                              </div>
+                                <owl-date-time #dt1></owl-date-time>
+                            </div> -->
+                            <!-- <input type="date" formControlName="salesQuoteDate" /> -->
+                            <!-- <div class="input-group">
+                              <input class="form-control" placeholder="yyyy-mm-dd" name="Basic Date Picker" formControlName="salesQuoteDate"
+                                ngbDatepicker #salesQuoteDate="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary feather icon-calendar" (click)="salesQuoteDate.toggle()"
+                                  type="button" rippleEffect></button>
+                              </div>
+                            </div> -->
+                            <div class="input-group">
+                              <input type="date" id="dob " class="form-control form-control-sm" placeholder="DOB"
+                                name="dob" formControlName="salesQuoteDate" />
+                            </div>
+                            <div *ngIf="SalesQuoteForm.controls['salesQuoteDate'].invalid && SalesQuoteForm.controls['salesQuoteDate'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['salesQuoteDate'].errors.required">
+                                Sales Quote Date is required.
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <label for="expiryDate ">Valid Till</label>
+                          <!-- <div class="input-group">
+                            <input [owlDateTime]="dt3" placeholder="Expiry Date" class="form-control" formControlName="expiryDate">
+                            <div class="input-group-append">
+                              <span [owlDateTimeTrigger]="dt3" ><button  class="btn btn-outline-secondary fa fa-calendar"
+                                type="button" rippleEffect></button></span>
+                            </div>
+                              <owl-date-time #dt3></owl-date-time>
+                          </div> -->
+                          <!-- <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" name="Basic Date Picker" formControlName="expiryDate"
+                              ngbDatepicker #expiryDate="ngbDatepicker">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary feather icon-calendar" (click)="expiryDate.toggle()"
+                                type="button" rippleEffect></button>
+                            </div>
+                          </div> -->
+                          <div class="input-group">
+                            <input type="date" formControlName="expiryDate" class="form-control form-control-sm" >
+                          </div>
+                          <div *ngIf="SalesQuoteForm.controls['expiryDate'].invalid && SalesQuoteForm.controls['expiryDate'].touched" class="text-danger mt-1 validation-text">
+                            Date should be greater than Sales Quote Date
+                            <div *ngIf="SalesQuoteForm.controls['expiryDate'].errors.required">
+                              Expiry Date is required.
+                            </div>
+                          </div>
+                          
+                          </div>
+                      </div>
+                      
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="CompanyName ">Customer</label>
+                          <input type="text" class="form-control"   formControlName="companyDisplayName" hidden/>
+                            <!-- <input type="text" class="form-control"   id="companyIdFirstWay" placeholder="Company Name" formControlName="companyDisplayName" list="dynmicCompanyIds"/>
+                            <datalist id="dynmicCompanyIds">
+                              <option *ngFor="let comp of companyname" [value]="comp.companyName" id="{{comp.companyId}}" (change)="onChangeCompany(comp.companyId)">{{comp.companyName}}</option>
+                            </datalist> -->
+                            <!-- <select (change)="onChangeCompany($event)" class="form-control" placeholder="Company Name"  formControlName="companyId">
+                              <option *ngFor="let comp of companyname" [value]="comp.companyId" id="{{comp.companyId}}" (change)="onChangeCompany(comp.companyId)">{{comp.companyName}}</option>
+                            </select> -->
+                            <ng-select [items]="companyname"
+                            bindLabel="companyName"
+                            bindValue="companyId"
+                            (change)="onChangeCompany(SalesQuoteForm,$event)"
+                            formControlName="companyId" >
+                            </ng-select>
+                              <div *ngIf="SalesQuoteForm.controls['companyId'].invalid && SalesQuoteForm.controls['companyId'].touched" class="text-danger mt-1 validation-text">
+                                <div *ngIf="SalesQuoteForm.controls['companyId'].errors.required">
+                                  Customer Name is required.
+                                </div>
+                              </div>
+                        </div>
+                        
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <label for="companyAddress ">Customer Address</label>
+                      
+                          <ng-select [items]="companyaddress"
+                                    bindLabel="addressTypeNick"
+                                    bindValue="companyAddressId"
+                                    formControlName="companyAddressId" 
+                                    (change)="onChangeCustomerAddress(SalesQuoteForm,$event)" 
+                                     id="aa">
+                                    <ng-template ng-header-tmp>
+                                      <div class="d-flex align-items-center ng-op-head" >
+                                          <!-- <div class="col-md-1 text-center p-0">#</div> -->
+                                          <div class="col-md-3 text-center"><div class="p-head">Company Name</div></div>
+                                          <div class="col-md-3 text-center border-left"><div class="p-head">Address Type Nick</div></div>
+                                          <div class="col-md-6 text-center border-left"><div class="p-head">Address</div></div>
+                                      </div>
+                                    </ng-template>
+                                    <ng-template ng-label-tmp let-item="item">
+                                      {{item.addressTypeNick}}
+                                    </ng-template>
+                                    
+                                    <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                      <div class="d-flex addrdata">
+                                        <!-- <div class="col-md-1 text-center  p-body">{{index+1}}</div> -->
+                                        <div class="col-md-3 p-body"><div class="p-head">{{item.companyName}}</div></div>
+                                        <div class="col-md-3 border-left  p-body pl-1">{{item.addressTypeNick}}</div>
+                                        <div class="col-md-6  border-left p-body pl-1">{{item.formattedAddress}}</div>
+                                      </div>
+                                  </ng-template>
+                          </ng-select>
+                       
+                          <div *ngIf="SalesQuoteForm.controls['companyAddressId'].invalid && SalesQuoteForm.controls['companyAddressId'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteForm.controls['companyAddressId'].errors.required">
+                              Customer Address is required.
+                            </div>
+                          </div> 
+
+                        </div>
+                        <input type="text" formControlName="companyAddress" value="" hidden>
+                    </div>
+                      
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                              <label for="Contact ">Contact</label>
+                              <input type="text" class="form-control" formControlName="contactDisplayName" value="{{this.contactname}}" hidden/>
+                            
+                              <!-- <input type="text" class="form-control"   id="contactIdFirstWay" placeholder="Contact" formControlName="contactDisplayName" list="dynmicContactIds"/>
+                              <datalist id="dynmicContactIds">
+                                <option *ngFor="let con of contacts" [value]="con.displayName" id="{{con.contactId}}" (change)="onChangeContact(con.contactId)">{{con.displayName}}</option>
+                              </datalist> -->
+
+                              <!-- <select (change)="onChangeContact($event)" class="form-control" placeholder="Contact Name"  formControlName="contactId">
+                                  <option *ngFor="let con of contacts" [value]="con.contactId" id="{{con.contactId}}" (change)="onChangeContact(con.contactId)">{{con.displayName}}</option>
+                              </select> -->
+
+                              <ng-select [items]="contacts"
+                              bindLabel="displayName"
+                              bindValue="contactId"
+                              (change)="onChangeContact(SalesQuoteForm,$event)"
+                              formControlName="contactId" >
+                              </ng-select>
+                            
+                              <div *ngIf="SalesQuoteForm.controls['contactId'].invalid && SalesQuoteForm.controls['contactId'].touched" class="text-danger mt-1 validation-text">
+                                <div *ngIf="SalesQuoteForm.controls['contactId'].errors.required">
+                                  Contact Name is required.
+                                </div>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <input type="text" class="form-control" value="" formControlName="salesPersonDisplayName" hidden/>
+                            <label for="salesPersonId ">Sales Person</label>
+                            
+                            <!--<datalist id="dynmicUserIds">
+                              <option *ngFor="let item of userdata" value="{{item.userName}}{{item.userId}}"  id="{{item.userId}}">{{item.userName}}</option>
+                            </datalist> -->
+                            <!-- <ng-select  (change)="onChangeSalePerson($event)" formControlName="salesPersonId" required>
+                              <ng-option value="">Select User name</ng-option>
+                              <ng-option *ngFor="let item of userdata" value="{{item.userId}}">
+                                  {{item.userName}}
+                              </ng-option>
+                            </ng-select> -->
+                            <ng-select [items]="userdata"
+                                      bindLabel="userName"
+                                      bindValue="userId"
+                                      (change)="onChangeSalePerson(SalesQuoteForm,$event)"
+                                      placeholder="Sales Person"
+                                      formControlName="salesPersonId" >
+                            </ng-select>
+                            <!-- <select (change)="onChangeSalePerson($event)" class="form-control" placeholder="sales Person Name"  formControlName="salesPersonId">
+                              <option *ngFor="let item of userdata" value="{{item.userId}}"  id="{{item.userId}}">{{item.userName}}</option>
+                            </select> -->
+                            <div *ngIf="SalesQuoteForm.controls['salesPersonId'].invalid && SalesQuoteForm.controls['salesPersonId'].touched" class="text-danger mt-1 validation-text">
+                              <div *ngIf="SalesQuoteForm.controls['salesPersonId'].errors.required">
+                                Sales Person Name is required.
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-12">
+                        <div class="form-group">
+                          <label for="preparedBy ">Prepared By</label>
+                      
+                          <ng-select [items]="userdata"
+                                    bindLabel="userName"
+                                    bindValue="userId"
+                                    (change)="onChangePreparedBy(SalesQuoteForm,$event)"
+                                    formControlName="preparedBy" >
+                          </ng-select>
+                        
+<!--                             (change)="onChangeCustomerAddress($event)"  -->
+                          <div *ngIf="SalesQuoteForm.controls['preparedBy'].invalid && SalesQuoteForm.controls['preparedBy'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteForm.controls['preparedBy'].errors.required">
+                              Prepared By is required.
+                            </div>
+                          </div> 
+                        </div>
+                        <input type="text" formControlName="preparedByDislayName" value="" hidden>
+                    </div>
+                      
+                    </div><!--row end-->
+                    
+                    </fieldset>
+                    </div>
+                    <div class="form-group">
+                      <fieldset class="the-fieldset">
+                          <legend class="the-legend">Commodity Information</legend>
+
+                          <div class="row">
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                                <label for="commodity ">Commodity</label>
+                                <div class="input-group">
+                                  <textarea type="text" class="form-control form-control-sm" placeholder="Commodity" name="commodity" formControlName="commodity" ></textarea>
+                                  
+                                </div>
+                                <div *ngIf="SalesQuoteForm.controls['commodity'].invalid && SalesQuoteForm.controls['commodity'].touched" class="text-danger mt-1 validation-text">
+                                  <div *ngIf="SalesQuoteForm.controls['commodity'].errors.required">
+                                    Commodity is required.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                                <label for="requiredEquipment ">Required Equipment / Package Details</label>
+                                <div class="input-group">
+                                  <textarea type="text" class="form-control form-control-sm" placeholder="Required Equipment / Package Details" formControlName="requiredEquipment" ></textarea>
+                                  
+                                </div>
+                                <div *ngIf="SalesQuoteForm.controls['requiredEquipment'].invalid && SalesQuoteForm.controls['requiredEquipment'].touched" class="text-danger mt-1 validation-text">
+                                  <div *ngIf="SalesQuoteForm.controls['requiredEquipment'].errors.required">
+                                    Package Details is required.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                                <label for="volume ">Volume (kgs/cbm)</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control form-control-sm" placeholder="Volume" formControlName="volume" >
+                                  
+                                </div>
+                                <div *ngIf="SalesQuoteForm.controls['volume'].invalid && SalesQuoteForm.controls['volume'].touched" class="text-danger mt-1 validation-text">
+                                  <div *ngIf="SalesQuoteForm.controls['volume'].errors.required">
+                                    Volume is required.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                              <div class="form-group">
+                                <label for="grossWeight ">Gross Weight</label>
+                                <div class="input-group">
+                                  <input type="number" class="form-control form-control-sm" placeholder="Gross Weight" formControlName="grossWeight" >
+                                </div>
+                                <div *ngIf="SalesQuoteForm.controls['grossWeight'].invalid && SalesQuoteForm.controls['grossWeight'].touched" class="text-danger mt-1 validation-text">
+                                  <div *ngIf="SalesQuoteForm.controls['grossWeight'].errors.required">
+                                    Gross Weight is required.
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </fieldset>
+                      <div class="form-group mt-1">
+                        <fieldset class="the-fieldset">
+                          <legend class="the-legend">Term and Conditions</legend>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="isHazardous" id="isHazardous" checked="false" (change)="onChangeHazardous($event)">
+                                <label class="form-check-label" for="isHazardous">
+                                  Harzardous
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="showTax" id="showTax" (change)="onChangeShowTax($event)">
+                                <label class="form-check-label" for="showTax">
+                                  Show Tax on Sales Quote
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="termsConditions" id="termsConditions" >
+                                <label class="form-check-label" for="termsConditions">
+                                  Show Term & Conditions on Sales Quote
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="showTotal" id="showTotal" (change)="onChangeShowTotal($event)">
+                                <label class="form-check-label" for="showTotal">
+                                  Show Total on Sales Quote
+                                </label>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" formControlName="showCarrier" id="showCarrier" (change)="onChangeShowCarrier($event)">
+                                <label class="form-check-label" for="showCarrier">
+                                  Show Carrier on Sales Quote
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <input type="date" formControlName="dateCreated" value="" name="dateCreated" hidden>
+                    <div class="row mt-2">
+                      <div class="col-12">
+                        <button type="submit" rippleEffect class="btn btn-success mr-1 bg-success" (click)="onSubmit(SalesQuoteForm)">Save</button>
+                        <!-- <button type="reset" rippleEffect class="btn btn-outline-secondary mr-1" (click)="resetForm(SalesQuoteForm)">Reset</button> -->
+                        <!-- <button type="reset" rippleEffect class="btn btn-outline-secondary mr-1" routerLink="/sales-quotes">Go to List</button> -->
+                        <button type="reset" rippleEffect class="btn btn-outline-secondary" [disabled]="!isqoatesdetailbtn" (click)="modalOpenForm(modalForm1)">Add Routing Details</button>
+                        <!-- <button (click)="generatePDF()" class="btn btn-secondary ml-1">Generate PDF</button> -->
+                      </div>
+                    </div>
+                  </form>                
+                </div>
+            </div>
+        <hr class="mt-3">
+        <app-sale-quote-details-list [hero]="SaleDetailList" [ModeOfTransport]="transportMode" [Direction]="direction" [SaleQuotedata]="(mydta|json)||(insertedrecord[0]|json)" (sendChildValue)=editSalesQuoteDetails($event,modalForm1) *ngIf="islisdispaly"></app-sale-quote-details-list>
+        <div class="" *ngIf="!islisdispaly">
+          <h4 class="">Routing Details</h4>
+          <div class="p-2">
+            <p class="text-center">No Sales Quotes Data Available!</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+  <!-- modal -->
+  <div id="routingmodal">
+    <ng-template #modalForm1 let-modal>
+      <div class="modal-header align-items-center">
+       <h5 class="modal-title" id="companyProfileLabel">New Routing Details</h5>
+       <button #closeModal  type="button" class="close m-0" (click)="modal.dismiss(SalesQuoteDetailsForm)" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+       </button>
+      </div>
+  
+      <div class="modal-body">
+        
+          <form [formGroup]="SalesQuoteDetailsForm" #myForm="ngForm">
+              <div class="row">
+                <div class="col">
+                  <input 
+                      type="text"
+                      id="sqID "
+                      class="form-control"
+                      placeholder="sqID" 
+                      name="sqID"
+                      formControlName="sqID"
+                      hidden
+                        />
+                        <input 
+                      type="text"
+                      id="salesQuoteDetailId "
+                      class="form-control"
+                      placeholder="salesQuoteDetailId" 
+                      name="salesQuoteDetailId"
+                      formControlName="salesQuoteDetailId"
+                      hidden
+                        />{{salesQuoteDetailId}}
+                        <div class="row ">
+                          <div class="col-12">
+                            <div class="form-group">
+                                  <label for="placeOfOrigin" class="">Origin</label>
+                                  <!-- <select (change)="onChangeCarrier($event)" class="form-control" placeholder="carrier"  formControlName="carrierId">
+                                    <option *ngFor="let loc of oceanmaster" [value]="loc.oceanLineId" id="{{loc.oceanLineId}}">{{loc.oceanLineCode}}</option>
+                                  </select> -->
+                                  <ng-select [items]="locationmaster"
+                                      bindLabel="locationShortName"
+                                      bindValue="locationId"
+                                      (change)="onChangePlaceOrigin(SalesQuoteDetailsForm,$event)"
+                                      formControlName="placeOfOriginId">
+                                  </ng-select>
+                                  <div *ngIf="SalesQuoteDetailsForm.controls['placeOfOriginId'].invalid && SalesQuoteDetailsForm.controls['placeOfOriginId'].touched" class="text-danger mt-1 validation-text">
+                                    <div *ngIf="SalesQuoteDetailsForm.controls['placeOfOriginId'].errors.required">
+                                      Place Of Origin is required.
+                                    </div>
+                                  </div>
+                                  <input type="text" formControlName="placeOfOrigin" hidden />
+                            </div>
+                          </div>
+                          <!-- <div class="col-6">
+                            <div class="form-group">
+                                  <label for="carrier" class="">Carrier</label> -->
+                                  <!-- <select (change)="onChangeCarrier($event)" class="form-control" placeholder="carrier"  formControlName="carrierId">
+                                    <option *ngFor="let loc of oceanmaster" [value]="loc.oceanLineId" id="{{loc.oceanLineId}}">{{loc.oceanLineCode}}</option>
+                                  </select> -->
+                                  <!-- <ng-select [items]="oceanmaster"
+                                                bindLabel="oceanLineCode"
+                                                bindValue="oceanLineId"
+                                                (change)="onChangeCarrier($event)"
+                                                formControlName="carrierId" >
+                                  </ng-select>
+                                  <div *ngIf="SalesQuoteDetailsForm.controls['carrierId'].invalid && SalesQuoteDetailsForm.controls['carrierId'].touched" class="text-danger mt-1 validation-text">
+                                    
+                                    <div *ngIf="SalesQuoteDetailsForm.controls['carrierId'].errors.required">
+                                      carrier is required.
+                                    </div>
+                                  </div> -->
+                            <!-- </div>
+                          </div> -->
+                        </div>
+                </div>
+              </div>
+              <div class="row ">
+                  <div class="col-6">
+                    <div class="form-group">
+                          <label for="pol " class="">POL</label>
+                          <!-- <select (change)="onChangepol($event)" class="form-control" placeholder="POL"  formControlName="polid">
+                            <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                          </select> -->
+                          <ng-select [items]="locationmaster"
+                                      bindLabel="locationShortName"
+                                      bindValue="locationId"
+                                      (change)="onChangepol(SalesQuoteDetailsForm,$event)"
+                                      formControlName="polid" >
+                          </ng-select>
+                          <div *ngIf="SalesQuoteDetailsForm.controls['polid'].invalid && SalesQuoteDetailsForm.controls['polid'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteDetailsForm.controls['polid'].errors.required">
+                              POL is required.
+                            </div>
+                          </div>
+                    </div>
+                    <input type="text" formControlName="pol" hidden/>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label for="pod " class="">POD</label>
+                      <!-- <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="podid">
+                        <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                      </select> -->
+                      <ng-select [items]="locationmaster"
+                                      bindLabel="locationShortName"
+                                      bindValue="locationId"
+                                      (change)="onChangepod(SalesQuoteDetailsForm,$event);onChangeMacth($event)"
+                                      formControlName="podid" >
+                      </ng-select>
+                      <div *ngIf="SalesQuoteDetailsForm.controls['podid'].invalid && SalesQuoteDetailsForm.controls['podid'].touched" class="text-danger mt-1 validation-text">
+                        <div *ngIf="SalesQuoteDetailsForm.controls['podid'].errors.required">
+                          POD is required.
+                        </div>
+                        <div *ngIf="SalesQuoteDetailsForm.get('podid').errors">
+                        Pol and Pod should not be equal.
+                        </div>
+                      </div>
+                    </div>
+                    <input type="text" formControlName="pod" hidden/>
+                  </div>
+              </div>
+              <div class="row ">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label for="placeOfDelivery " class="">Transshipment</label>
+                        <!-- <select (change)="onChangepol($event)" class="form-control" placeholder="POL"  formControlName="polid">
+                          <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                        </select> -->
+                        <ng-select [items]="locationmaster"
+                                    bindLabel="locationShortName"
+                                    bindValue="locationId"
+                                    (change)="onChangetransshipment(SalesQuoteDetailsForm,$event)"
+                                    formControlName="placeOfDeliveryId" >
+                        </ng-select>
+                        <div *ngIf="SalesQuoteDetailsForm.controls['placeOfDeliveryId'].invalid && SalesQuoteDetailsForm.controls['placeOfDeliveryId'].touched" class="text-danger mt-1 validation-text">
+                          <div *ngIf="SalesQuoteDetailsForm.controls['placeOfDeliveryId'].errors.required">
+                            Place Of Delivery is required.
+                          </div>
+                        </div>
+                    </div>
+                    <input type="text" formControlName="placeOfDelivery" hidden/>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="pot1id " class="">Final Destination</label>
+                    <!-- <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="podid">
+                      <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                    </select> -->
+                    <ng-select [items]="locationmaster"
+                                    bindLabel="locationShortName"
+                                    bindValue="locationId"
+                                    (change)="onChangefinalDestination(SalesQuoteDetailsForm,$event)"
+                                    formControlName="pot1id" >
+                    </ng-select>
+                    <div *ngIf="SalesQuoteDetailsForm.controls['pot1id'].invalid && SalesQuoteDetailsForm.controls['pot1id'].touched" class="text-danger mt-1 validation-text">
+                      <div *ngIf="SalesQuoteDetailsForm.controls['pot1id'].errors.required">
+                        POD is required.
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" formControlName="pot1" hidden/>
+                </div>
+            </div>
+              <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+                      <label for="companyTypeId ">Transit Time</label>
+                      <input 
+                      type="text"
+                      id="transitTime "
+                      class="form-control form-control-sm"
+                      placeholder="transitTime" 
+                      name="transitTime"
+                      formControlName="transitTime"
+                        />
+                        <div *ngIf="SalesQuoteDetailsForm.controls['transitTime'].invalid && SalesQuoteDetailsForm.controls['transitTime'].touched" class="text-danger mt-1 validation-text">
+                          <div *ngIf="SalesQuoteDetailsForm.controls['transitTime'].errors.required">
+                            Transit Time is required.
+                          </div>
+                        </div>
+                  </div>
+                  </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="pod " class="">Type of Move</label>
+                    <!-- <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="podid">
+                      <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                    </select> -->
+                    <ng-select [items]="moveTypeMasetr"
+                                    bindLabel="typeOfMove"
+                                    bindValue="typeOfMove"
+                                    (change)="onChangetypeOfMove(SalesQuoteDetailsForm,$event)"
+                                    formControlName="typeOfMove" >
+                    </ng-select>
+                    <div *ngIf="SalesQuoteDetailsForm.controls['typeOfMove'].invalid && SalesQuoteDetailsForm.controls['typeOfMove'].touched" class="text-danger mt-1 validation-text">
+                      <div *ngIf="SalesQuoteDetailsForm.controls['typeOfMove'].errors.required">
+                        Type of Move is required.
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <input type="text" formControlName="" hidden/> -->
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="companyTypeName ">Free Time</label>
+                    <input 
+                    type="text"
+                    id="freeTime "
+                    class="form-control form-control-sm"
+                    placeholder="freeTime" 
+                    name="freeTime"
+                    formControlName="freeTime"
+                    />
+                    <div *ngIf="SalesQuoteDetailsForm.controls['freeTime'].invalid && SalesQuoteDetailsForm.controls['freeTime'].touched" class="text-danger mt-1 validation-text">
+                      <div *ngIf="SalesQuoteDetailsForm.controls['freeTime'].errors.required">
+                        Free Time is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col">
+                  <div class="form-group">
+                    <label for="carrierId " class="">Ocean Line</label>
+                                  <!-- <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="podid">
+                                    <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                                  </select> -->
+                                  <ng-select [items]="oceanmaster"
+                                                bindLabel="oceanLineCode"
+                                                bindValue="oceanLineId"
+                                                (change)="onChangeCarrier(SalesQuoteDetailsForm,$event)"
+                                                formControlName="carrierId" >
+                                  </ng-select>
+                                  <div *ngIf="SalesQuoteDetailsForm.controls['carrierId'].invalid && SalesQuoteDetailsForm.controls['carrierId'].touched" class="text-danger mt-1 validation-text">
+                                    
+                                    <div *ngIf="SalesQuoteDetailsForm.controls['carrierId'].errors.required">
+                                      Ocean Line is required.
+                                    </div>
+                                  </div>
+                  </div>
+                  <input type="text" formControlName="carrier" hidden/>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="vesselId " class="">Vessel</label>
+                    <!-- <select (change)="onChangepod($event)" class="form-control" placeholder="POD"  formControlName="podid">
+                      <option *ngFor="let loc of locationmaster" [value]="loc.locationId" id="{{loc.locationId}}">{{loc.locationShortName}}</option>
+                    </select> -->
+                    <ng-select [items]="vesselMastr"
+                                    bindLabel="vesselName"
+                                    bindValue="vesselId"
+                                    (change)="onChangeVessel(SalesQuoteDetailsForm,$event)"
+                                    formControlName="vesselId" >
+                    </ng-select>
+                    <div *ngIf="SalesQuoteDetailsForm.controls['vesselId'].invalid && SalesQuoteDetailsForm.controls['vesselId'].touched" class="text-danger mt-1 validation-text">
+                      <div *ngIf="SalesQuoteDetailsForm.controls['vesselId'].errors.required">
+                        vessel is required.
+                      </div>
+                    </div>
+                  </div>
+                  <input type="text" formControlName="vesselName" hidden/>
+                </div>
+                  <div class="col">
+                      <div class="form-group">
+                        <label for="incoTerm ">IncoTerm</label>
+                        <ng-select [items]="incotermMastr"
+                        bindLabel="incotermName"
+                        bindValue="incotermName"
+                        formControlName="incoTerm" >
+                        </ng-select>
+                        <div *ngIf="SalesQuoteDetailsForm.controls['incoTerm'].invalid && SalesQuoteDetailsForm.controls['incoTerm'].touched" class="text-danger mt-1 validation-text">
+                          <div *ngIf="SalesQuoteDetailsForm.controls['incoTerm'].errors.required">
+                            IncoTerm is required.
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <input type="text" formControlName="incotermName" hidden/> -->
+                  </div>
+                  
+                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                          <label for="notes ">Notes</label>
+                          <input 
+                          type="text"
+                          id="notes "
+                          class="form-control form-control-sm"
+                          placeholder="notes" 
+                          name="notes"
+                          formControlName="notes"
+                          />
+                          <div *ngIf="SalesQuoteDetailsForm.controls['notes'].invalid && SalesQuoteDetailsForm.controls['notes'].touched" class="text-danger mt-1 validation-text">
+                            <div *ngIf="SalesQuoteDetailsForm.controls['notes'].errors.required">
+                              Note is required.
+                            </div>
+                          </div>
+                      </div>
+                </div>
+                  <div class="col">
+                      <div class="form-group">
+                        <label for="parentCompanyName ">Sort Order</label>
+                        <input 
+                        type="number"
+                        id="sortOrder "
+                        class="form-control form-control-sm"
+                        placeholder="0" 
+                        name="sortOrder"
+                        formControlName="sortOrder"
+                        />
+                        <div *ngIf="SalesQuoteDetailsForm.controls['sortOrder'].invalid && (SalesQuoteDetailsForm.controls['sortOrder'].dirty||SalesQuoteDetailsForm.controls['sortOrder'].touched)" class="text-danger mt-1 validation-text">
+                          <div *ngIf="SalesQuoteDetailsForm.controls['sortOrder'].errors.required">
+                            Sort Order is required.
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              
+              </div>
+              <div class="row">
+        
+                <div class="modal-footer">
+                    <!-- <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modal.dismiss(SalesQuoteDetailsForm)">Close</button> -->
+                    <button type="submit" class="btn btn-success" (click)="onSubmitService(SalesQuoteDetailsForm,sqID)"  rippleEffect>Save Data</button>
+                  
+                </div>
+              </div>
+   
+      </form>
+  
+      </div>
+  
+      
+     
+  </ng-template>
+  </div>

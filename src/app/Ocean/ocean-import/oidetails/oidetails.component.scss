@@ -1,0 +1,37 @@
+.breadcrumb{
+    font-size: large;
+  }
+  
+  
+  .addrdata{
+    font-size: 0.84rem;
+    white-space: pre-wrap;
+  }
+  .ng-op-head{
+  background-color: rgb(198 198 198);
+    color: #414141;
+    letter-spacing: -0.7px;
+    font-weight: 500;
+    font-size: .96rem;
+  }
+  .ng-op-head span{
+  padding: .5rem;
+  }
+  .p-head{
+  padding: .4rem;
+  }
+  .p-body{
+  padding: .3rem;
+  }
+  
+  .dropdown-menu {
+  display: block;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+  top: -9px;
+  left: 60%;
+  }
+  

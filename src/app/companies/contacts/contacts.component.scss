@@ -1,0 +1,14 @@
+@import '@core/scss/angular/libs/datatables.component.scss';
+
+.datatable-scroll {
+  width: auto !important;
+}
+.btn-gradient-primary{
+  background: linear-gradient(118deg, #223651, rgba(34, 54, 81, 0.7));
+}
+.btn-gradient-danger{
+  background: linear-gradient(118deg,#ea5455,#f08182);
+}
+.btn-gradient-success{
+background: linear-gradient(118deg,#28c76f,#48da89);
+}

@@ -1,0 +1,113 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <!-- content-header component -->
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <!-- Basic Select start -->
+    <section class="basic-select">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Ng-Select</h4>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 mb-2">
+                  <a href="https://github.com/ng-select/ng-select" target="_blank"
+                    >For more information on ng-select.</a
+                  >
+
+                  <button (click)="exportToExcel()">Export The Report</button>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <label>Basic Select with Search</label>
+                  <div class="form-group">
+                    <!-- Basic Select with Search -->
+                    <ng-select [items]="selectBasic" bindLabel="name" [loading]="selectBasicLoading"> </ng-select>
+                    <!--/ Basic Select with Search -->
+
+                    <ng-select [items]="defaultBindingsList" [(ngModel)]="selectedCity">
+                    </ng-select>
+                  </div>
+                </div>
+<!--                 
+                <div class="col-sm-6 col-12">
+                  <label>Select Group by item</label>
+
+                  <div class="form-group">
+             
+                    <ng-select
+                      [items]="selectGroup"
+                      bindLabel="name"
+                      bindValue="name"
+                      groupBy="country"
+                      [(ngModel)]="selectGroupselected"
+                    >
+                      <ng-template ng-optgroup-tmp let-item="item">
+                        {{ item.country || 'Unnamed group' }}
+                      </ng-template>
+                    </ng-select>
+                    <br />
+                    <small>Selected: {{ selectGroupselected | json }}</small>
+               
+                  </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <label>Select With Icon</label>
+
+                  <div class="form-group">
+                
+                    <ng-select [items]="selectIcon" [(ngModel)]="selectIconSelected" bindLabel="name" bindValue="name">
+                      <ng-template ng-option-tmp ng-label-tmp let-item="item">
+                        <i [class]="item.icon"></i>
+                        {{ item.name }}
+                      </ng-template>
+                    </ng-select>
+                
+                  </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <label>Select with custom Option</label>
+
+                  <div class="form-group">
+           
+                    <ng-select
+                      [items]="selectIcon"
+                      [(ngModel)]="selectCustomSelected"
+                      bindLabel="name"
+                      bindValue="name"
+                    >
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                        <div *ngIf="item.name === 'Firefox'">{{ item.name }}</div>
+                        <div style="margin: 10px 0" class="card" *ngIf="item.name !== 'Safari'">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                            <p class="card-text">
+                              <i [class]="item.icon"></i>
+                              Some quick example text to build
+                            </p>
+                            <div *ngIf="item.name === 'Opera'">
+                              <a href="#" class="card-link">Card link</a>
+                              <a href="#" class="card-link">Another link</a>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                   
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+
+
+  </div>
+</div>

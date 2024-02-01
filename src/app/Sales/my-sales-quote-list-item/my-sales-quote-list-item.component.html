@@ -1,0 +1,168 @@
+
+
+
+<div>
+<div class="mt-2"><h4>Sales Quote Item List</h4></div>
+
+<form action="#" class="invoice-repeater" >
+    <div *ngFor="let item of items; let i = index" >
+      <div class="row d-flex align-items-end mt-2">
+        <div class="col">
+          <div class="form-group ">
+            <label for="chargeItem{{ i }}">Charge Item</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="item.chargeItem"
+              name="chargeItem{{ i }}"
+              id="chargeItem{{ i }}"
+              placeholder="Charge Item"
+          
+            
+            />
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="form-group">
+            <label for="Quantity">Quantity</label>
+            <input
+              type="number"
+              class="form-control"
+              id="Quantity"
+              [(ngModel)]="item.Quantity"
+              name="Quantity{{ i }}"
+              id="Quantity{{ i }}"
+              placeholder="Quantity"
+         
+             
+            />
+          </div>
+        </div>
+  
+        <div class="col">
+          <div class="form-group">
+            <label for="BuyingRate">Buying Rate</label>
+            <input 
+                type="number"  
+                class="form-control" 
+                id="BuyingRate"
+                [(ngModel)]="item.BuyingRate" 
+                name="BuyingRate{{ i }}"
+                placeholder="Buying Rate"
+               
+               
+                />
+          </div>
+        </div>
+  
+        <div class="col">
+            <div class="form-group">
+              <label for="BuyingAmmount">Buying Ammount</label>
+              <input 
+                type="number"  
+                class="form-control" 
+                id="BuyingAmmount" 
+                [(ngModel)]="item.BuyingAmmount" 
+                name="BuyingAmmount{{ i }}"
+                value="{{item.Quantity * item.BuyingRate}}"
+         
+                placeholder="Buying Ammount" 
+                />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="TaxPercentage">Tax Percentage</label>
+              <input 
+                type="number"  
+                class="form-control" 
+                id="TaxPercentage"
+                [(ngModel)]="item.TaxPercentage" 
+                name="TaxPercentage{{ i }}" 
+                value="" 
+              
+                placeholder="0"
+            />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="BuyingTaxAmmount">Buying Tax Ammount</label>
+              <input 
+                
+                type="number"  
+                class="form-control" 
+                id="BuyingTaxAmmount"
+                [(ngModel)]="item.BuyingTaxAmmount" 
+                name="BuyingTaxAmmount{{ i }}"  
+                value="{{( item.Quantity * item.BuyingRate * item.TaxPercentage)/100}}"
+                placeholder="0" 
+            />
+            </div>
+          </div>
+
+        <div class="col">
+          <div class="form-group">
+            <button class="btn btn-outline-danger text-nowrap px-1" (click)="deleteItem(i)" rippleEffect>
+              <i data-feather="x" class="mr-25"></i>
+              <span>Delete</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </form>
+ 
+<!-- 
+  <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="TotalBuyingAmount">Total Buying Amount</label>
+                <input 
+                    type="number"  
+                    class="form-control" 
+                    id="TotalBuyingAmount"
+                    [(ngModel)]="" 
+                    name=""  
+                    value=""
+                    placeholder="0" 
+                />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="TotalBuyingTaxAmount">Total Buying Tax Amount</label>
+                <input 
+                type="number"  
+                class="form-control" 
+                id="TotalBuyingTaxAmount"
+                [(ngModel)]=""
+                name=""
+                value=""
+                placeholder="0" 
+            />
+            </div>
+        </div>
+    </div> -->
+
+  <div class="row mb-3">
+    <div class="col">
+      <button class="btn btn-icon btn-primary mr-5" type="button" (click)="addItem()"  rippleEffect>
+        <i data-feather="plus" class="mr-25"></i>
+        <span>Add Charges</span>
+      </button>
+    </div>
+    <div class="col ">
+      <button type="button" rippleEffect class="btn btn-primary mr-1 ml-5" (click)="save()"> Save Sales Quote Items</button>
+    </div>
+  </div>
+  
+</div>
+
+<!-- 
+<div class=" mt-2 mb-2 container ">
+  <input type="text" [(ngModel)]="bookTitle">
+  <button (click)="onAddTitle()" class="btn btn-primary mr-1">Add Title</button>
+</div> -->

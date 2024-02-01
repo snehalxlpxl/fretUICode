@@ -1,0 +1,265 @@
+<!-- <p>invoice-list works!</p> -->
+
+<h3 class="container p-2" >Invoice List</h3>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="companyProfileLabel">Update</h5> 
+      <!-- {{counter[0].counterId}} 
+      {{counter[0].counterName}} 
+      {{counter[0].counterValue}} 
+     
+{{counterName}} -->
+      <button type="button" class="close" (click)="modal.dismiss(CompanyForm.reset)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  <div class="modal-body">
+      <form [formGroup]="CompanyForm">
+        <div class="col-12">
+          <div class="form-group">
+              <label for="currentInvoiceNumber">Current Invoice Number</label>
+              <input type="text" id="currentInvoiceNumber " class="form-control"
+               name="currentInvoiceNumber"
+              formControlName="currentInvoiceNumber"  readonly />
+          </div>
+
+      </div>
+
+      <input type="text" id="counterId " class="form-control"
+      name="counterId"
+     formControlName="counterId"  hidden />
+
+     <input type="text" id="counterName " class="form-control"
+      name="counterName"
+     formControlName="counterName"  hidden />
+
+      <div class="col-12">
+        <div class="form-group">
+            <label for="invoiceNumber ">New Invoice Number</label>
+            <input type="text" id="invoiceNumber " class="form-control"
+            name="invoiceNumber"
+           formControlName="invoiceNumber"  placeholder="New Invoice No" />
+         
+        </div>
+    </div>
+<!-- 
+    <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="counterValue">
+            <label class="form-check-label" for="counterValue"  formControlName="counterValue">
+                Is Counter Update
+            </label>
+        </div>
+    </div> -->
+    <div class="col-12">
+        <div class="form-group">
+            <label for="currentCounterNumber">Current Counter Number</label>
+            <input type="text" id="currentCounterNumber " class="form-control"
+             name="currentCounterNumber" [(ngModel)]="counterValue"
+            formControlName="currentCounterNumber"  readonly />
+        </div>
+
+    </div>
+   
+    <div class="col-12">
+      <div class="form-group">
+          <label for="counterValue ">New Counter Number</label>
+          <input type="text" id="counterValue " class="form-control"
+          name="counterValue" [(ngModel)]="counterValue"
+         formControlName="counterValue"  placeholder="New Counter Number" />
+       
+      </div>
+     
+  </div>
+    <div class="modal-footer">
+      <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.dismiss()">Close</button>
+      <button type="button" class="btn btn-gradient-success"   (click)="onSubmitService(CompanyForm)" 
+         rippleEffect>Save</button>
+         <!-- [disabled]="CompanyForm.invalid" -->
+         
+  </div>
+      </form>
+  </div>
+</ng-template>
+     
+
+<div class="content-wrapper container-xxl p-0">
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+          <h4 class="card-title">Invoice List</h4>
+      <div class="row">
+        
+        <div class="col-md-6 col-12">
+          <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center"
+              >Show
+              <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              entries</label
+            >
+          </div>
+        </div>
+        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+          <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+            <label class="d-flex align-items-center"
+              >Search<input
+                type="search"
+                placeholder="Search"
+                class="form-control ml-25"
+                (keyup)="filterUpdate($event)"
+                (search)="filterUpdate($event)"
+            /></label>
+            <!-- <button class="btn btn-gradient-primary ml-2" routerLink="/oedetails"><i data-feather="plus" class="mr-0 mr-sm-1"></i>New Ocean Export</button> -->
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <ngx-datatable
+        [rows]="kitchenSinkRows"
+        [rowHeight]="58"
+        class="bootstrap core-bootstrap"
+        [limit]="10"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [scrollbarH]="true"
+        [selectionType]="SelectionType.checkbox"
+        [limit]="basicSelectedOption"
+   
+        
+      >
+      <!-- 
+        (activate)="onActivate($event)"
+       -->
+      
+        <ngx-datatable-column
+          [width]="50"
+          [sortable]="false"
+          [canAutoResize]="false"
+          [draggable]="false"
+          [resizeable]="false"
+        >
+          <ng-template
+            ngx-datatable-header-template
+            let-value="value"
+            let-allRowsSelected="allRowsSelected"
+            let-selectFn="selectFn"
+          >
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [checked]="allRowsSelected"
+                (change)="selectFn(!allRowsSelected)"
+                id="headerChkbxRef"
+              />
+              <label class="custom-control-label" for="headerChkbxRef"></label>
+            </div>
+          </ng-template>
+          <ng-template
+            ngx-datatable-cell-template
+            let-rowIndex="rowIndex"
+            let-value="value"
+            let-isSelected="isSelected"
+            let-onCheckboxChangeFn="onCheckboxChangeFn"
+          >
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [checked]="isSelected"
+                (change)="onCheckboxChangeFn($event)"
+                id="rowChkbxRef{{ rowIndex }}"
+              />
+              <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Job No " prop="jobNo" [width]="120">
+        
+          <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">                  
+              <div class="cell-line-height">
+                <a  routerLink="/oedetails/{{row.cargoId}}" class="font-medium-1 d-block"
+                  ><span class="font-weight-bold">{{ name }}</span></a>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column> -->
+
+        <ngx-datatable-column name="invoice Number" prop="invoiceNumber" [width]="170"></ngx-datatable-column>
+
+        <ngx-datatable-column name="invoice Type" prop="invoiceType" [width]="190"></ngx-datatable-column>
+        <ngx-datatable-column name="paying Party" prop="payingParty" [width]="300"></ngx-datatable-column>
+        <ngx-datatable-column name="job Number " prop="jobNumber" [width]="140"></ngx-datatable-column>
+        <ngx-datatable-column name="vessel Voyage" prop="vesselVoyage" [width]="250"></ngx-datatable-column>
+        <ngx-datatable-column name="cycle " prop="cycle" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="cargo Type" prop="cargoType" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="freight Status " prop="freightStatus" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="pol  " prop="pol" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="final Destination" prop="finalDestination" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="date Created" prop="dateCreated" [width]="200">
+           <ng-template let-value="value" ngx-datatable-cell-template>{{value |
+          date:'dd-MM-yyyy HH:MM'}}</ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="dateModified" prop="dateModified" [width]="200">
+          <ng-template let-value="value" ngx-datatable-cell-template>{{value |
+            date:'dd-MM-yyyy HH:MM'}}</ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                  <span class="d-none d-sm-inline-block" (click)="populateForm(row.invoiceId,modalForm)" >Button </span>
+              </button>
+              <!-- {{row|json}} -->
+          </ng-template>
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+          <ng-template ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">
+              <div ngbDropdown container="body">
+                <a
+                  ngbDropdownToggle
+                  href="javascript:void(0);"
+                  class="hide-arrow"
+                  id="dropdownBrowserState"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                </a>
+                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="file-text" class="mr-50"></i> Details</a
+                  >
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="archive" class="mr-50"></i> Archive</a
+                  >
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="trash-2" class="mr-50"></i> Delete</a
+                  >
+                </div>
+              </div>
+      
+              <i data-feather="edit" class="text-primary cursor-pointer"></i>
+            </div>
+          </ng-template>
+        </ngx-datatable-column> -->
+      </ngx-datatable>
+        
+      </core-card-snippet>
+      </section>
+      
+
+</div>

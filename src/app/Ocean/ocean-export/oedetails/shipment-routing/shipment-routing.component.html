@@ -1,0 +1,425 @@
+<!-- <p>shipment-routing works!</p> -->
+
+<div class="content-wrapper container-xxl p-0">
+   
+
+    <ng-template #modalForm let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title" id="companyProfileLabel">Ocean Routing</h5>
+            <button type="button" class="close" (click)="modal.dismiss(ContainerForm.reset)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+
+            <form [formGroup]="ContainerForm">
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group row">
+                            <label for="pol " class="col-sm-4 col-form-label">Port of Loading (POL)</label>
+                            <div class="col-12">
+                            <ng-select
+                                [items]="GetPOL"
+                                bindLabel="locationShortName"
+                                bindValue="locationId"
+                                formControlName="polid" 
+                                placeholder="POL"
+                                (change)="onpol($event)">
+                            </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group row">
+                            <label for="pod " class="col-sm-4 col-form-label">Port of Destination (POD)</label>
+                            <div class="col-12">
+                            <ng-select
+                                [items]="GetPOD"
+                                bindLabel="locationShortName"
+                                bindValue="locationId"
+                                formControlName="podid" 
+                                placeholder="POD"
+                                (change)="onpod($event)">
+                            </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+ 
+                <div class="row mr-1">
+                    <div class="col">
+                    <div class="form-group row">
+                        <label for="etd "  class="col-sm-4 col-form-label"> ETD </label>
+                        <div class="col-12">
+                            <input type="date" id="etd" class="form-control" placeholder="ETD"
+                                name="etd" formControlName="etd" />
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group row">
+                            <label for="eta "  class="col-sm-4 col-form-label"> ETA </label>
+                            <div class="col-12">
+                                <input type="date" id="etd" class="form-control" placeholder="ETA"
+                                    name="eta" formControlName="eta" />
+                            </div>
+                        </div>
+                        </div>
+                </div>
+
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="loadingTerminalName ">Loading Pier Terminal</label>
+                            <input type="text" id="loadingTerminalName " class="form-control"
+                                placeholder="Loading Pier Terminal" name="loadingTerminalName"
+                                formControlName="loadingTerminalName"  maxlength="15" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="unloadingTerminalName ">Unloading Pier Terminal</label>
+                            <input type="text" id="unloadingTerminalName" class="form-control"
+                                placeholder="unloadingPierTerminal" name="unloadingTerminalName"
+                                formControlName="unloadingTerminalName"  maxlength="15" />
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="oceanLiner ">Ocean Liner</label>
+                            <ng-select
+                                [items]="GetOceanLiner"
+                                bindLabel="lineCallSign"
+                                bindValue="oceanLineId"
+                                formControlName="oceanCarrierId" 
+                                placeholder="Ocean Liner"
+                                (change)="onOceanLiner($event)">
+
+                                <ng-template ng-header-tmp>
+                                    <div class="d-flex align-items-center ng-op-head" >
+                                      <div class="col-md-1 text-center p-0">#</div>
+                                        <div class="col-md-5 text-center border-left"><div class="p-head">Code</div></div>
+                                        <div class="col-md-6 text-center border-left"><div class="p-head">Line Call Sign</div></div>
+                                    </div>
+                                  </ng-template>
+                                  <ng-template ng-label-tmp let-item="item">
+                                    <b>{{item.lineCallSign}}</b>
+                                  </ng-template>
+                                  
+                                  <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                    <div class="d-flex addrdata">
+                                      <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                      <div class="col-md-5 border-left  p-body pl-1">{{item.oceanLineCode}}</div>
+                                      <div class="col-md-6 border-left  p-body pl-1">{{item.lineCallSign}}</div>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="carrierAgent">Carrier Agent</label>
+                            <ng-select
+                                [items]="GetCarrierAgent"
+                                bindLabel="companyName"
+                                bindValue="companyId"
+                                formControlName="containerAgentId" 
+                                placeholder="Carrier Agent"
+                                (change)="onCarrierAgent($event)">
+                            </ng-select>
+                           
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="vesel ">Vessel</label>
+                            <ng-select
+                                [items]="GetVessel"
+                                bindLabel="vesselName"
+                                bindValue="vesselId"
+                                formControlName="vesselId" 
+                                placeholder="Vessel"
+                                (change)="onVessel($event)">
+
+                        
+                            </ng-select>
+                           
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="flag">Flag</label>
+                            <ng-select
+                                [items]="GetFlag"
+                                bindLabel="countryName"
+                                bindValue="countryId"
+                                formControlName="vesselFlagId" 
+                                placeholder="Select Country"
+                                (change)="onFlag($event)">
+
+                                <ng-template ng-header-tmp>
+                                    <div class="d-flex align-items-center ng-op-head" >
+                                      <div class="col-md-1 text-center p-0">#</div>
+                                        <div class="col-md-5 text-center border-left"><div class="p-head">Country Code</div></div>
+                                        <div class="col-md-6 text-center border-left"><div class="p-head">Country Name</div></div>
+                                    </div>
+                                  </ng-template>
+                                  <ng-template ng-label-tmp let-item="item">
+                                    <b>{{item.countryName}}</b>
+                                  </ng-template>
+                                  
+                                  <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                                    <div class="d-flex addrdata">
+                                      <div class="col-md-1 text-center  p-body">{{index+1}}</div>
+                                      <div class="col-md-5 border-left  p-body pl-1">{{item.countryCode}}</div>
+                                      <div class="col-md-6 border-left  p-body pl-1">{{item.countryName}}</div>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
+                           
+                        </div>
+                    </div>
+                 </div>   
+
+                 <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="builtYear ">Built</label>
+                            <input type="text" id="builtYear" class="form-control"
+                                placeholder="Built" name="builtYear"
+                                formControlName="builtYear"  maxlength="15" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="llyodsCode ">LLYODS CODE</label>
+                            <input type="text" id="llyodsCode" class="form-control"
+                                placeholder="LLYODS CODE" name="llyodsCode"
+                                formControlName="llyodsCode"  maxlength="15" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="voyageNumber ">Voyage</label>
+                            <input type="text" id="voyageNumber" class="form-control"
+                                placeholder="voyageNumber" name="voyageNumber"
+                                formControlName="voyageNumber"  maxlength="15" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="documentCutoffDate ">Document Cutoff Date</label>
+                            <input type="date" id="documentCutoffDate" class="form-control"
+                                placeholder="Document Cutoff Date" name="documentCutoffDate"
+                                formControlName="documentCutoffDate"  maxlength="15" />
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gatesClosingDate ">Gates Closings Date</label>
+                            <input type="date" id="gatesClosingDate" class="form-control"
+                                placeholder="Gates Closing Date" name="gatesClosingDate"
+                                formControlName="gatesClosingDate"/>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="loadingDate ">Loading Date</label>
+                            <input type="date" id="loadingDate" class="form-control"
+                                placeholder="Loading Date" name="loadingDate"
+                                formControlName="loadingDate"/>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="blinstructionCutoff ">BL Instruction Cutoff Date</label>
+                            <input type="date" id="blinstructionCutoff" class="form-control"
+                                placeholder="BL Instruction Cutoff Date" name="blinstructionCutoff"
+                                formControlName="blinstructionCutoff"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mr-1">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="imonumber ">IMO Number</label>
+                            <input type="text" id="imonumber" class="form-control"
+                                placeholder="imonumber" name="imonumber"
+                                formControlName="imonumber"   />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="bookingNumber ">Booking Number</label>
+                            <input type="text" id="bookingNumber" class="form-control"
+                                placeholder="bookingNumber" name="bookingNumber"
+                                formControlName="bookingNumber"  maxlength="15" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="bookingDate">Booking Date</label>
+                            <input type="date" id="bookingDate" class="form-control"
+                                placeholder="bookingDate" name="bookingDate"
+                                formControlName="bookingDate" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="inttrarefNo ">Intra REF </label>
+                            <input type="text" id="inttrarefNo" class="form-control"
+                                placeholder="inttrarefNo" name="inttrarefNo"
+                                formControlName="inttrarefNo"  />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        (click)="modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-gradient-success"  (click)="onSubmitService(ContainerForm)" 
+                       rippleEffect>Save</button>
+                       <!-- [disabled]="ContainerForm.invalid"
+                       -->
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+    </ng-template>
+
+    <!--Datatables-->
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+            <!-- <div class="col-6 col-sm-4">
+                <button class="btn btn-primary ml-1 mb-2" rippleEffect (click)="modalOpenForm(modalForm)">
+                    <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New
+                        Address</span>
+                </button>
+            </div> -->
+            <div class="row" mt-4>
+
+                <!-- <div class="col-md-6 col-12">
+                    <div class="d-flex justify-content-between align-items-center m-1">
+                        <label class="d-flex align-items-center">Show
+                            <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            entries</label>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-6 col-12 d-flex justify-content-md-end">
+                    <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+                        <label class="d-flex align-items-center">Search<input type="search" placeholder="Search"
+                                class="form-control ml-25" (keyup)="filterUpdate($event)"
+                                (search)="filterUpdate($event)" /></label>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <ngx-datatable [rows]="kitchenSinkRows" [rowHeight]="58" class="bootstrap core-bootstrap" [limit]="10"
+                [columnMode]="ColumnMode.force" [headerHeight]="40" [footerHeight]="50" [scrollbarH]="true" [columnMode]="ColumnMode.force"
+                [selectionType]="SelectionType.checkbox" [limit]="basicSelectedOption" (select)="onSelect($event)" >
+                <!-- (activate)="onActivate($event)" -->
+
+                <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+                    [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                        let-selectFn="selectFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)" id="headerChkbxRef" />
+                            <label class="custom-control-label" for="headerChkbxRef"></label>
+                        </div>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                        let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" [checked]="isSelected"
+                                (change)="onCheckboxChangeFn($event)" id="rowChkbxRef{{ rowIndex }}" />
+                            <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="POL" prop="pol" [width]="180">
+                      <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+                        <div (click)="populateForm(row,modalForm)" class="cursor-pointer"><b>{{row.pol}}</b></div>
+                      </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="POD" prop="pod" [width]="180">
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Loading Terminal Name" prop="loadingTerninalName" [width]="140"></ngx-datatable-column>
+                
+                <ngx-datatable-column name="Ocean Carrier Name" prop="oceanCarrierName" [width]="200"></ngx-datatable-column>
+                <ngx-datatable-column name="Vessel Name" prop="vesselName" [width]="200"></ngx-datatable-column>
+                
+                <ngx-datatable-column name="etd" prop="etd" [width]="200">
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |date:'dd-MM-yyyy HH:MM'}}</ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="eta" prop="eta" [width]="120">
+                    <ng-template let-value="value" ngx-datatable-cell-template>{{value |date:'dd-MM-yyyy HH:MM'}}</ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                            <span class="d-none d-sm-inline-block" (click)="populateForm(row,modalForm)">Edit</span>
+                        </button>
+
+                        <button class="btn btn-gradient-danger ml-1 me-2" (click)="onDelete(row.oceanRoutingId)"
+                            [swal]="SweetAlertConfirmColor" rippleEffect>
+                            <span class="d-none d-sm-inline-block ">Delete</span>
+                        </button>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                        <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+                        <!-- Swal of Sweet Alert ConfirmColor -->
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        <div class="col-2">
+            <button class="btn btn-gradient-primary" rippleEffect (click)="modalOpenForm(modalForm)">
+                <i data-feather="plus" class="mr-0 mr-sm-1"></i><span class="d-none d-sm-inline-block">New Ocean Routing</span>
+            </button>
+        </div>
+        </core-card-snippet>
+    </section>
+
+
+</div>

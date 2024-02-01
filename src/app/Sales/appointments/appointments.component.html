@@ -1,0 +1,363 @@
+<!-- <p>appointments works!</p> -->
+
+<div class="content-wrapper container-xxl p-0">
+    
+            <ng-template #modalForm let-modal>
+                <div class="modal-header">
+                 <h5 class="modal-title" id="companyProfileLabel">Add Company</h5>
+                 <button type="button" class="close" (click)="modal.dismiss(CompanyForm.reset)" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                 </button>
+                </div>
+
+                <div class="modal-body">
+                  
+                    <form [formGroup]="CompanyForm"  >
+                        
+                                <div class="form-group row">
+                                <label for="CompanyName " class="col-sm-4 col-form-label">Company Name :</label>
+                                <div class="col-12">
+                                    <input 
+                                    type="text"
+                                    id="companyName "
+                                    class="form-control"
+                                    placeholder="Company Name" 
+                                    name="companyName"
+                                    formControlName="companyName"
+                                    />
+                                    <span class="text-danger"
+                                              *ngIf="(CompanyForm.controls['companyName'].touched || submitted) && CompanyForm.controls['companyName'].errors?.['required']">Company Name is required*
+                                    </span>
+                                </div>
+                            </div>
+                           
+                            <div class="form-group row">
+                                    <label for="displayName ">Display Company Name :</label>
+                                    <div class="col-12">
+                                    <input 
+                                    type="text"
+                                    id="displayName "
+                                    class="form-control"
+                                    placeholder="Display Company Name" 
+                                    name="displayName"
+                                    formControlName="displayName"
+                                    />
+                                    <span class="text-danger"
+                                              *ngIf="(CompanyForm.controls['displayName'].touched || submitted) && CompanyForm.controls['displayName'].errors?.['required']">Display Name is required*
+                                    </span>
+                                  </div>
+                            </div>
+                          
+                      
+
+
+                        <div class="row mr-1" >
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="companyTypeId ">Company Type Id :</label>
+                                <input 
+                                type="text"
+                                id="companyTypeId "
+                                class="form-control"
+                                placeholder="company Type Id" 
+                                name="companyTypeId"
+                                formControlName="companyTypeId"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['companyTypeId'].touched || submitted) && CompanyForm.controls['companyTypeId'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="companyTypeName ">Company Type Name:</label>
+                                <input 
+                                type="text"
+                                id="companyTypeName "
+                                class="form-control"
+                                placeholder="CompanyTypeName" 
+                                name="companyTypeName"
+                                formControlName="companyTypeName"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['companyTypeName'].touched || submitted) && CompanyForm.controls['companyTypeName'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="parentCompanyId ">Parent Company Id:</label>
+                                <input 
+                                type="text"
+                                id="parentCompanyId "
+                                class="form-control"
+                                placeholder="Parent Company Id" 
+                                name="parentCompanyId"
+                                formControlName="parentCompanyId"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['parentCompanyId'].touched || submitted) && CompanyForm.controls['parentCompanyId'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row mr-1" >
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="parentCompanyName ">Parent Company Name  :</label>
+                                <input 
+                                type="text"
+                                id="parentCompanyName "
+                                class="form-control"
+                                placeholder="Parent Company Name" 
+                                name="parentCompanyName"
+                                formControlName="parentCompanyName"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['parentCompanyName'].touched || submitted) && CompanyForm.controls['parentCompanyName'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="gstNumber ">gst Number :</label>
+                                <input 
+                                type="text"
+                                id="gstNumber "
+                                class="form-control"
+                                placeholder="gstNumber" 
+                                name="gstNumber"
+                                formControlName="gstNumber"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['gstNumber'].touched || submitted) && CompanyForm.controls['gstNumber'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="gstType ">gst Type</label>
+                                <input 
+                                type="text"
+                                id="gstType "
+                                class="form-control"
+                                placeholder="gst Type" 
+                                name="gstType"
+                                formControlName="gstType"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['gstType'].touched || submitted) && CompanyForm.controls['gstType'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row mr-1" >
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="placeOfSupply ">placeOfSupply</label>
+                                <input 
+                                type="text"
+                                id="placeOfSupply "
+                                class="form-control"
+                                placeholder="place Of Supply" 
+                                name="placeOfSupply"
+                                formControlName="placeOfSupply"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['placeOfSupply'].touched || submitted) && CompanyForm.controls['placeOfSupply'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                <label for="website ">website  :</label>
+                                <input 
+                                type="text"
+                                id="website "
+                                class="form-control"
+                                placeholder="website " 
+                                name="website"
+                                formControlName="website"
+                                />
+                                <span class="text-danger"
+                                *ngIf="(CompanyForm.controls['website'].touched || submitted) && CompanyForm.controls['website'].errors?.['required']">Display Name is required*
+                      </span>
+                            </div>
+                            
+                        
+                            </div>
+                        </div>
+                  
+                    <div class="modal-footer">
+                        <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modal.dismiss()">Close</button>
+                        <button type="button" class="btn btn-success" (click)="onSubmitService(CompanyForm)"  [disabled]="CompanyForm.invalid" rippleEffect>Save Data</button>
+                      
+                    </div>
+                        
+                    </form>
+
+                </div>
+
+                
+               
+            </ng-template>
+            
+<!--Datatables-->
+
+<section id="ngx-datatable-kitchen-sink">
+    <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+      <h4 class="card-title">Company-List</h4>
+
+      <div class="col-6 col-sm-4" >
+        <button class="btn btn-primary ml-1" rippleEffect (click)="modalOpenForm(modalForm)">
+          <i data-feather="plus" class="mr-0 mr-sm-1" ></i
+          ><span class="d-none d-sm-inline-block" >Add New Company</span>
+        </button>
+      </div>
+  <div class="row">
+    
+    <div class="col-md-6 col-12">
+      <div class="d-flex justify-content-between align-items-center m-1">
+        <label class="d-flex align-items-center"
+          >Show
+          <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          entries</label
+        >
+      </div>
+    </div>
+    <div class="col-md-6 col-12 d-flex justify-content-md-end">
+      <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+        <label class="d-flex align-items-center"
+          >Search<input
+            type="search"
+            placeholder="Search"
+            class="form-control ml-25"
+            (keyup)="filterUpdate($event)"
+            (search)="filterUpdate($event)"
+        /></label>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <ngx-datatable
+    [rows]="kitchenSinkRows"
+    [rowHeight]="58"
+    class="bootstrap core-bootstrap"
+    [limit]="10"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="40"
+    [footerHeight]="50"
+    [scrollbarH]="true"
+    [selectionType]="SelectionType.checkbox"
+    [limit]="basicSelectedOption"
+    (select)="onSelect($event)"
+    
+  >
+  <!-- (select)="onSelect($event)"
+    (activate)="onActivate($event)"
+  [columnMode]="ColumnMode.force" -->
+  
+    <ngx-datatable-column
+      [width]="50"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+    >
+      <ng-template
+        ngx-datatable-header-template
+        let-value="value"
+        let-allRowsSelected="allRowsSelected"
+        let-selectFn="selectFn"
+      >
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [checked]="allRowsSelected"
+            (change)="selectFn(!allRowsSelected)"
+            id="headerChkbxRef"
+          />
+          <label class="custom-control-label" for="headerChkbxRef"></label>
+        </div>
+      </ng-template>
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-isSelected="isSelected"
+        let-onCheckboxChangeFn="onCheckboxChangeFn"
+      >
+        <div class="custom-control custom-checkbox">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            [checked]="isSelected"
+            (change)="onCheckboxChangeFn($event)"
+            id="rowChkbxRef{{ rowIndex }}"
+          />
+          <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Company Name" prop="companyName" [width]="280">
+    
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Display Name" prop="displayName" [width]="250"></ngx-datatable-column>
+    <ngx-datatable-column name="Company Type Id" prop="companyTypeId" [width]="250"></ngx-datatable-column>
+    <ngx-datatable-column name="Company Type Name" prop="companyTypeName" [width]="200"></ngx-datatable-column>
+    <ngx-datatable-column name="Parent Company Id" prop="parentCompanyId" [width]="200"></ngx-datatable-column>
+    <ngx-datatable-column name="Gst Number" prop="gstNumber" [width]="200"></ngx-datatable-column>
+    <ngx-datatable-column name="Gst SType" prop="gstType" [width]="200"></ngx-datatable-column>
+    
+    <ngx-datatable-column name="Place Of Supply" prop="placeOfSupply" [width]="250"></ngx-datatable-column>
+    <ngx-datatable-column name="Website" prop="website" [width]="200"></ngx-datatable-column>
+    <ngx-datatable-column name="Date Created" prop="dateCreated" [width]="200">
+
+      <ng-template let-value="value" ngx-datatable-cell-template>{{value | date:'dd-MM-yyyy'}}</ng-template>
+     <!-- {{formatdate | date:'short'}} -->
+    </ngx-datatable-column>
+    
+    <!-- <ng-template let-value="value" ngx-datatable-cell-template>{{myDate | date:'dd-MM-yyyy'}}</ng-template>
+               
+              </ngx-datatable-column> -->
+    <ngx-datatable-column name="Created By" prop="createdBy" [width]="100"></ngx-datatable-column>
+   
+            
+          <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-primary ml-1" rippleEffect>
+                <span class="d-none d-sm-inline-block" (click)="populateForm(row,modalForm)">Edit</span>
+               </button>
+            
+               <button class="btn btn-danger ml-1 me-2" (click)="onDelete(row.companyId)" [swal]="SweetAlertConfirmColor" rippleEffect>
+                <span class="d-none d-sm-inline-block ">Delete</span>
+               </button>
+                                  <!-- Swal of Sweet Alert ConfirmColor -->
+                    <swal #SweetAlertConfirmColor (open)="ConfirmColorOpen()"></swal>
+                    <!-- Swal of Sweet Alert ConfirmColor -->
+             </ng-template>
+             </ngx-datatable-column>
+           
+    
+    
+  </ngx-datatable>
+    
+  </core-card-snippet>
+  </section>
+
+      
+</div>

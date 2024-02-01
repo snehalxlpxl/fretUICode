@@ -1,0 +1,243 @@
+<h3 class="container p-2" >Ocean Export</h3>
+
+<ng-template #modalForm let-modal>
+  <div class="modal-header">
+      <h5 class="modal-title" id="companyProfileLabel">Update</h5>
+      <button type="button" class="close" (click)="modal.dismiss(CompanyForm.reset)" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  <div class="modal-body">
+      <form [formGroup]="CompanyForm">
+        <div class="col-12">
+          <div class="form-group">
+              <label for="customer ">Customer</label>
+              <!-- <ng-select [items]="GetCustomer"
+                  bindLabel="companyName"
+                  bindValue="companyId"
+                  formControlName="customerId" 
+                  placeholder="Customer"
+                  (change)="onCustomer($event,form)">
+              </ng-select> -->
+              <ng-select [items]="GetCustomer"
+                bindLabel="companyName"
+                bindValue="companyId"
+                formControlName="customerId" 
+                placeholder="Customer"
+                (change)="onCustomer($event,form)">
+            </ng-select>
+              <!-- <div *ngIf="CompanyForm.controls['customerId'].invalid  && CompanyForm.controls['customerId'].touched"
+                      class="text-danger">
+                  <div *ngIf="CompanyForm.controls['customerId'].errors.required">
+                      Customer is required.
+                  </div>
+              </div>  -->
+          </div>
+          <!-- <input type="text" formControlName="cust" hidden/> -->
+
+      </div>
+      <input type="text" formControlName="accountId" hidden/>
+      <input type="text" formControlName="accountName" hidden/>
+      <input type="text" formControlName="opportunityId" hidden/> 
+      <!-- <input type="text" formControlName="opportunityId" hidden/>  -->
+
+      <div class="col-12">
+        <div class="form-group">
+            <label for="salesPerson ">Sales Person</label>
+            <ng-select [items]="GetSalesPerson"
+                bindLabel="userDisplayName"
+                bindValue="userId"
+                formControlName="opportunityOwnerId" 
+                placeholder="Sales Person"
+                (change)="onSalesPerson($event,form)">
+            </ng-select>
+            <!-- <div *ngIf="CompanyForm.controls['opportunityOwnerId'].invalid  && CompanyForm.controls['opportunityOwnerId'].touched"
+                    class="text-danger">
+                <div *ngIf="CompanyForm.controls['opportunityOwnerId'].errors.required">
+                    Sales Person is required.
+                </div>
+            </div>  -->
+        </div>
+        <input type="text" formControlName="sales" hidden/>
+    </div>
+    <div class="modal-footer">
+      <button #closeModal type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          (click)="modal.dismiss()">Close</button>
+      <button type="button" class="btn btn-gradient-success" [disabled]="CompanyForm.invalid"  (click)="onSubmitService(CompanyForm)" 
+         rippleEffect>Save</button>
+         
+  </div>
+      </form>
+  </div>
+</ng-template>
+      
+
+<div class="content-wrapper container-xxl p-0">
+
+    <section id="ngx-datatable-kitchen-sink">
+        <core-card-snippet [snippetCode]="_snippetCodeKitchenSink">
+          <h4 class="card-title">Ocean Export List</h4>
+      <div class="row">
+        
+        <div class="col-md-6 col-12">
+          <div class="d-flex justify-content-between align-items-center m-1">
+            <label class="d-flex align-items-center"
+              >Show
+              <select class="form-control mx-25" [(ngModel)]="basicSelectedOption">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              entries</label
+            >
+          </div>
+        </div>
+        <div class="col-md-6 col-12 d-flex justify-content-md-end">
+          <div class="d-flex align-items-center justify-content-end pr-1 pb-1 pl-1 pl-md-0 pb-md-0">
+            <label class="d-flex align-items-center"
+              >Search<input
+                type="search"
+                placeholder="Search"
+                class="form-control ml-25"
+                (keyup)="filterUpdate($event)"
+                (search)="filterUpdate($event)"
+            /></label>
+            <button class="btn btn-gradient-primary ml-2" routerLink="/oedetails"><i data-feather="plus" class="mr-0 mr-sm-1"></i>New Ocean Export</button>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <ngx-datatable
+        [rows]="kitchenSinkRows"
+        [rowHeight]="58"
+        class="bootstrap core-bootstrap"
+        [limit]="10"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [scrollbarH]="true"
+        [selectionType]="SelectionType.checkbox"
+        [limit]="basicSelectedOption"
+   
+        
+      >
+      <!-- 
+        (activate)="onActivate($event)"
+       -->
+      
+        <ngx-datatable-column
+          [width]="50"
+          [sortable]="false"
+          [canAutoResize]="false"
+          [draggable]="false"
+          [resizeable]="false"
+        >
+          <ng-template
+            ngx-datatable-header-template
+            let-value="value"
+            let-allRowsSelected="allRowsSelected"
+            let-selectFn="selectFn"
+          >
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [checked]="allRowsSelected"
+                (change)="selectFn(!allRowsSelected)"
+                id="headerChkbxRef"
+              />
+              <label class="custom-control-label" for="headerChkbxRef"></label>
+            </div>
+          </ng-template>
+          <ng-template
+            ngx-datatable-cell-template
+            let-rowIndex="rowIndex"
+            let-value="value"
+            let-isSelected="isSelected"
+            let-onCheckboxChangeFn="onCheckboxChangeFn"
+          >
+            <div class="custom-control custom-checkbox">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                [checked]="isSelected"
+                (change)="onCheckboxChangeFn($event)"
+                id="rowChkbxRef{{ rowIndex }}"
+              />
+              <label class="custom-control-label" for="rowChkbxRef{{ rowIndex }}"></label>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Job No " prop="jobNo" [width]="120">
+        
+          <ng-template let-row="row" let-name="value" ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">                  
+              <div class="cell-line-height">
+                <a  routerLink="/oedetails/{{row.cargoId}}" class="font-medium-1 d-block"
+                  ><span class="font-weight-bold">{{ name }}</span></a>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Estimated Amount" prop="amount" [width]="170"></ngx-datatable-column>
+
+        <ngx-datatable-column name="Transport Direction " prop="transportDirection" [width]="190"></ngx-datatable-column>
+        <ngx-datatable-column name="mode Of Transport" prop="modeOfTransport" [width]="170"></ngx-datatable-column>
+        <ngx-datatable-column name="consignee " prop="consignee" [width]="340"></ngx-datatable-column>
+        <ngx-datatable-column name="shipper" prop="shipper" [width]="250"></ngx-datatable-column>
+        <ngx-datatable-column name="pol " prop="pol" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="pod" prop="pod" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="dateCreated " prop="dateCreated" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="dateModified" prop="dateModified" [width]="200"></ngx-datatable-column>
+        <ngx-datatable-column name="Actions" [width]="180" [sortable]="false" prop="id">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <button class="btn btn-gradient-primary ml-1" rippleEffect>
+                  <span class="d-none d-sm-inline-block" (click)="populateForm(row.cargoId,modalForm)">Button</span>
+              </button>
+              <!-- {{row|json}} -->
+          </ng-template>
+        </ngx-datatable-column>
+        <!-- <ngx-datatable-column name="Actions" [width]="120" [sortable]="false">
+          <ng-template ngx-datatable-cell-template>
+            <div class="d-flex align-items-center">
+              <div ngbDropdown container="body">
+                <a
+                  ngbDropdownToggle
+                  href="javascript:void(0);"
+                  class="hide-arrow"
+                  id="dropdownBrowserState"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i data-feather="more-vertical" class="text-primary cursor-pointer mr-50"></i>
+                </a>
+                <div ngbDropdownMenu class="dropdown-menu-right" aria-labelledby="dropdownBrowserState">
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="file-text" class="mr-50"></i> Details</a
+                  >
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="archive" class="mr-50"></i> Archive</a
+                  >
+                  <a href="javascript:void(0)" ngbDropdownItem class="d-flex align-items-center"
+                    ><i data-feather="trash-2" class="mr-50"></i> Delete</a
+                  >
+                </div>
+              </div>
+      
+              <i data-feather="edit" class="text-primary cursor-pointer"></i>
+            </div>
+          </ng-template>
+        </ngx-datatable-column> -->
+      </ngx-datatable>
+        
+      </core-card-snippet>
+      </section>
+      
+
+</div>

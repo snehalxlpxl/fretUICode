@@ -1,0 +1,338 @@
+<div class="content-wrapper container-xxl p-0">
+<div class="table-container">
+  <div class="row pt-2">
+    <!-- <button class="btn btn-primary" (click)="addCostSheet()"  [disabled]="isButtonDisabled">Generate Cost Sheet</button> -->
+    <button class="btn ml-1 btn-gradient-primary" (click)="patch()">Patch value</button>
+      <button class="btn ml-2  btn-gradient-primary" (click)="addRow()">Add Charges</button>
+  </div>
+  <div class="pt-2">
+    <form [formGroup]="chargesForm"> 
+      <table class="table table-bordered table-responsive"  >
+        <thead>
+          <tr class="text-uppercase">
+            
+            <th colspan="3" >Charge</th>
+            <th colspan="5" >Buying</th>
+            <th colspan="5">Selling</th>
+            <th colspan="2"  >Paying Party</th>           
+            <th>Action</th> 
+          </tr>
+          <tr>
+            <th>Charge_Item</th>
+            <th>Quantity</th>
+            <th>Apply Per</th>
+
+            <th>Buying Rate</th>
+            <th>Currency</th>
+            <th>Tax Percentage</th>
+            <!-- <th>Buy ExRate</th> -->
+            <th>Buying Amount</th>
+            <th>Buy Tax Amount</th>
+
+            <th>Selling Rate</th>
+            <th>Currency</th>
+            <th>Tax Percentage</th>
+            <!-- <th>Sell ExRate</th> -->
+            <th>Selling Amount</th>
+            <th>Sell Tax Amt</th>
+
+
+            <th>Invoice To</th>
+            <th>Pay To</th>
+            <!-- <th>Bill No</th>
+            <th>Bill Date</th> -->
+
+            <th>Action</th>
+          </tr>
+        </thead>
+       
+        <tbody formArrayName="Rows">
+          <tr
+              *ngFor="
+                let itemrow of chargesForm.controls.Rows;
+                let i = index;
+                let l = last
+              "
+              [formGroupName]="i"
+            >
+         
+              
+              <!-- <td>
+                <input type="text" class="form-control" formControlName="firstname" placeholder="Enter First">
+                <div class="text-danger" *ngIf="getFormControls.controls[i].get('firstname')?.touched">
+                  <span *ngIf="getFormControls.controls[i].get('firstname')?.errors?.['required']">Required</span>
+                  <span *ngIf="getFormControls.controls[i].get('firstname')?.errors?.['minlength']">3 Chars
+                    Required</span>
+                </div>
+              </td> -->
+              <td>
+                <input type="number" value="{{companydataurlid||sqID}}" id="sqid{{ i }}" formControlName="cargoId" hidden />
+                <input type="number" value="{{costSheetId}}" id="costSheetId{{ i }}" formControlName="costSheetId" hidden />
+                <input type="number" value="{{chargeId}}" id="chargeId{{ i }}" name="chargeId{{i}}" formControlName="chargeId" hidden />
+                <input type="text" formControlName="incomeExpense" value="EXPENSE" hidden>
+                <input type="text" formControlName="sellincomeExpense" value="INCOME" hidden>
+                <input type="number" value="{{chargeIdSell}}" id="chargeIdSell{{ i }}" name="chargeIdSell{{i}}" formControlName="chargeIdSell" hidden />
+                <input type="text" formControlName="dateCreated"  hidden>
+
+                <input type="text" formControlName="createdBy"  hidden>
+                <input type="text" formControlName="modifiedBy"  hidden>
+                <input type="text" formControlName="verifiedBy"  hidden>
+                <input type="text" formControlName="buyExRateUsd"  hidden>
+                <input type="text" formControlName="buyExRateEur"  hidden>
+                <input type="text" formControlName="buyExRateTl"  hidden>
+                <input type="text" formControlName="buyExRateInr"  hidden>
+                <input type="text" formControlName="sellExRateUsd"  hidden>
+                <input type="text" formControlName="sellExRateEur"  hidden>
+                <input type="text" formControlName="sellExRateTl"  hidden>
+                <input type="text" formControlName="exchangeRateDate"  hidden>
+                <input type="text" formControlName="costCategoryId"  hidden>
+
+
+                <ng-select
+               
+                [items]="GetChargeItem"
+                bindLabel="chargeItemName"
+                bindValue="chargeItemId"
+                formControlName="chargeItemId" 
+                placeholder="chargeItemId"
+                (change)="onChangeChargeMaster($event, chargesForm)"
+                class="stretchable-dropdown"
+                >
+              <ng-template ng-header-tmp>
+                <div class="d-flex align-items-center ng-op-head" >
+                  <div class="col-md-4 text-center border-left"><div class="p-head">Direction</div></div>
+
+                    <div class="col-md-8 text-center"><div class="p-head">Charge Description</div></div>
+                </div>
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.chargeItemName}}
+              </ng-template>
+              
+              <ng-template ng-option-tmp let-item="item" let-index="index" class="p-0 border-bottom ">
+                <div class="d-flex addrdata">
+                  <!-- <div class="col-md-1 text-center  p-body">{{index+1}}</div> -->
+                  <div class="col-md-4 border-left  p-body pl-1">{{item.transportationDirection}}</div>
+
+                  <div class="col-md-8 p-body"><div class="p-head">{{item.chargeItemName}}</div></div>
+                </div>
+            </ng-template>
+            </ng-select>
+            <input type="text" formControlName="chargeDescription" hidden/>
+
+              </td>
+              <td>
+                <!-- <input type="text" class="form-control" formControlName="lastname" placeholder="Enter Last">
+                <div class="text-danger" *ngIf="getFormControls.controls[i].get('lastname')?.touched">
+                  <span *ngIf="getFormControls.controls[i].get('lastname')?.errors?.['required']">Required</span>
+                </div> -->
+                <input type="number" 
+                id="quantity{{i}}" 
+                formControlName="quantity" 
+                (change)="onChange(i)"
+                placeholder="0"
+                class="form-control form-control-sm"
+                width="500px"
+                />
+              </td>
+              <td>
+                <ng-select [items]="GetApplyPer"
+                          bindLabel="applyPerName"
+                          bindValue="applyPerName"
+                          formControlName="applyPer" 
+                          placeholder="Apply Per"
+                        >
+                  </ng-select>  
+              </td>  
+              <td>
+                <input
+                type="number"
+                class="form-control form-control-sm"
+                id="BuyingRate"
+                name="BuyingRate{{ i }}"
+                placeholder="0"
+                [width]="200"
+                formControlName="rate"
+                (change)="onChange(i)"
+              />
+              </td>
+              <td>
+                <ng-select [items]="GetCurr"
+                        bindLabel="currencyCode"
+                        bindValue="currencyId"
+                        formControlName="currId" 
+                        placeholder="Currency"
+                        (change)="onGetCurr($event, chargesForm)">
+                </ng-select>  
+                <input type="text" formControlName="currCode" hidden/>
+            
+              </td>
+              <td>
+                <ng-select [items]="GetTaxPercentage"
+                        bindLabel="taxName"
+                        bindValue="effectiveTaxPercentage"
+                        formControlName="taxPercent" 
+                        placeholder="Tax"
+                        (change)="onChange(i)">
+                </ng-select>              
+              </td>
+              <!-- <td>
+                <input type="text" class="form-control" formControlName="city" placeholder="Enter City">
+              </td> -->
+              <td>
+                <input
+                type="number"
+                class="form-control form-control-sm"
+                id="BuyingAmount"
+                name="buyingamount{{i}}"
+                (change)="onChange(i)"
+                placeholder="0"
+                formControlName="totalAmount"
+                  readonly          
+              />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  class="form-control form-control-sm"
+                  id="taxAmount"
+                  name="taxAmount{{i}}" 
+                  placeholder="0"
+                  formControlName="taxAmount"
+                  (change)="onChange(i)"       
+                  readonly         
+                />
+               
+              </td>
+              <td>
+                <input
+                 type="number"
+                 class="form-control form-control-sm"
+                 id="sellingingRate"
+                 name="sellingingRate{{ i }}"
+                 placeholder="0"
+                 [width]="200"
+                 formControlName="sellingrate"
+                 (change)="onChange(i)"                 
+               />         
+           </td>
+              <td>
+                <ng-select [items]="GetCurrency"
+                        bindLabel="currencyName"
+                        bindValue="currencyId"
+                        formControlName="currencyId" 
+                        placeholder="Currency"
+                        (change)="onGetCurrency($event, chargesForm)">
+                </ng-select> 
+                <input type="text" formControlName="currencyCode" hidden/>
+             
+              </td>
+              <td>
+                <ng-select [items]="GetTax"
+                        bindLabel="taxName"
+                        bindValue="effectiveTaxPercentage"
+                        formControlName="selltaxPercent" 
+                        placeholder="Tax"
+                        (change)="onChange(i)">
+                </ng-select>              
+              </td>
+              <!-- <td>
+                <input type="text" class="form-control" formControlName="city" placeholder="Enter City">
+              </td> -->
+              <td>
+
+                <input
+                type="number"
+                class="form-control form-control-sm"
+                id="selltotalAmount"
+                name="selltotalAmount{{i}}"
+                (change)="onChange(i)"
+                placeholder="0"
+                formControlName="selltotalAmount"
+                readonly                           
+              />
+              </td>
+              <td>
+                <input
+               width="200px"
+                type="number"
+                class="form-control form-control-sm"
+                id="selltaxAmount"
+                name="selltaxAmount{{i}}" 
+                placeholder="0"
+                formControlName="selltaxAmount"
+                (change)="onChange(i)"
+                readonly
+              />
+              </td>
+              <td>
+                <ng-select [items]="GetInvoiceTo"
+                        bindLabel="companyName"
+                        bindValue="companyId"
+                        formControlName="invoiceTo" 
+                        placeholder="Invoice To"
+                        (change)="onInvoiceTo($event, chargesForm)">
+                </ng-select>              
+              </td>
+              <td>
+                <ng-select [items]="GetPayTo"
+                                bindLabel="companyName"
+                                bindValue="companyId"
+                                formControlName="payingPartyId" 
+                                placeholder="Pay To"
+                                (change)="onPayTo($event, chargesForm)">
+                </ng-select>
+              </td>
+              <!-- <td>
+                <input type="text" class="form-control" formControlName="city" placeholder="Enter City">
+              </td>
+              <td>
+                <input type="text" class="form-control" formControlName="state" placeholder="Enter state">
+              </td> -->
+              <td>
+                <button class="btn btn-danger" (click)="remove(i, chargesForm.value.Rows[i].costSheetId,chargesForm.value.Rows[i].chargeId)">Remove</button>
+              </td>
+            </tr>
+          
+         
+        </tbody>
+
+
+
+        <tfoot>
+          <tr style="background-color: #f3f2f7;">
+            <td colspan="6"></td>
+            <td><input type="text" value="{{totalBuyingAmt}}" readonly></td>
+            <td><input type="text" value="{{totalBuyingAmtTax}}" readonly></td>
+            <td colspan="3"></td>
+            <td><input type="text" value="{{totalSellingAmt}}" readonly></td>
+            <td><input type="text" value="{{totalSellyingAmtTax}}" readonly></td>
+            <td colspan="3"></td>
+           
+          </tr>
+          <ng-container>
+            <tr>
+              <td colspan="18">
+                <div class="row">
+                  <div class="col-12 text-start">
+                    <button class="btn btn-success" [disabled]="chargesForm.invalid" (click)="onAddCharges(chargesForm)">Save Bulk Charges</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tfoot>
+      </table>
+    <footer>
+      <div class="row postion-absolute profitrow1 d-flex align-items-center  m-2"> 
+        <div class="col-md-2"><div class="text-left text-uppecase"><div style="padding-bottom: 3px;font-size: 12px;"><b>Profit Excluding Tax</b></div><div><input type="text" class="text-success profit_input" value="{{profitExcludingTax}}" readonly/></div></div></div>
+        <div class="col-md-2"><div class="text-left text-uppecase"><div style="padding-bottom: 3px;font-size: 12px;"><b>Profit Including Tax</b></div><div><input type="text" class="text-success profit_input" value="{{profitIncludingTax}}" readonly/></div></div></div>
+      </div> 
+    </footer>
+    </form>
+     <code>{{ chargesForm.value| json }}</code> 
+  </div>
+  </div>
+</div>
+
+

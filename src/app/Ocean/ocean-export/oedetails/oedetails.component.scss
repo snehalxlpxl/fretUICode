@@ -1,0 +1,110 @@
+.breadcrumb{
+  font-size: large;
+}
+
+
+.addrdata{
+  font-size: 0.84rem;
+  white-space: pre-wrap;
+}
+.ng-op-head{
+background-color: rgb(198 198 198);
+  color: #414141;
+  letter-spacing: -0.7px;
+  font-weight: 500;
+  font-size: .96rem;
+}
+.ng-op-head span{
+padding: .5rem;
+}
+.p-head{
+padding: .4rem;
+}
+.p-body{
+padding: .3rem;
+}
+
+// .dropdown-menu {
+// display: block;
+// position: relative;
+// background-color: #f9f9f9;
+// min-width: 160px;
+// box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+// z-index: 100;
+// top: -9px;
+// left: 60%;
+// }
+
+
+
+// /* Show the dropdown menu when the 'show' class is applied */
+// .dropdown-menu.show {
+//   display: show;
+// }
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button styling */
+.dropdown-toggle {
+  padding: 10px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 100;
+
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Adjust the transition speed here */
+}
+
+/* Show the dropdown menu when the dropdown button is clicked */
+.dropdown.open .dropdown-menu {
+  display: block;
+  opacity: 1;
+}
+
+/* Show the dropdown menu when the dropdown button is clicked */
+.dropdown:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+}
+
+/* Dropdown item styling */
+.dropdown-item {
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+}
+
+/* Style for the dropdown items on hover */
+.dropdown-item:hover {
+  background-color: #ddd;
+  transition: opacity 0.5s ease; /* Adjust the transition speed here */
+}
+
+.dropdown-menu.fade {
+  transition: opacity 0.5s ease; /* Adjust the transition speed here */
+  opacity: 0;
+}
+
+.dropdown-menu.fade.show {
+  opacity: 1;
+}
+/* Add this CSS to decrease the font size */
+.swal-title-font-size {
+  font-size: 14px; /* Adjust the font size as needed */
+}
